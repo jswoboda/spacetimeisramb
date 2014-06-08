@@ -1,0 +1,189 @@
+\documentclass[10pt]{article}
+%\usepackage{fullpage}
+\usepackage{graphicx}   % if you want to include graphics files
+\usepackage{subfigure}
+\usepackage{setspace}
+\usepackage{amsxtra}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{multirow}
+\usepackage{algorithm} %pseudo code
+\usepackage{algorithmic}
+\usepackage{wrapfig}
+\usepackage{bm}
+%\usepackage{unicode-math}
+%\setmathfont{xits-math.otf}
+
+% matlab listing
+\usepackage{listings}
+\lstset{language=Matlab}
+\lstset{tabsize=2}
+\usepackage[]{mcode}
+%\usepackage{rotating}
+
+%turns all margins to 1in
+\addtolength{\oddsidemargin}{-.875in}
+\addtolength{\evensidemargin}{-.875in}
+\addtolength{\textwidth}{1.75in}
+
+\addtolength{\topmargin}{-.875in}
+\addtolength{\textheight}{1.75in}
+
+\DeclareMathOperator{\sgn}{sgn} 
+\DeclareMathOperator{\cnum}{299792458 \text{m/s}}
+\DeclareMathOperator{\mpers}{\text{m/s}}
+\DeclareMathOperator{\e}{\text{e}}
+\DeclareMathOperator{\s}{\text{s}}
+\DeclareMathOperator{\ns}{\text{ns}}
+\DeclareMathOperator{\mus}{ \mu \text{s}}
+\DeclareMathOperator{\ms}{\text{ms}}
+
+\DeclareMathOperator{\m}{\text{m}}
+\DeclareMathOperator{\cm}{\text{cm}}
+\DeclareMathOperator{\km}{\text{km}}
+\DeclareMathOperator{\Hz}{\text{Hz}}
+\DeclareMathOperator{\kHz}{\text{kHz}}
+\DeclareMathOperator{\MHz}{\text{MHz}}
+
+\DeclareMathOperator{\GHz}{\text{GHz}}
+
+\DeclareMathOperator{\W}{\text{W}}
+\DeclareMathOperator{\kW}{\text{kW}}
+\DeclareMathOperator{\sinc}{\text{sinc}}
+\graphicspath{{Figs/}}
+
+\setcounter{secnumdepth}{2}
+\author{John Swoboda\\ BU ID: U75949493}
+\title{\textbf{Space-Time Ambiguity Function in 3-D ISR}}
+
+\begin{document}
+\maketitle
+\abstract{By leveraging electronically steerable phased array antenna technology, incoherent scatter radars have now become full three-dimensional remote sensors for ionosphere plasmas. Currently these systems are operating in the high latitude region where the ionosphere is highly dynamic in both space and time. These systems are giving researchers an unprecedented look at the ionosphere that they have not had in the past.Because of the highly dynamic nature of the ionosphere in this region it is import to differentiate between artifacts and the true behavior of the plasma. Often the three dimension data is fitted in polar coordinates and then the parameters are interpolated to a Cartesian grid. This and other sources of error could be effecting reconstructions of the plasma parametersIn this study we explore the impacts of fast moving plasma progressing through the field of view of the radar on the reconstruction of the three dimensional parameters. We pose the problem as a linear inverse problem for the lags of the plasma autocorrelation function. We will show the impact of the plasma through simulation from a full 3-d incoherent scatter radar model. From there we can apply methods from image and video processing to attempt to correct for the artifacts.}
+\section{Introduction}
+Incoherent scatter radar (ISR) systems have enabled researchers since the 1950's to explore the ionosphere \cite{gordon58}. Using methodology developed by Dougherty, Farley and others these systems can give measurements of electron density $N_e$, Ion temperature $T_i$, electron temperature $T_e$, Ion velocity $V_i$ and other plasma parameters \cite{dougherty:farley1960}, \cite{farleydougherty:ISR2}, \cite{hagfors1961}, \cite{doughteryfarley:ISR3}. These parameters are measured by fitting a theoretic autocorrelation derived from first principles physics to an estimated intrapulse time autocorrelation of the scattered radar signal \cite{Lehtinen1996435}.
+
+As with any real world measurement method there is a non-ideal measurement ambiguity which gives these sensors a type of resolution. Often these ambiguities are only carried out over range and time. The range ambiguity is controlled by the pulse shape and the time ambiguity is controlled by the integration time. A number techniques have been developed to reduce the impact of these ambiguities including full profile analysis \cite{holt1992}. \cite{Lehtinen1989133}, \cite{Lehtinen:1997uh} and deconvolution methods \cite{nikoukar2008}.
+
+Recently phase array technology has started to be leveraged by ISR community. The AMISR systems have already been deployed both at the Poker Flat Alaska and Resolute Bay Canada. The EISCAT-3D project is currently being developed using phased array technology as well and will be capable of multistaic processing. These new systems are already giving researchers an unprecedented three dimensional view of the ionosphere.
+
+Still there has been no formal derivation of a three dimensional ambiguity function for these systems.
+\section{Space-Time Ambiguity Derivation}
+
+In the ISR literature the measurement ambiguity along the range dimension is often referred to simply as the ambiguity function \cite{hysell2008}. This only shows the measurement ambiguity along the range. Due to the three dimensional imaging ability of the phased array ISR systems such as AMISR we will define a new set of terminology to describe this more complex measurement.
+
+Specifically we will refer to the measurement ambiguity in the range dimension as the range ambiguity, $W(r,\tau)$. The measurement ambiguity in the elevation and azimuth angles will be referred to as the angular or cross range  ambiguity $F(\theta,\phi)$. The since these two functions are separable they can be multiplied together to form the full spatial ambiguity $K(\tau,\mathbf{r},\mathbf{r}_s)$. Lastly the time ambiguity, which is from the integration time for each measurement will be referred to the time ambiguity. Again like the full spatial ambiguity function we can multiply the space and time ambiguity functions to get the Space-Time ambiguity function.% Might want to go through math from the kernel stuff.
+
+The range ambiguity is due to the pulse and receiver filter on the ISR systems.  If we look at data received by the ISR system, with a wavenumber $\mathbf{k}$ and pulse shape $s(t)$, noted as $x(t)$ we can see that the received signal can be represented as the following
+
+\begin{equation}
+\label{eq:xt}
+x(t) \propto h(t) \ast \int_{\mathbf{r}} e^{-j\mathbf{k} \cdot \mathbf{r}}  s(t-\frac{2r}{c}) n_e(\mathbf{r},t) d\mathbf{r},
+\end{equation}
+
+\noindent where $\mathbf{r}$ is the range, $h(t)$ is the receiver filter, $n_e(\mathbf{r},t)$ is the electron density fluctuation.  Generally it is assumed that the pass band of the filter is larger then the bandwidth of the electron density fluctuation\cite{kudeki:notes}.  As such it can  be assumed that filter will only act on the the shape of the pulse.   This will change Equation \ref{eq:xt} to the following:
+
+\begin{equation}
+\label{ex:xtaug}
+x(t) \propto \ast \int_{\mathbf{r}} e^{-j\mathbf{k} \cdot \mathbf{r}}  a(t-\frac{2r}{c}) n_e(\mathbf{r},t) d\mathbf{r}
+\end{equation}
+\noindent where $a(t)= h(t) \ast s(t)$.   
+
+When the autocorrelation of the signal is done we find the following formula,\cite{nikoukar2008}.  
+
+\begin{equation}
+\label{ex:acf1}
+\langle x(t)x^*(t+\tau)\rangle = \int_{\mathbf{r'}}\int_{\mathbf{r}} e^{-2j \mathbf{k}\cdot \left(\mathbf{r}'-\mathbf{r} \right)}a(t-\frac{2r}{c})a^*(t+\tau-\frac{2r'}{c}) \langle n_e(\mathbf{r},t)n_e(\mathbf{r}',t+\tau)\rangle d\mathbf{r} d\mathbf{r}'
+\end{equation}
+ 
+\noindent where $r'$ is the magnitude of the vector $\mathbf{r}'$.  We can make some simplifying assumption at this point that the space-time autocorrelation function of $n_e(\mathbf{r},t)$, $\langle n_e(\mathbf{r},t)n_e(\mathbf{r}',t+\tau)\rangle$, will vanish as the magnitude of $\mathbf{x} \equiv \mathbf{r}'-\mathbf{r} $ increases.  Once the spatial correlation is removed we can rewrite Equation \ref{ex:acf1} as 
+ 
+ \begin{equation}
+ \label{ex:acf2}
+ \langle x(t)x^*(t+\tau)\rangle = \int_{\mathbf{r}} a(t-\frac{2r}{c})a^*(t+\tau -\frac{2r}{c}) \int_{\mathbf{x}} e^{-2j \mathbf{k}\cdot \mathbf{x}} \langle n_e(\mathbf{r},t)n_e(\mathbf{x}+\mathbf{r},t+\tau)\rangle d\mathbf{x} d\mathbf{r}.
+ \end{equation}
+ 
+ The inner integral is a spatial Fourier transform evaluated at the wave number of the radar $\mathbf{k}$
+ \begin{equation}
+ \label{eq:spft}
+ \langle |n_e(\mathbf{k},r,\tau)|^2\rangle \equiv  \int_{\mathbf{x}} e^{-2j \mathbf{k}\cdot \mathbf{x} } \langle n_e(\mathbf{r},t)n_e(\mathbf{x}+\mathbf{r},t+\tau)\rangle d\mathbf{x}. 
+ \end{equation}
+ 
+ \noindent Equation \ref{ex:acf2} becomes
+ \begin{equation}
+ \langle x(t)x^*(t+\tau)\rangle = \int_{\mathbf{r}} a(t-\frac{2r}{c})a^*(t+\tau -\frac{2r}{c}) \langle |n_e(\mathbf{k},r,\tau)|^2\rangle d\mathbf{r}.
+ \end{equation}
+ %angle ambiguity
+ %E_e(\phi,\psi)\text{dirc}_N(\frac{d_1}{\lambda}\sin\phi \cos\psi)\text{dirc}_K\left(\frac{d_2}{\lambda}\sin\phi\sin\psi\right)
+ It should be noted that the term $ a(t)a^*(t+\tau)$ is the soft target ambiguity function.  If $t$ is replaced with $2r/c$ we can see that the this function represented as $A(r,\tau)$\cite{nikoukar:thesis}.  This function is in a way a lag dependent smoothing of the range dimension. 
+ 
+ The spatial ambiguity across angle is determined by the antenna beam pattern. In phase array radars this beam pattern is determined by the 
+ 
+\begin{figure}[!t]
+	\centering
+	\includegraphics[width=5.5in]{spaceamb}
+	\caption{Full Spatial Ambiguity Function}	
+	\label{fig:chain}
+\end{figure}
+
+\subsection{Ambiguity after Frame transformation}
+In order to simplify notation first assume that the autocorrelation functions have been descritized and each $i^{th}$ lag can be represented as $x_i$. The measured lag product will also be represented as $y_i(\mathbf{r}_s,t_s)$. With this in mind the measurement process of the $i^{th}$ lag by the ISR can be represented as follows,
+
+\begin{equation}
+\label{eqn:firstL}
+y_i(\mathbf{r}_s,t_s) = \int L_i(t_s,\mathbf{r}_s,t,\mathbf{r})x_i(t,\mathbf{r})dtd\mathbf{r}.
+\end{equation}
+
+For this we will focus on a single instance in the sampled time. We will assume that the radar is integrating over a length of time $T$ beginning at $t_0$ which will be the label of the sampled time. The operator $L$ will be represented as a separable function $KI$ where $I$ is an indicator function of length $T$ and centered at $t_0+1/2$. This will change (\ref{eqn:firstL}) to the following,
+
+\begin{equation}
+\label{eqn:L2}
+y_{i,t_0}(\mathbf{r}_s) = \int K_i(\mathbf{r}_s,\mathbf{r})\int_{t_0}^{t_0+T} x_i(t,\mathbf{r})dtd\mathbf{r}.
+\end{equation}
+
+At this point it will be assumed that $x_i$ is rigid object and does not deform with respect to $\mathbf{r}$ over time period $[t_0,t_0+T]$. Also it will be assumed that the lag will be moving with a constant velocity $\mathbf{v}$. Thus $x_i(\mathbf{r},t)\Rightarrow x_i(\mathbf{r}+\mathbf{v}t)$. At this point (\ref{eqn:L2}) becomes,
+
+\begin{equation}
+\label{eqn:L3}
+y_{i,t_0}(\mathbf{r}_s) = \int \int_{t_0}^{t_0+T} K_i(\mathbf{r}_s,\mathbf{r})x_i(\mathbf{r}+\mathbf{v}t)dtd\mathbf{r}.
+\end{equation}
+
+A change of variables where $\mathbf{r}' = \mathbf{r}+\mathbf{v}t$ acts as a Galilean transform and applies a warping to the kernel and changing the frame of reference. Then (\ref{eqn:L3}) becomes
+
+\begin{equation}
+\label{eqn:L4}
+y_{i,t_0}(\mathbf{r}_s) = \int \int_{t_0}^{t_0+T} K_i(\mathbf{r}_s,\mathbf{r}'-\mathbf{v}t)x_i(\mathbf{r}')dtd\mathbf{r}'.
+\end{equation}
+
+The next step is to make the specific observation that in ISR each point of the sample spatial variable $\mathbf{r}_s$ will be the determined the $m^{th}$ range gate and the $n^{th}$ beam. This shows the final problem is truly a semi-discrete inverse problem and (\ref{eqn:L3}) becomes,
+
+\begin{equation}
+\label{eqn:L5}
+y_{i,t_0,m,n}= \int \left[ \int_{t_0}^{t_0+T} K_{i,m,n}(\mathbf{r}'-\mathbf{v}t)dt \right]x_i(\mathbf{r}')d\mathbf{r}'.
+\end{equation}
+
+\noindent The kernel $K$ is actually a separable function with the component $f_{i,n}(\mathbf{r}')$ caused by the range ambiguity of the $i^{th}$ lag at the $m^{th}$ range gate. The function $g_m(\mathbf{r}')$ is the angle ambiguity from the $n^{th}$ beam. 
+
+By performing the integration in $t$ the problem can now be simplified further back to a Friedholm integral equation by simply replacing the terms  in the square brackets as a new kernel $A$,
+
+\begin{equation}
+\label{eqn:L6}
+y_{i,t_0,m,n}= \int A_{i,m,n}(\mathbf{r}') x_i(\mathbf{r}')d\mathbf{r}'.
+\end{equation}
+\noindent We are now left with a semi-discrete inverse problem to solve. The operator $A$ can be estimated through knowledge of the radar system and pulse pattern which would determine the antenna beam pattern and the range ambiguity function. The velocity $\mathbf{v}$ can be estimated by taking taking measurements of the Doppler shift and using a methodology seen in \cite{butler:imagingfregiondrifts}. Once the operator has been determined debluring methods can be applied.
+
+
+
+\begin{figure}[!t]
+	\centering
+	\includegraphics[width=5.5in]{spaceambmoving}
+	\caption{Full Spatial Ambiguity Function With Motion}
+	\label{fig:chain}
+\end{figure}
+
+\section{Simulation}
+\section{Possible Mitigation Techniques}
+\section{Conclusion}
+\bibliographystyle{ieeetrsrt}
+\bibliography{litreview}
+
+\end{document}
