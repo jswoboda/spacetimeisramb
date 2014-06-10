@@ -1,5 +1,5 @@
-\documentclass[10pt]{article}
-%\usepackage{fullpage}
+\documentclass[draft,ras]{Template/AGUTeX}
+
 \usepackage{graphicx}   % if you want to include graphics files
 \usepackage{subfigure}
 \usepackage{setspace}
@@ -7,66 +7,60 @@
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{multirow}
-\usepackage{algorithm} %pseudo code
-\usepackage{algorithmic}
-\usepackage{wrapfig}
 \usepackage{bm}
-%\usepackage{unicode-math}
-%\setmathfont{xits-math.otf}
 
-% matlab listing
-\usepackage{listings}
-\lstset{language=Matlab}
-\lstset{tabsize=2}
-\usepackage[]{mcode}
-%\usepackage{rotating}
-
-%turns all margins to 1in
-\addtolength{\oddsidemargin}{-.875in}
-\addtolength{\evensidemargin}{-.875in}
-\addtolength{\textwidth}{1.75in}
-
-\addtolength{\topmargin}{-.875in}
-\addtolength{\textheight}{1.75in}
-
-\DeclareMathOperator{\sgn}{sgn} 
-\DeclareMathOperator{\cnum}{299792458 \text{m/s}}
-\DeclareMathOperator{\mpers}{\text{m/s}}
-\DeclareMathOperator{\e}{\text{e}}
-\DeclareMathOperator{\s}{\text{s}}
-\DeclareMathOperator{\ns}{\text{ns}}
-\DeclareMathOperator{\mus}{ \mu \text{s}}
-\DeclareMathOperator{\ms}{\text{ms}}
-
-\DeclareMathOperator{\m}{\text{m}}
-\DeclareMathOperator{\cm}{\text{cm}}
-\DeclareMathOperator{\km}{\text{km}}
-\DeclareMathOperator{\Hz}{\text{Hz}}
-\DeclareMathOperator{\kHz}{\text{kHz}}
-\DeclareMathOperator{\MHz}{\text{MHz}}
-
-\DeclareMathOperator{\GHz}{\text{GHz}}
-
-\DeclareMathOperator{\W}{\text{W}}
-\DeclareMathOperator{\kW}{\text{kW}}
-\DeclareMathOperator{\sinc}{\text{sinc}}
+% graphics path
 \graphicspath{{Figs/}}
 
-\setcounter{secnumdepth}{2}
-\author{John Swoboda\\ BU ID: U75949493}
-\title{\textbf{Space-Time Ambiguity Function in 3-D ISR}}
+\authorrunninghead{SWOBODA ET AL.}
+\titlerunninghead{3-D ISR}
+
+
+\authoraddr{Corresponding author: J. P. Swoboda,
+Department of Electrical \& Computer Engineering,
+Boston University, 8 Saint Mary’s Street
+Boston, MA 02215, USA.
+(swoboj@bu.edu)}
 
 \begin{document}
-\maketitle
-\abstract{By leveraging electronically steerable phased array antenna technology, incoherent scatter radars have now become full three-dimensional remote sensors for ionosphere plasmas. Currently these systems are operating in the high latitude region where the ionosphere is highly dynamic in both space and time. These systems are giving researchers an unprecedented look at the ionosphere that they have not had in the past.Because of the highly dynamic nature of the ionosphere in this region it is import to differentiate between artifacts and the true behavior of the plasma. Often the three dimension data is fitted in polar coordinates and then the parameters are interpolated to a Cartesian grid. This and other sources of error could be effecting reconstructions of the plasma parametersIn this study we explore the impacts of fast moving plasma progressing through the field of view of the radar on the reconstruction of the three dimensional parameters. We pose the problem as a linear inverse problem for the lags of the plasma autocorrelation function. We will show the impact of the plasma through simulation from a full 3-d incoherent scatter radar model. From there we can apply methods from image and video processing to attempt to correct for the artifacts.}
+
+\title{Space-Time Ambiguity Function in 3-D ISR}
+%%%%%%%%%%%%%% Author Info %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\authors{John Swoboda,\altaffilmark{1},
+Joshual Semeter,\altaffilmark{1}, Philip Erickson \altaffilmark{2}}
+
+\altaffiltext{1}{Department of Electrical \& Computer Engineering,
+Boston University, Boston, Massachusetts, USA.}
+\altaffiltext{2}{Atmospheric Science Division,
+MIT Haystack Observatory, Westford Massachusetts, USA.}
+%%%%%%%%%%%%%% Abstract %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{abstract}By leveraging electronically steerable phased array antenna technology, incoherent scatter radars have now become full three-dimensional remote sensors for ionosphere plasmas. Currently these systems are operating in the high latitude region where the ionosphere is highly dynamic in both space and time. These systems are giving researchers an unprecedented look at the ionosphere that they have not had in the past.
+
+Because of the highly dynamic nature of the ionosphere in this region it is import to differentiate between artifacts and the true behavior of the plasma. Often the three dimension data is fitted in polar coordinates and then the parameters are interpolated to a Cartesian grid. This and other sources of error could be effecting reconstructions of the plasma parameters
+
+In this study we explore the impacts of fast moving plasma progressing through the field of view of the radar on the reconstruction of the three dimensional parameters. We pose the problem as a linear inverse problem for the lags of the plasma autocorrelation function. We will show the impact of the plasma through simulation from a full 3-d incoherent scatter radar model. From there we can apply methods from image and video processing to attempt to correct for the artifacts.
+\end{abstract}
+
+%%%%%%%%%%%%%%  End of Abstract %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\begin{article}
+
+%%%%%%%%%%%%%% Intro %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \section{Introduction}
 Incoherent scatter radar (ISR) systems have enabled researchers since the 1950's to explore the ionosphere \cite{gordon58}. Using methodology developed by Dougherty, Farley and others these systems can give measurements of electron density $N_e$, Ion temperature $T_i$, electron temperature $T_e$, Ion velocity $V_i$ and other plasma parameters \cite{dougherty:farley1960}, \cite{farleydougherty:ISR2}, \cite{hagfors1961}, \cite{doughteryfarley:ISR3}. These parameters are measured by fitting a theoretic autocorrelation derived from first principles physics to an estimated intrapulse time autocorrelation of the scattered radar signal \cite{Lehtinen1996435}.
 
 As with any real world measurement method there is a non-ideal measurement ambiguity which gives these sensors a type of resolution. Often these ambiguities are only carried out over range and time. The range ambiguity is controlled by the pulse shape and the time ambiguity is controlled by the integration time. A number techniques have been developed to reduce the impact of these ambiguities including full profile analysis \cite{holt1992}. \cite{Lehtinen1989133}, \cite{Lehtinen:1997uh} and deconvolution methods \cite{nikoukar2008}.
 
-Recently phase array technology has started to be leveraged by ISR community. The AMISR systems have already been deployed both at the Poker Flat Alaska and Resolute Bay Canada. The EISCAT-3D project is currently being developed using phased array technology as well and will be capable of multistaic processing. These new systems are already giving researchers an unprecedented three dimensional view of the ionosphere.
+Recently phase array technology has started to be leveraged by ISR community. The AMISR systems have already been deployed both at the Poker Flat Alaska and Resolute Bay Canada \cite{amisr.site}. The EISCAT-3D project is currently being developed using phased array technology as well and will be capable of multistaic processing. These new systems are already giving researchers an unprecedented three dimensional view of the ionosphere.
 
 Still there has been no formal derivation of a three dimensional ambiguity function for these systems.
+
+
+%%%%%%%%%%%%%% Ambiguity Derivation%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \section{Space-Time Ambiguity Derivation}
 
 In the ISR literature the measurement ambiguity along the range dimension is often referred to simply as the ambiguity function \cite{hysell2008}. This only shows the measurement ambiguity along the range. Due to the three dimensional imaging ability of the phased array ISR systems such as AMISR we will define a new set of terminology to describe this more complex measurement.
@@ -179,11 +173,22 @@ y_{i,t_0,m,n}= \int A_{i,m,n}(\mathbf{r}') x_i(\mathbf{r}')d\mathbf{r}'.
 	\caption{Full Spatial Ambiguity Function With Motion}
 	\label{fig:chain}
 \end{figure}
+%%%%%%%%%%%%%% Simulation %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Simulation}
+%%%%%%%%%%%%%% Mitigation %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \section{Possible Mitigation Techniques}
+%%%%%%%%%%%%%% Conclusion %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \section{Conclusion}
-\bibliographystyle{ieeetrsrt}
-\bibliography{litreview}
+\bibliographystyle{BibTeX/agufull08}
+\bibliography{BibTeX/litreview}
+
+\begin{acknowledgments}
+(Text here)
+\end{acknowledgments}
+
+\end{article}
 
 \end{document}
