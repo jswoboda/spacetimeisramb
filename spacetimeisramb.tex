@@ -26,8 +26,8 @@ Boston, MA 02215, USA.
 
 \title{Space-Time Ambiguity Function in 3-D ISR}
 %%%%%%%%%%%%%% Author Info %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\authors{John Swoboda,\altaffilmark{1},
-Joshual Semeter,\altaffilmark{1}, Philip Erickson \altaffilmark{2}}
+\authors{John Swoboda,\altaffilmark{1}
+Joshual Semeter,\altaffilmark{1} Philip Erickson \altaffilmark{2}}
 
 \altaffiltext{1}{Department of Electrical \& Computer Engineering,
 Boston University, Boston, Massachusetts, USA.}
@@ -58,7 +58,12 @@ Recently phase array technology has started to be leveraged by ISR community. Th
 
 Even though these systems are already in use there is no formal derivation of a three dimensional ambiguity function for these systems. In a highly dynamic region like the high latitude ionosphere this lack of knowledge can be problematic. There are numerous phenomena such as polar cap patches that may be moving through the field of view at very high speeds \cite{dahlgren2012di}.
 
-In this publication we will develop a model for a full three dimensional space-time ambiguity function for 3-D ISR systems. This ambiguity function can also be modified to show the ambiguity function within the plasma rest frame to show the actual size of the ambiguity function relative to the moving plasma. 
+In this publication we will develop a model for a full three dimensional space-time ambiguity function for 3-D ISR systems. This function can also be modified to show the ambiguity within the rest frame of the moving plasma. In the end this full three dimensional can be represented as kernel in a Fredholm integral equation like in Equation \ref{eqn:friedholm} with $x(s)$ being the lag of the autocorrelation function at a specific time and position. 
+
+\begin{equation}
+\label{eqn:friedholm}
+y(t) = \int_a^b K(t,s) x(s) ds
+\end{equation}
 
 The impact of the three-dimensional ambiguity on moving plasma will be shown through simulation. This ISR simulator fully emulates the ISR data creation process at the IQ level. 
 
@@ -69,7 +74,7 @@ Lastly possible mitigation techniques will be explored. These mitigation techniq
 
 \section{Space-Time Ambiguity Derivation}
 
-In the ISR literature the measurement ambiguity along the range dimension is often referred to simply as the ambiguity function \cite{hysell2008}. This only shows the measurement ambiguity along the range. Due to the three dimensional imaging ability of the phased array ISR systems such as AMISR we will define a new set of terminology to describe this more complex measurement.
+In the ISR literature the measurement ambiguity along the range dimension is often referred to simply as the ambiguity function \cite{hysell2008}. This only shows the measurement ambiguity along the range $r$. Due to the three dimensional imaging ability of the phased array ISR systems such as AMISR we will define a new set of terminology to describe this more complex measurement which is now imaging the system in three-dimensional coordinates $\mathbf{r}=[x,y,z]^T$.
 
 Specifically we will refer to the measurement ambiguity in the range dimension as the range ambiguity, $W(r,\tau)$. The measurement ambiguity in the elevation and azimuth angles will be referred to as the angular or cross range  ambiguity $F(\theta,\phi)$. The since these two functions are separable they can be multiplied together to form the full spatial ambiguity $K(\tau,\mathbf{r},\mathbf{r}_s)$. Lastly the time ambiguity, which is from the integration time for each measurement will be referred to the time ambiguity. Again like the full spatial ambiguity function we can multiply the space and time ambiguity functions to get the Space-Time ambiguity function.% Might want to go through math from the kernel stuff.
 
