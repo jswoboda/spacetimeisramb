@@ -54,9 +54,15 @@ Incoherent scatter radar (ISR) systems have enabled researchers since the 1950's
 
 As with any real world measurement method there is a non-ideal measurement ambiguity which gives these sensors a type of resolution. Often these ambiguities are only carried out over range and time. The range ambiguity is controlled by the pulse shape and the time ambiguity is controlled by the integration time. A number techniques have been developed to reduce the impact of these ambiguities including full profile analysis \cite{holt1992}. \cite{Lehtinen1989133}, \cite{Lehtinen:1997uh} and deconvolution methods \cite{nikoukar2008}.
 
-Recently phase array technology has started to be leveraged by ISR community. The AMISR systems have already been deployed both at the Poker Flat Alaska and Resolute Bay Canada \cite{amisr.site}. The EISCAT-3D project is currently being developed using phased array technology as well and will be capable of multistaic processing. These new systems are already giving researchers an unprecedented three dimensional view of the ionosphere.
+Recently phase array technology has started to be leveraged by ISR community. The AMISR systems have already been deployed both at the Poker Flat Alaska and Resolute Bay Canada \cite{amisr.site}. The EISCAT-3D project is currently being developed using phased array technology as well and will be capable of multistaic processing \cite{eiscat3ddesign}. These new systems are already giving researchers an unprecedented three dimensional view of the ionosphere. 
 
-Still there has been no formal derivation of a three dimensional ambiguity function for these systems.
+Even though these systems are already in use there is no formal derivation of a three dimensional ambiguity function for these systems. In a highly dynamic region like the high latitude ionosphere this lack of knowledge can be problematic. There are numerous phenomena such as polar cap patches that may be moving through the field of view at very high speeds \cite{dahlgren2012di}.
+
+In this publication we will develop a model for a full three dimensional space-time ambiguity function for 3-D ISR systems. This ambiguity function can also be modified to show the ambiguity function within the plasma rest frame to show the actual size of the ambiguity function relative to the moving plasma. 
+
+The impact of the three-dimensional ambiguity on moving plasma will be shown through simulation. This ISR simulator fully emulates the ISR data creation process at the IQ level. 
+
+Lastly possible mitigation techniques will be explored. These mitigation techniques will borrow heavily from the image and signal processing literature.
 
 
 %%%%%%%%%%%%%% Ambiguity Derivation%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
