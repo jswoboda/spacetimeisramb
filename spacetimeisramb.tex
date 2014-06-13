@@ -54,7 +54,7 @@ Incoherent scatter radar (ISR) systems have enabled researchers since the 1950's
 
 As with any real world measurement method there is a non-ideal measurement ambiguity which gives these sensors a type of resolution. Often these ambiguities are only carried out over range and time. The range ambiguity is controlled by the pulse shape and the time ambiguity is controlled by the integration time. A number techniques have been developed to reduce the impact of these ambiguities including full profile analysis \cite{holt1992}. \cite{Lehtinen1989133}, \cite{Lehtinen:1997uh} and deconvolution methods \cite{nikoukar2008}.
 
-Recently phase array technology has started to be leveraged by ISR community. The AMISR systems have already been deployed both at the Poker Flat Alaska and Resolute Bay Canada \cite{amisr.site}. The EISCAT-3D project is currently being developed using phased array technology as well and will be capable of multistaic processing \cite{eiscat3ddesign}. These new systems are already giving researchers an unprecedented three dimensional view of the ionosphere. 
+Recently phase array technology has started to be leveraged by ISR community. The AMISR systems have already been deployed both at the Poker Flat Alaska and Resolute Bay Canada \cite{amisr.site}. The EISCAT-3D project is currently being developed using phased array technology as well and will be capable of multistaic processing \cite{eiscat3ddesign}. These new systems are already being used to create three dimensional reconstructions of plasma parameters \cite{Semeter2009738}, \cite{Nicolls:2007ie}, \cite{dahlgren2012di},\cite{Dahlgren:2012dq}.
 
 Even though these systems are already in use there is no formal derivation of a three dimensional ambiguity function for these systems. In a highly dynamic region like the high latitude ionosphere this lack of knowledge can be problematic. There are numerous phenomena such as polar cap patches that may be moving through the field of view at very high speeds \cite{dahlgren2012di}.
 
@@ -74,9 +74,9 @@ Lastly possible mitigation techniques will be explored. These mitigation techniq
 
 \section{Space-Time Ambiguity Derivation}
 
-In the ISR literature the measurement ambiguity along the range dimension is often referred to simply as the ambiguity function \cite{hysell2008}. This only shows the measurement ambiguity along the range $r$. Due to the three dimensional imaging ability of the phased array ISR systems such as AMISR we will define a new set of terminology to describe this more complex measurement which is now imaging the system in three-dimensional coordinates $\mathbf{r}=[x,y,z]^T$.
+In the ISR literature the measurement ambiguity along the range dimension is often referred to simply as the ambiguity function \cite{hysell2008}. This only shows the measurement ambiguity along the range $r$. Due to the three-dimensional imaging capability of phased array ISR systems we will define a new set of terminology to describe this more complicated measurement which is now imaging the ionosphere in three-dimensional coordinates $\mathbf{r}=[x,y,z]^T$.
 
-Specifically we will refer to the measurement ambiguity in the range dimension as the range ambiguity, $W(r,\tau)$. The measurement ambiguity in the elevation and azimuth angles will be referred to as the angular or cross range  ambiguity $F(\theta,\phi)$. The since these two functions are separable they can be multiplied together to form the full spatial ambiguity $K(\tau,\mathbf{r},\mathbf{r}_s)$. Lastly the time ambiguity, which is from the integration time for each measurement will be referred to the time ambiguity. Again like the full spatial ambiguity function we can multiply the space and time ambiguity functions to get the Space-Time ambiguity function.% Might want to go through math from the kernel stuff.
+Specifically we will refer to the measurement ambiguity in the range dimension as the range ambiguity, $W(r,\tau)$. The measurement ambiguity in the elevation and azimuth angles will be referred to as the angular or cross range  ambiguity $F(\theta,\phi)$, where $\theta$ is elevation angle and $\phi$ is the azimuth angle. The since these two functions are separable they can be multiplied together to form the full spatial ambiguity $K(\tau,\mathbf{r},\mathbf{r}_s)$. Lastly the time ambiguity, which is from the integration time for each measurement will be referred to the time ambiguity. Again like the full spatial ambiguity function we can multiply the space and time ambiguity functions to get the Space-Time ambiguity function.% Might want to go through math from the kernel stuff.
 
 The range ambiguity is due to the pulse and receiver filter on the ISR systems.  If we look at data received by the ISR system, with a wavenumber $\mathbf{k}$ and pulse shape $s(t)$, noted as $x(t)$ we can see that the received signal can be represented as the following
 
@@ -121,14 +121,25 @@ When the autocorrelation of the signal is done we find the following formula,\ci
  %E_e(\phi,\psi)\text{dirc}_N(\frac{d_1}{\lambda}\sin\phi \cos\psi)\text{dirc}_K\left(\frac{d_2}{\lambda}\sin\phi\sin\psi\right)
  It should be noted that the term $ a(t)a^*(t+\tau)$ is the soft target ambiguity function.  If $t$ is replaced with $2r/c$ we can see that the this function represented as $A(r,\tau)$\cite{nikoukar:thesis}.  This function is in a way a lag dependent smoothing of the range dimension. 
  
- The spatial ambiguity across angle is determined by the antenna beam pattern. In phase array radars this beam pattern is determined by the 
+ The spatial ambiguity across angle is determined by the antenna beam pattern. In phase array radars this beam pattern is ideally the array factor multiplied by the element pattern \cite{Balanis:2005:ATA:1208379}. The array factor is determined by a number of things including the element spacing in both x and y $(dx,dy)$ and the wave number of the radar, $k$. Making idealized assumptions with no mutual coupling and that the array elements are cross dipole elements AMISR systems will have the following array pattern for pointing angle ($\theta_0,\phi_0$),
  
-\begin{figure}[!t]
+ \begin{equation}
+ \label{eqn:amisrpat}
+F(\theta,\phi) = \frac{1}{2}(1+\cos(\theta)^2)\left[ \frac{1}{MN} \left(1+e^{j(\psi_y/2 + \psi_x)}\right)\frac{\sin((M/2) \psi_x)}{\sin(\psi_x)} \frac{\sin((N/2) \psi_x)}{\sin(\psi_x/2)}\right]^2,
+ \end{equation}
+ 
+ \noindent where $\psi_x = -k d_x(\sin\theta\cos\phi-\sin\theta_0\cos\phi_0)$, $\psi_y = -k d_y(\sin\theta\sin\phi-\sin\theta_0\sin\phi_0)$.
+
+
+This spatial ambiguity is a separable function made up of the components of $W(r,\tau)$ and $F(\theta,\phi)$. A rendering of an example of this full ambiguity function for an uncoded long pulse and antenna pattern in (\ref{eqn:amisrpat}) can be seen in Figure \ref{fig:amb4}
+
+\begin{figure}
 	\centering
 	\includegraphics[width=5.5in]{spaceamb}
 	\caption{Full Spatial Ambiguity Function}	
-	\label{fig:chain}
+	\label{fig:amb4}
 \end{figure}
+
 
 \subsection{Ambiguity after Frame transformation}
 In order to simplify notation first assume that the autocorrelation functions have been descritized and each $i^{th}$ lag can be represented as $x_i$. The measured lag product will also be represented as $y_i(\mathbf{r}_s,t_s)$. With this in mind the measurement process of the $i^{th}$ lag by the ISR can be represented as follows,
@@ -182,8 +193,11 @@ y_{i,t_0,m,n}= \int A_{i,m,n}(\mathbf{r}') x_i(\mathbf{r}')d\mathbf{r}'.
 	\centering
 	\includegraphics[width=5.5in]{spaceambmoving}
 	\caption{Full Spatial Ambiguity Function With Motion}
-	\label{fig:chain}
+	\label{fig:ambtime}
 \end{figure}
+
+
+
 %%%%%%%%%%%%%% Simulation %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Simulation}
