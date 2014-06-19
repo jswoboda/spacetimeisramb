@@ -8,7 +8,8 @@
 \usepackage{amssymb}
 \usepackage{multirow}
 \usepackage{bm}
-
+\RequirePackage{lineno}
+\linenumbers
 % graphics path
 \graphicspath{{Figs/}}
 
@@ -171,7 +172,8 @@ Lastly, since the radar requires a finite amount of time to average pulses to cr
 \begin{align}
 \label{eqn:sptamb}
 \rho(\tau,\mathbf{r}_s,t_s) &= \int G(t_s,t)K(\tau,\mathbf{r}_s,\mathbf{r})R(\tau,\mathbf{r},t) dV dt\\
-	&=\int L(\tau,\mathbf{r}_s,t_s,\mathbf{r},t)R(\tau,\mathbf{r},t)d\mathbf{r}dt.
+	\rho(\tau,\mathbf{r}_s,t_s) &=\int L(\tau,\mathbf{r}_s,t_s,\mathbf{r},t)R(\tau,\mathbf{r},t)dVdt.%\\
+	%L(\tau,\mathbf{r}_s,t_s,\mathbf{r},t) &= G(t_s,t)F(\theta_s,\phi_s,\theta,\phi)W(\tau,r_s,r)
 \end{align}
 
 \noindent The final kernel, $L(\tau,\mathbf{r}_s,t_s,\mathbf{r},t)$ encompasses the full space-time ambiguity.
