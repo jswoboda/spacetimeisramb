@@ -122,32 +122,41 @@ When the autocorrelation of the signal is done we find the following formula, \c
  \noindent Equation \ref{ex:acf2} becomes
  
  \begin{equation}
- \langle x(n)x^*(n+\tau)\rangle = \int_{r} a(n-\frac{2r}{c})a^*(n+\tau -\frac{2r}{c}) \langle |n_e(\mathbf{k},\mathbf{r},\tau)|^2\rangle dr.
+ \langle x(n)x^*(n+\tau)\rangle = \int_{r} a(n-\frac{2r}{c})a^*(n+\tau -\frac{2r}{c}) \langle |n_e(\tau,\mathbf{k},\mathbf{r})|^2\rangle dr.
  \end{equation}
  %angle ambiguity
  %E_e(\phi,\psi)\text{dirc}_N(\frac{d_1}{\lambda}\sin\phi \cos\psi)\text{dirc}_K\left(\frac{d_2}{\lambda}\sin\phi\sin\psi\right)
- It should be noted that the term $ a(n)a^*(n+\tau)$ is the soft target ambiguity function.  If $n$ is replaced with $2r_s/c$ we can see that the this function represented as $W(\tau,r_s,r)$ \cite{nikoukar:thesis}.  In order to simplify notation we will represent $ \langle |n_e(\mathbf{k},\mathbf{r},\tau)|^2\rangle$, as $R(\mathbf{r},\tau)$. Assuming, for the moment, that $R$ only varies across the range dimension $r$ we can now represent this in the form of a Fredholm integral equation
+ It should be noted that the term $ a(n)a^*(n+\tau)$ is the soft target ambiguity function.  If $n$ is replaced with $2r_s/c$ we can see that the this function represented as $W(\tau,r_s,r)$ \cite{nikoukar:thesis}.  In order to simplify notation we will represent $ \langle |n_e(\tau,\mathbf{k},\mathbf{r})|^2\rangle$, as $R(\tau,\mathbf{r})$. Assuming, for the moment, that $R$ only varies across the range dimension $r$ we can now represent this in the form of a Fredholm integral equation
  
  \begin{equation}
  \label{eqn:fredfirst}
- \langle x(2r_s/c)x^*(2r_s/c+\tau)\rangle = \int_{r} W(\tau,r_s,r) R(r,\tau) dr.
+ \langle x(2r_s/c)x^*(2r_s/c+\tau)\rangle = \int_{r} W(\tau,r_s,r) R(\tau,r) dr.
  \end{equation}
  
-This function is in a way a lag dependent smoothing along the range dimension of $R(r,\tau)$. 
+This function is in a way a lag dependent smoothing along the range dimension of $R(\tau,r)$. 
  
-The spatial ambiguity across angle is determined by the antenna beam pattern. In phase array radars this beam pattern is ideally the array factor multiplied by the element pattern \cite{Balanis:2005:ATA:1208379}. The array factor is determined by a number of things including the element spacing in both x and y $(dx,dy)$ and the wave number of the radar, $k$. Making idealized assumptions with no mutual coupling and that the array elements are cross dipole elements AMISR systems will have the following array pattern for pointing angle ($\theta_0,\phi_0$),
+The spatial ambiguity across angle is determined by the antenna beam pattern. In phase array radars this beam pattern is ideally the array factor multiplied by the element pattern \cite{Balanis:2005:ATA:1208379}. The array factor is determined by a number of things including the element spacing in both x and y $(dx,dy)$ and the wave number of the radar, $k$. Making idealized assumptions with no mutual coupling and that the array elements are cross dipole elements AMISR systems will have the following array pattern for pointing angle ($\theta_s,\phi_s$),
  
  \begin{equation}
  \label{eqn:amisrpat}
-F(\theta,\phi) = \frac{1}{2}(1+\cos(\theta)^2)\left[ \frac{1}{MN} \left(1+e^{j(\psi_y/2 + \psi_x)}\right)\frac{\sin((M/2) \psi_x)}{\sin(\psi_x)} \frac{\sin((N/2) \psi_x)}{\sin(\psi_x/2)}\right]^2,
+F(\theta,\phi,\theta_s,\phi_s) = \frac{1}{2}(1+\cos(\theta)^2)\left[ \frac{1}{MN} \left(1+e^{j(\psi_y/2 + \psi_x)}\right)\frac{\sin((M/2) \psi_x)}{\sin(\psi_x)} \frac{\sin((N/2) \psi_x)}{\sin(\psi_x/2)}\right]^2,
  \end{equation}
  
- \noindent where $\psi_x = -k d_x(\sin\theta\cos\phi-\sin\theta_0\cos\phi_0)$, $\psi_y = -k d_y(\sin\theta\sin\phi-\sin\theta_0\sin\phi_0)$.
+ \noindent where $\psi_x = -k d_x(\sin\theta\cos\phi-\sin\theta_s\cos\phi_s)$, $\psi_y = -k d_y(\sin\theta\sin\phi-\sin\theta_s\sin\phi_s)$.
 
 
-This spatial ambiguity is a separable function made up of the components of $W(r,\tau)$ and $F(\theta,\phi)$. 
+This spatial ambiguity is a separable function made up of the components of $W(\tau,r)$ and $F(\theta,\phi,\theta_s,\phi_s)$. These two functions can be combined by multiplying, creating the spatial ambiguity function  $K(\tau,\mathbf{r}_s,\mathbf{r})$, and then doing a volume integration. This will create radar system's estimate of the ACF which will be referred to as $\rho(\tau,\mathbf{r}_s)$,
 
-A rendering of an example of this full ambiguity function for an uncoded long pulse and antenna pattern in (\ref{eqn:amisrpat}) can be seen in Figure \ref{fig:amb4}
+ %\begin{equation}
+
+ \begin{align}
+  \label{eqn:volume}
+\rho(\tau,\mathbf{r}_s) &= \int F(\theta,\phi,\theta_s,\phi_s)W(\tau,r_s,r) R(\tau,\mathbf{r}) dV,\\
+	&= \int K(\tau,\mathbf{r}_s,\mathbf{r}) R(\tau,\mathbf{r})dV.
+\end{align}
+ %\end{equation}
+
+A rendering of an example of this full ambiguity function for an uncoded long pulse and antenna pattern in (\ref{eqn:amisrpat}) for four beams can be seen in Figure \ref{fig:amb4}.
 
 \begin{figure}
 	\centering
@@ -156,54 +165,54 @@ A rendering of an example of this full ambiguity function for an uncoded long pu
 	\label{fig:amb4}
 \end{figure}
 
+Lastly, since the radar requires a finite amount of time to average pulses to create the estimate of the ACF we will add slow-time dependence to $R$. We will add another separable function $G(t_s,t)$ to the kernel,
 
-\subsection{Ambiguity after Frame transformation}
-In order to simplify notation first assume that the autocorrelation functions have been descritized and each $i^{th}$ lag can be represented as $x_i$. The measured lag product will also be represented as $y_i(\mathbf{r}_s,t_s)$. With this in mind the measurement process of the $i^{th}$ lag by the ISR can be represented as follows,
 
-\begin{equation}
-\label{eqn:firstL}
-y_i(\mathbf{r}_s,t_s) = \int L_i(t_s,\mathbf{r}_s,t,\mathbf{r})x_i(t,\mathbf{r})dtd\mathbf{r}.
-\end{equation}
+\begin{align}
+\label{eqn:sptamb}
+\rho(\tau,\mathbf{r}_s,t_s) &= \int G(t_s,t)K(\tau,\mathbf{r}_s,\mathbf{r})R(\tau,\mathbf{r},t) dV dt\\
+	&=\int L(\tau,\mathbf{r}_s,t_s,\mathbf{r},t)R(\tau,\mathbf{r},t)d\mathbf{r}dt.
+\end{align}
 
-For this we will focus on a single instance in the sampled time. We will assume that the radar is integrating over a length of time $T$ beginning at $t_0$ which will be the label of the sampled time. The operator $L$ will be represented as a separable function $KI$ where $I$ is an indicator function of length $T$ and centered at $t_0+1/2$. This will change (\ref{eqn:firstL}) to the following,
+\noindent The final kernel, $L(\tau,\mathbf{r}_s,t_s,\mathbf{r},t)$ encompasses the full space-time ambiguity.
+
+\subsection{Ambiguity after Frame Transformation}
+
+We will now focus on the impact of the motion of plasma as it is going through the field of view of the radar. We will assume that the radar is integrating over a length of time $T$ beginning at $t_s$. The kernel $L$ will be represented as a separable function $K$ and $G$ as in (\ref{eqn:sptamb}). In this case $G$ will be an indicator function of length $T$ and centered at $t_0+1/2$. This will change (\ref{eqn:sptamb}) to the following,
 
 \begin{equation}
 \label{eqn:L2}
-y_{i,t_0}(\mathbf{r}_s) = \int K_i(\mathbf{r}_s,\mathbf{r})\int_{t_0}^{t_0+T} x_i(t,\mathbf{r})dtd\mathbf{r}.
+\rho(\tau,\mathbf{r}_s,t_s) = \int K(\tau,\mathbf{r}_s,\mathbf{r}) \int_{t_s}^{t_s+T}R(\tau,\mathbf{r},t) dt dV.
 \end{equation}
 
-At this point it will be assumed that $x_i$ is rigid object and does not deform with respect to $\mathbf{r}$ over time period $[t_0,t_0+T]$. Also it will be assumed that the lag will be moving with a constant velocity $\mathbf{v}$. Thus $x_i(\mathbf{r},t)\Rightarrow x_i(\mathbf{r}+\mathbf{v}t)$. At this point (\ref{eqn:L2}) becomes,
+At this point it will be assumed that the plasma is rigid object and will not deform with respect to $\mathbf{r}$ over time period $[t_0,t_0+T]$. Also it will be assumed that it will be moving with a constant velocity $\mathbf{v}$. Thus $R(\tau,\mathbf{r},t)\Rightarrow R(\tau,\mathbf{r}+\mathbf{v}t)$. At this point (\ref{eqn:L2}) becomes,
 
 \begin{equation}
 \label{eqn:L3}
-y_{i,t_0}(\mathbf{r}_s) = \int \int_{t_0}^{t_0+T} K_i(\mathbf{r}_s,\mathbf{r})x_i(\mathbf{r}+\mathbf{v}t)dtd\mathbf{r}.
-\end{equation}
+\rho(\tau,\mathbf{r}_s,t_s) = \int \int_{t_s}^{t_s+T} K(\tau,\mathbf{r}_s,\mathbf{r})R(\tau,\mathbf{r}+\mathbf{v}t)dtdV\end{equation}
 
 A change of variables where $\mathbf{r}' = \mathbf{r}+\mathbf{v}t$ acts as a Galilean transform and applies a warping to the kernel and changing the frame of reference. Then (\ref{eqn:L3}) becomes
 
 \begin{equation}
 \label{eqn:L4}
-y_{i,t_0}(\mathbf{r}_s) = \int \int_{t_0}^{t_0+T} K_i(\mathbf{r}_s,\mathbf{r}'-\mathbf{v}t)x_i(\mathbf{r}')dtd\mathbf{r}'.
+\rho(\tau,\mathbf{r}_s,t_s)= \int \int_{t_0}^{t_0+T} K(\tau,\mathbf{r}_s,\mathbf{r}'-\mathbf{v}t)R(\tau,\mathbf{r}')dtdV.
 \end{equation}
 
-The next step is to make the specific observation that in ISR each point of the sample spatial variable $\mathbf{r}_s$ will be the determined the $m^{th}$ range gate and the $n^{th}$ beam. This shows the final problem is truly a semi-discrete inverse problem and (\ref{eqn:L3}) becomes,
+\noindent Since $R(\tau,\mathbf{r}')$ is no longer dependent on $t$ (\ref{eqn:L4}) becomes,
 
 \begin{equation}
 \label{eqn:L5}
-y_{i,t_0,m,n}= \int \left[ \int_{t_0}^{t_0+T} K_{i,m,n}(\mathbf{r}'-\mathbf{v}t)dt \right]x_i(\mathbf{r}')d\mathbf{r}'.
+\rho(\tau,\mathbf{r}_s,t_s)= \int \left[ \int_{t_0}^{t_0+T}  K(\tau,\mathbf{r}_s,\mathbf{r}'-\mathbf{v}t)dt \right]R(\tau,\mathbf{r}+\mathbf{v}t)dV.
 \end{equation}
 
-\noindent The kernel $K$ is actually a separable function with the component $f_{i,n}(\mathbf{r}')$ caused by the range ambiguity of the $i^{th}$ lag at the $m^{th}$ range gate. The function $g_m(\mathbf{r}')$ is the angle ambiguity from the $n^{th}$ beam. 
-
-By performing the integration in $t$ the problem can now be simplified further back to a Friedholm integral equation by simply replacing the terms  in the square brackets as a new kernel $A$,
+By performing the integration in $t$ the problem can now be simplified further back to a Fredholm integral equation by simply replacing the terms  in the square brackets as a new kernel $A$,
 
 \begin{equation}
 \label{eqn:L6}
-y_{i,t_0,m,n}= \int A_{i,m,n}(\mathbf{r}') x_i(\mathbf{r}')d\mathbf{r}'.
+\rho(\tau,\mathbf{r}_s,t_s)= \int A(\tau,\mathbf{r}_s,t_s,\mathbf{r}') x_i(\mathbf{r}')dV.
 \end{equation}
-\noindent We are now left with a semi-discrete inverse problem to solve. The operator $A$ can be estimated through knowledge of the radar system and pulse pattern which would determine the antenna beam pattern and the range ambiguity function. The velocity $\mathbf{v}$ can be estimated by taking taking measurements of the Doppler shift and using a methodology seen in \cite{butler:imagingfregiondrifts}. Once the operator has been determined debluring methods can be applied.
 
-
+\noindent The impact of the plasma velocity on the ambiguity function can be seen in Figure \ref{fig:ambtime}. This is the same ambiguity as seen in \ref{fig:amb4} but with a velocity of $100$ m/s in the $y$ direction. This distortion shows in the spatial domain that the motion of the plasma creates a larger ambiguity function in space and thus blurs the image further.
 
 \begin{figure}[!t]
 	\centering
@@ -212,7 +221,7 @@ y_{i,t_0,m,n}= \int A_{i,m,n}(\mathbf{r}') x_i(\mathbf{r}')d\mathbf{r}'.
 	\label{fig:ambtime}
 \end{figure}
 
-
+The operator $A$ can be estimated through knowledge of the radar system and pulse pattern which would determine the antenna beam pattern and the range ambiguity function. The velocity $\mathbf{v}$ can be estimated by taking taking measurements of the Doppler shift and using a methodology seen in \cite{butler:imagingfregiondrifts}. Once the operator has been determined debluring methods can be applied.
 
 %%%%%%%%%%%%%% Simulation %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
