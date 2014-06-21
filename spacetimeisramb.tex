@@ -55,7 +55,7 @@ Incoherent scatter radar (ISR) systems have enabled researchers since the 1950's
 
 As with any real world measurement method there is a non-ideal measurement ambiguity which gives these sensors a type of resolution. Often these ambiguities are only carried out over range and time. The range ambiguity is controlled by the pulse shape and the time ambiguity is controlled by the integration time. A number techniques have been developed to reduce the impact of these ambiguities including full profile analysis \cite{holt1992}. \cite{Lehtinen1989133}, \cite{Lehtinen:1997uh} and deconvolution methods \cite{nikoukar2008}.
 
-Recently phase array technology has started to be leveraged by ISR community. The AMISR systems have already been deployed both at the Poker Flat Alaska and Resolute Bay Canada \cite{amisr.site}. The EISCAT-3D project is currently being developed using phased array technology as well and will be capable of multistaic processing \cite{eiscat3ddesign}. These new systems are already being used to create three dimensional reconstructions of plasma parameters \cite{Semeter2009738}, \cite{Nicolls:2007ie}, \cite{dahlgren2012di},\cite{Dahlgren:2012dq}. 
+Recently phase array technology has started to be leveraged by ISR community. The AMISR systems have already been deployed both at the Poker Flat Alaska and Resolute Bay Canada \cite{amisr.site}. The EISCAT-3D project is currently being developed using phased array technology as well and will be capable of multistatic processing \cite{eiscat3ddesign}. These new systems are already being used to create three dimensional reconstructions of plasma parameters \cite{Semeter2009738}, \cite{Nicolls:2007ie}, \cite{dahlgren2012di},\cite{Dahlgren:2012dq}. 
 
 Even though these systems are already in use there is no formal derivation of a three dimensional ambiguity function for these systems. In a highly dynamic region like the high latitude ionosphere this lack of knowledge can be problematic. There are numerous phenomena such as polar cap patches that may be moving through the field of view at very high speeds \cite{dahlgren2012di}.
 
@@ -197,25 +197,24 @@ A change of variables where $\mathbf{r}' = \mathbf{r}+\mathbf{v}t$ acts as a Gal
 
 \begin{equation}
 \label{eqn:L4}
-\rho(\tau,\mathbf{r}_s,t_s)= \int \int_{t_0}^{t_0+T} K(\tau,\mathbf{r}_s,\mathbf{r}'-\mathbf{v}t)R(\tau,\mathbf{r}')dtdV.
+\rho(\tau,\mathbf{r}_s,t_s)= \int \int_{t_s}^{t_s+T} K(\tau,\mathbf{r}_s,\mathbf{r}'-\mathbf{v}t)R(\tau,\mathbf{r}')dtdV.
 \end{equation}
 
 \noindent Since $R(\tau,\mathbf{r}')$ is no longer dependent on $t$ (\ref{eqn:L4}) becomes,
 
 \begin{equation}
 \label{eqn:L5}
-\rho(\tau,\mathbf{r}_s,t_s)= \int \left[ \int_{t_0}^{t_0+T}  K(\tau,\mathbf{r}_s,\mathbf{r}'-\mathbf{v}t)dt \right]R(\tau,\mathbf{r}+\mathbf{v}t)dV.
+\rho(\tau,\mathbf{r}_s,t_s)= \int \left[ \;\; \int_{t_s}^{t_s+T}  K(\tau,\mathbf{r}_s,\mathbf{r}'-\mathbf{v}t)dt \;\; \right]R(\tau,\mathbf{r}')dV.
 \end{equation}
 
 By performing the integration in $t$ the problem can now be simplified further back to a Fredholm integral equation by simply replacing the terms  in the square brackets as a new kernel $A$,
 
 \begin{equation}
 \label{eqn:L6}
-\rho(\tau,\mathbf{r}_s,t_s)= \int A(\tau,\mathbf{r}_s,t_s,\mathbf{r}') x_i(\mathbf{r}')dV.
+\rho(\tau,\mathbf{r}_s,t_s)= \int A(\tau,\mathbf{r}_s,t_s,\mathbf{r}') R(\tau,\mathbf{r}')dV.
 \end{equation}
 
-\noindent The impact of the plasma velocity on the ambiguity function can be seen in Figure \ref{fig:ambtime}. This is the same ambiguity as seen in \ref{fig:amb4} but with a velocity of $100$ m/s in the $y$ direction. This distortion shows in the spatial domain that the motion of the plasma creates a larger ambiguity function in space and thus blurs the image further.
-
+\noindent The impact of the plasma velocity on the ambiguity function can be seen in Figure \ref{fig:ambtime}. This is the same ambiguity as seen in Figure \ref{fig:amb4} but with a velocity of 500 m/s in the $y$ direction over a period of 2 minutes. This velocity creates a larger ambiguity function in the frame of reference of the moving plasma.
 \begin{figure}[!t]
 	\centering
 	\includegraphics[width=5.5in]{spaceambmoving}
@@ -223,7 +222,7 @@ By performing the integration in $t$ the problem can now be simplified further b
 	\label{fig:ambtime}
 \end{figure}
 
-The operator $A$ can be estimated through knowledge of the radar system and pulse pattern which would determine the antenna beam pattern and the range ambiguity function. The velocity $\mathbf{v}$ can be estimated by taking taking measurements of the Doppler shift and using a methodology seen in \cite{butler:imagingfregiondrifts}. Once the operator has been determined debluring methods can be applied.
+The operator $A$ can be determined through knowledge of the radar system's beam pattern along with the experiments pulse pattern, integration time and velocity of the plasma. This velocity $\mathbf{v}$ can be estimated by taking taking measurements of the Doppler shift and using a methodology seen in \cite{butler:imagingfregiondrifts}. Once the operator has been determined debluring methods can be applied.
 
 %%%%%%%%%%%%%% Simulation %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
