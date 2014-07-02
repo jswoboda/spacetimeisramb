@@ -28,7 +28,7 @@ Boston, MA 02215, USA.
 \title{Space-Time Ambiguity Function in 3-D ISR}
 %%%%%%%%%%%%%% Author Info %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \authors{John Swoboda,\altaffilmark{1}
-Joshual Semeter,\altaffilmark{1} Philip Erickson \altaffilmark{2}}
+Joshua Semeter,\altaffilmark{1} Philip Erickson \altaffilmark{2}}
 
 \altaffiltext{1}{Department of Electrical \& Computer Engineering,
 Boston University, Boston, Massachusetts, USA.}
@@ -54,7 +54,12 @@ The use of this new ambiguity function allow us to pose this problem in terms of
 \section{Introduction}
 Incoherent scatter radar (ISR) systems have enabled researchers since the 1950's to explore the ionosphere \cite{gordon58}. Using methodology developed by Dougherty, Farley and others these systems can give measurements of electron density $N_e$, Ion temperature $T_i$, electron temperature $T_e$, Ion velocity $V_i$ and other plasma parameters \cite{dougherty:farley1960}, \cite{farleydougherty:ISR2}, \cite{hagfors1961}, \cite{doughteryfarley:ISR3}. These parameters are measured by fitting a theoretic autocorrelation derived from first principles physics to an estimated intrapulse time autocorrelation of the scattered radar signal \cite{Lehtinen1996435}.
 
-As with any real world measurement method there is a non-ideal measurement ambiguity which gives these sensors a type of resolution. Often these ambiguities are only carried out over range and time. The range ambiguity is controlled by the pulse shape and the time ambiguity is controlled by the integration time. A number techniques have been developed to reduce the impact of these ambiguities including full profile analysis \cite{holt1992}. \cite{Lehtinen1989133}, \cite{Lehtinen:1997uh} and deconvolution methods \cite{nikoukar2008}.
+As with any real world measurement method there is a non-ideal ambiguity which gives these sensors a type of resolution. Often in ISR these ambiguities are only carried out over range and time. The range ambiguity is controlled by the pulse shape and the time ambiguity is controlled by the integration time. 
+
+A number techniques have been developed to reduce the impact of these ambiguities, two techniques often shown in the literate are full profile analysis or deconvolution methods. Full profile analysis consists of fitting value to the entire range gate of values \cite{holt1992}, \cite{Lehtinen1989133}, \cite{Lehtinen:1997uh}, \cite{hysell2008}. This technique often places constraints on the physical parameters, \cite{hysell2008}. Because the the relationship between the autocorrelation function and the lags are non-linear this method often yields algorithms that require a large amount computation.
+
+Deconvolution methods, such as in \cite{nikoukar2008} treat the problem as a linear inverse problem of the lags. Method such as total-variations or Tikihonov regularization can be applied to the lags to try to fill in the missing information nation from the null space of the operator. These methods are easy to compute and can rely on a large body of knowledge from engineering communities that study linear inverse problems. The problem with these methods is researchers are unsure how to constrain the norms of the data or its derivatives.
+
 
 Recently phase array technology has started to be leveraged by ISR community. The AMISR systems have already been deployed both at the Poker Flat Alaska and Resolute Bay Canada \cite{amisr.site}. The EISCAT-3D project is currently being developed using phased array technology as well and will be capable of multistatic processing \cite{eiscat3ddesign}. These new systems are already being used to create three dimensional reconstructions of plasma parameters \cite{Semeter2009738}, \cite{Nicolls:2007ie}, \cite{dahlgren2012di},\cite{Dahlgren:2012dq}. 
 
@@ -223,7 +228,7 @@ By performing the integration in $t$ the problem can now be simplified further b
 	\label{fig:ambtime}
 \end{figure}
 
-The operator $A$ can be determined through knowledge of the radar system's beam pattern along with the experiments pulse pattern, integration time and velocity of the plasma. This velocity $\mathbf{v}$ can be estimated by taking taking measurements of the Doppler shift and using a methodology seen in \cite{butler:imagingfregiondrifts}. Once the operator has been determined debluring methods can be applied.
+The operator $A$ can be determined through knowledge of the radar system's beam pattern along with the experiments pulse pattern, integration time and velocity of the plasma. This velocity $\mathbf{v}$ can be estimated by taking taking measurements of the Doppler shift and using a methodology seen in \cite{butler:imagingfregiondrifts}. Once the operator has been determined standard processing techniques can be used as if the plasma is not moving.%debluring methods can be applied.
 
 %%%%%%%%%%%%%% Simulation %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -243,6 +248,7 @@ To test this a phantom ionosphere is created where a small plasma enhancement mo
 %%%%%%%%%%%%%% Mitigation %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Possible Mitigation Techniques}
+There are a number of possible ways to remove the ISR operator function to the data. A relatively simply way to remove the problem is to process the data in the frame of reference of the plasma. This technique includes measuring the ion velocity of the plasma and then integrating the beams that the plasma is present in as it moves through the field of view.
 %%%%%%%%%%%%%% Conclusion %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Conclusion}
