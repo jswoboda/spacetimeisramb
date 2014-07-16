@@ -59,15 +59,15 @@ As with any real world measurement method there is limit to the spatial and temp
 
 %The hard target radar world also uses an ambiguity to analyze resolution but it is a function of time delay and Doppler mismatch. The CPI for a pulse doppler is like the time ambiguity. This ambiguity is tied to 
 
-Because the assumption of stationarity at the level of the ambiguity function constrains the measurement and creates a blurring and other forms of artifacts due to the non-linear fitting of plasma parameters, a number techniques have been developed to reduce the impact of these ambiguities. Some techniques include trying to reduce the extent of the ambiguity function by adjusting the waveform. Barker code wave forms are used in ISR but mainly for low altitude studies of the E-region due to the inability to form a spectrum from them. Another method for reducing the ambiguity in range is using alternating codes \citep{Sultzer1993}. %These codes though do reduce the amount of power returned from a specific volume of plasma.
+Because the assumption of stationarity at the level of the ambiguity function constrains the measurement and creates a blurring and other forms of artifacts due to the non-linear fitting of plasma parameters. In order to reduce the impact of these ambiguities number techniques have been developed. Some techniques include trying to reduce the extent of the ambiguity function by adjusting the waveform. Barker code wave forms are used in ISR but mainly for low altitude studies of the E-region due to the inability to form a spectrum from them. Another method for reducing the ambiguity in range is using alternating codes \citep{Sultzer1993}. %These codes though do reduce the amount of power returned from a specific volume of plasma.
 
-Another set of techniques often shown in the literate focus on reducing the impact of the ambiguity function through post processing. The first method full profile analysis consists of fitting value to the entire range gate of values \citep{holt1992}, \citep{Lehtinen1989133}, \citep{Lehtinen:1997uh}, \citep{hysell2008}. This technique often places constraints on the physical parameters as in \citet{hysell2008}. Because the the relationship between the autocorrelation function and the lags are non-linear this method often yields algorithms that require a large amount computation.
+Another set of techniques often shown in the literature focus on reducing the impact of the ambiguity function through post processing. The first method, full profile analysis, consists of fitting physical parameter values to entire range extent taking into account all of the correlations between all locations \citep{holt1992}, \citep{Lehtinen1989133}, \citep{Lehtinen:1997uh}, \citep{hysell2008}. This technique often places constraints on the physical parameters as in \citet{hysell2008}. Because the the relationship between the autocorrelation function and the lags are non-linear this method often yields algorithms that require a large amount computation to calculate the covariance matrices between all of the values.
 
 The other set of post processing methods is deconvolution methods, such as in \citet{nikoukar2008}, treat the problem as a linear inverse problem of the lags. Method such as total-variations or Tikihonov regularization can be applied to the lags to try to fill in the missing information nation from the null space of the operator. These methods are easy to compute and can rely on a large body of knowledge from engineering communities that study linear inverse problems. 
 
 Recently phased array technology has started to be leveraged by ISR community. The Advance Modular Incoherent Scatter Radar (AMISR) systems have already been deployed both at the Poker Flat Alaska (PFISR) and Resolute Bay Canada (RISR) \citep{amisr.site}. The EISCAT-3D project is currently being developed using phased array technology as well and will be capable of multistatic processing \citep{eiscat3ddesign}. These new systems are already being used to create three dimensional reconstructions of plasma parameters \citep{Semeter2009738}, \citep{Nicolls:2007ie}, \citep{dahlgren2012di},\citep{Dahlgren:2012dq}. 
 
-There has been no formal derivation of an ambiguity function for all three spatial dimensions for these systems, although up until recently ISR systems, which only had dish antennas, could not mitigate the finite beam width effects. In a highly dynamic region like the high latitude ionosphere this lack of knowledge can be problematic. There are numerous phenomena such as polar cap patches that may be moving through the field of view at very high speeds \citep{dahlgren2012di}.   
+There has been no formal derivation of an ambiguity function for all three spatial dimensions for these systems, although up until recently ISR systems, which only had dish antennas, could not mitigate the finite beam width effects. In a highly dynamic region like the high latitude ionosphere this lack of knowledge can be problematic. There are numerous phenomena such as polar cap patches that may be moving through the field of view at very high speeds \citep{dahlgren2012di}. This motion can cause an apparent expansion in the shape of the beams if one represents the beams in the frame of reference of the moving plasma.
 
 These three-dimensional reconstructions often consist of taking the fitted parameters and then interpolating them to a Cartesian space from the system's natural spherical coordinate space \citep{Butler:2013ul}. The step of fitting the autocorrelation function to the theoretical functions to find the final plasma parameters is a non-linear operation. Because of this it is impossible to exactly predict the impact on the parameter values as different plasma populations move through the field of view of the radar. Alternatively it is possible to treat the formation of the autocorrelation estimates as a linear process with each lag as an independent channel \citep{nikoukar2008}.
 
@@ -278,8 +278,6 @@ After the lag products have been formed an estimate of the noise correlation is 
 
 \noindent where $w(n_w)$ is the background noise process of the radar.  Often the noise process is sampled during a calibration period for the radar when nothing is being emitted.  The final estimate of the autocorrelation function after the noise subtraction and summation rule will be represented by $\hat{R}_f(m,l)$. At this point a summation rule is applied and the data is sent off to be fit.
 
-In order to demonstrate the blurring taking place from the motion of plasma a phantom ionosphere is created where a small plasma enhancement moves through the radar field of view. The background electron density varies in altitude as a Chapman function while the electron and ion temperature remains constant. This is done to avoid having to do full fit and thus only try to measure the electron density. Also estimates of the zeroth lag are only necessary. Added to this is a 35 km radius sphere of enhance electron density of about $5\times 10^{10} $ m$^{-3}$ centered at 400 km altitude moving at 500 m/s along the $\mathbf{y}$ direction. Images from this phantom can be seen in Figure \ref{fig:phantom}. 
-
 \begin{figure}
 	\centering
 	\includegraphics[width=6in]{phantom}
@@ -287,7 +285,9 @@ In order to demonstrate the blurring taking place from the motion of plasma a ph
 	\label{fig:phantom}
 \end{figure}
 
-Using the phantom we can see how just simply changing the integration time can impact the reconstruction. In Figure \ref{fig:variable} we can see a case were only 10 pulses are used for the reconstruction. This corresponds to an integration time of about 9 seconds using the 121 beam pattern. The enhancement can be seen with concentrated energy as it moves through the field of view. The problem is that there is a high amount of variance in the reconstruction. Figure \ref{fig:phantom} shows the reconstruction with 200 pulses, 3 minute integration time. The variability has been reduced but there is a large amount of blurring of the enhancement as it moves through the field of view. 
+In order to demonstrate the blurring taking place from the motion of plasma a phantom ionosphere is created where a small plasma enhancement moves through the radar field of view. The background electron density varies in altitude as a Chapman function while the electron and ion temperature remains constant. This is done to avoid having to do full fit and thus only try to measure the electron density. Also estimates of the zeroth lag are only necessary. Added to this is a 35 km radius sphere of enhance electron density of about $5\times 10^{10} $ m$^{-3}$ centered at 400 km altitude moving at 500 m/s along the $\mathbf{y}$ direction. Images from this phantom can be seen in Figure \ref{fig:phantom}. 
+
+Using the phantom we can see how just simply changing the integration time can impact the reconstruction. In Figure \ref{fig:variable} we can see a case were only 10 pulses are used for the reconstruction. This corresponds to an integration time of about 9 seconds using the 121 beam pattern. The enhancement can be seen with concentrated energy as it moves through the field of view. The problem is that there is a high amount of variance in the reconstruction. Figure \ref{fig:blurred} shows the reconstruction with 200 pulses, 3 minute integration time. The variability has been reduced but there is a large amount of blurring of the enhancement as it moves through the field of view. 
 \begin{figure}
 	\centering
 	\includegraphics[width=6in]{variabledata}
@@ -295,16 +295,46 @@ Using the phantom we can see how just simply changing the integration time can i
 	\label{fig:variable}
 \end{figure}
 
+
 \begin{figure}
 	\centering
 	\includegraphics[width=6in]{blurreddata}
 	\caption{Example images from blurred data}	
-	\label{fig:phantom}
+	\label{fig:blurred}
+\end{figure}
+
+In order to give a comparison a phantom was also created with no motion. This can be seen in Figure \ref{fig:phantomstat}. Images using the same integration time as in Figure \ref{variabledata} for the stationary phantom can be seen in \ref{fig:variablestat}. Another set of images using the longer integration time can be seen in \ref{fig:blurredstat}. These images show that the blurring is on the same order between both integration times.
+
+\begin{figure}
+	\centering
+	\includegraphics[width=6in]{phantomstation}
+	\caption{Example images from phantom}	
+	\label{fig:phantomstat}
+\end{figure}
+
+\begin{figure}
+	\centering
+	\includegraphics[width=6in]{variabledatastation}
+	\caption{Example images from short integration of stationary plasma}	
+	\label{fig:variablestat}
+\end{figure}
+
+
+\begin{figure}
+	\centering
+	\includegraphics[width=6in]{blurreddatastation}
+	\caption{Example images from longer integration time of stationary plasma}	
+	\label{fig:blurredstat}
 \end{figure}
 %%%%%%%%%%%%%% Mitigation %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Possible Mitigation Techniques}
 There are a number of possible ways to remove the ISR operator function to the data. A relatively simply way to remove the problem is to process the data in the frame of reference of the plasma. This technique includes measuring the ion velocity of the plasma and then integrating the beams that the plasma is present in as it moves through the field of view.
+
+
+In order to reconstruct the plasma parameters it is necessary to do some sort of regularization. There are two type of regularization that can be applied in this case the first is parameter based regularization, like full profile analysis, and the other is data based regularization. The term parameter based regularization in this case means applying constraints to the physical parameters that are often determined after fitting. This requires a large amount of calculation because the fitting and constraints are done in one step. Currently full profile analysis has only been applied along the range dimension and not in all three spatial dimensions. Extending this to three dimensions may make these algorithms computationally infeasible.
+
+Data based regularization infers the application of constraints to the estimates of the autocorrelation functions. The constraints usually deal with how the data changes over time and space by constraining the energy of the ACFs or its derivative. This has an advantage of being more computationally tractable in that it is now a linear inverse problem. Using the ideas stated in this paper one can cast the reconstruction of the four dimensional function of the ACFs in these terms. The issue with doing this data based reconstruction is it is unknown how to constrain the reconstruction in the best way.
 %%%%%%%%%%%%%% Conclusion %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Conclusion}
