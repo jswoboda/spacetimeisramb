@@ -52,20 +52,20 @@ The use of this new ambiguity function allow us to pose this problem in terms of
 %%%%%%%%%%%%%% Intro %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Introduction}
-Incoherent scatter radar (ISR) systems have enabled researchers since the 1950's to explore the ionosphere \citep{gordon58}. Using methodology developed by Dougherty, Farley and others these systems can give measurements of electron density $N_e$, Ion temperature $T_i$, electron temperature $T_e$, Ion velocity $V_i$ and other plasma parameters \citep{dougherty:farley1960}, \citep{farleydougherty:ISR2}, \citep{hagfors1961}, \citep{doughteryfarley:ISR3}. These parameters are measured by fitting a nonlinear theoretic autocorrelation function (ACF) model derived from first principles physics to an estimated intrapulse time autocorrelation of the scattered radar signal \citep{Lehtinen1996435}. 
+Incoherent scatter radar (ISR) systems have enabled researchers since the 1950's to explore the ionosphere \citep{gordon58}. Using methodology developed by Dougherty, Farley and others these systems can give measurements of electron density $N_e$, Ion temperature $T_i$, electron temperature $T_e$, Ion velocity $V_i$ and other plasma parameters \citep{dougherty:farley1960, farleydougherty:ISR2, doughteryfarley:ISR3, hagfors1961}. These parameters are measured by fitting a nonlinear theoretic autocorrelation function (ACF) model derived from first principles physics to an estimated intrapulse time autocorrelation of the scattered radar signal \citep{Lehtinen1996435}. 
 %This initial work showed the nonlinear relationship between the plasma parameters and the incoherent scatter autocorrelation function. 
 
 As with any real world measurement method there is limit to the spatial and temporal resolution of ISR systems. This resolution is determined by the ability of the sensor to create independent measurements of the ACF in time and space of what is essentially a zero-mean complex Gaussian process. At space and time extents smaller then these resolutions the random process that the ACF is derived from is assumed to be stationary. In ISR literature the ambiguity function encapsulates the spatial resolution in the range dimension. This ambiguity emerges as a function of range and correlation lag due to the pulse modulation and the finite bandwidth of the receiver \citep{farley1969}. The time resolution is determined by how long it takes to average the autocorrelation function to reduce the variance of the estimate to a desired level.
 
 %The hard target radar world also uses an ambiguity to analyze resolution but it is a function of time delay and Doppler mismatch. The CPI for a pulse doppler is like the time ambiguity. This ambiguity is tied to 
 
-Because the assumption of stationarity at the level of the ambiguity function constrains the measurement and creates a blurring and other forms of artifacts due to the non-linear fitting of plasma parameters. In order to reduce the impact of these ambiguities number techniques have been developed. Some techniques include trying to reduce the extent of the ambiguity function by adjusting the waveform. Barker code wave forms are used in ISR but mainly for low altitude studies of the E-region due to the inability to form a spectrum from them. Another method for reducing the ambiguity in range is using alternating codes \citep{Sultzer1993}. %These codes though do reduce the amount of power returned from a specific volume of plasma.
+This assumption of stationarity at the level of the ambiguity function constrains the measurement and creates a blurring and other forms of artifacts due to the non-linear fitting of plasma parameters. In order to reduce the impact of these ambiguities a number techniques have been developed. Some techniques include trying to reduce the extent of the ambiguity function by adjusting the waveform. Barker code wave forms are used in ISR but mainly for low altitude studies of the E-region due to the inability to form a spectrum from them. Another method for reducing the ambiguity in range is using alternating codes \citep{grayfarley:isrcomppulse, lehtinen;ac, Sultzer1993, 1989AdSpR...9..153S}. %These codes though do reduce the amount of power returned from a specific volume of plasma.
 
-Another set of techniques often shown in the literature focus on reducing the impact of the ambiguity function through post processing. The first method, full profile analysis, consists of fitting physical parameter values to entire range extent taking into account all of the correlations between all locations \citep{holt1992}, \citep{Lehtinen1989133}, \citep{Lehtinen:1997uh}, \citep{hysell2008}. This technique often places constraints on the physical parameters as in \citet{hysell2008}. Because the the relationship between the autocorrelation function and the lags are non-linear this method often yields algorithms that require a large amount computation to calculate the covariance matrices between all of the values.
+Another set of techniques often shown in the literature focus on reducing the impact of the ambiguity function through post processing. The first method, full profile analysis, consists of fitting physical parameter values to entire range extent taking into account all of the correlations between all locations \citep{holt1992, Lehtinen1989133, Lehtinen:1997uh,hysell2008}. This technique often places constraints on the physical parameters as in \citet{hysell2008}. Because the the relationship between the autocorrelation function and the lags are non-linear this method often yields algorithms that require a large amount computation to calculate the covariance matrices between all of the values.
 
 The other set of post processing methods, such as in \citet{nikoukar2008} and \citet{Virtanen:2008vx}, treat the problem as a linear inverse problem of the lags. Methods such as total-variations or Tikihonov regularization can be applied to the lags to try to fill in the missing information nation from the null space of the operator. These methods are easy to compute and can rely on a large body of knowledge from engineering communities that study linear inverse problems. 
 
-Recently phased array technology has started to be leveraged by ISR community. The Advance Modular Incoherent Scatter Radar (AMISR) systems have already been deployed both at the Poker Flat Alaska (PFISR) and Resolute Bay Canada (RISR) \citep{amisr.site}. The EISCAT-3D project is currently being developed using phased array technology as well and will be capable of multistatic processing \citep{eiscat3ddesign}. These new systems are already being used to create three dimensional reconstructions of plasma parameters \citep{Semeter2009738}, \citep{Nicolls:2007ie}, \citep{dahlgren2012di},\citep{Dahlgren:2012dq}. 
+Recently phased array technology has started to be leveraged by ISR community. The Advance Modular Incoherent Scatter Radar (AMISR) systems have already been deployed both at the Poker Flat Alaska (PFISR) and Resolute Bay Canada (RISR) \citep{amisr.site}. The EISCAT-3D project is currently being developed using phased array technology as well and will be capable of multistatic processing \citep{eiscat3ddesign}. These new systems are already being used to create three dimensional reconstructions of plasma parameters \citep{Semeter2009738}, \citep{Nicolls:2007ie, dahlgren2012di,Dahlgren:2012dq}. 
 
 There has been no formal derivation of an ambiguity function for all three spatial dimensions for these systems, although up until recently ISR systems, which only had dish antennas, could not mitigate the finite beam width effects. In a highly dynamic region like the high latitude ionosphere this lack of knowledge can be problematic. There are numerous phenomena such as polar cap patches that may be moving through the field of view at very high speeds \citep{dahlgren2012di}. This motion can cause an apparent expansion in the shape of the beams if one represents the beams in the frame of reference of the moving plasma.
 
@@ -86,83 +86,100 @@ Lastly possible mitigation techniques will be explored. These mitigation techniq
 %%%%%%%%%%%%%% Ambiguity Derivation%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Space-Time Ambiguity}
+The three dimensional nature of the problem requires first defining the spatial coordinate system, $\mathbf{r}=[x,y,z]^T$. For this coordinate system, $\mathbf{r}=[0,0,0]^T$ at the location of the radar and thus $r=|\mathbf{r}|$, also known as the range variable. This allows for the use of polar coordinates $\mathbf{r} =  [r,\theta_,\phi]^T$ where $\theta$ is the physical elevation angle, $\phi$ is the physical azimuth angle.
 
-In the ISR literature the measurement ambiguity along the range dimension is often referred to simply as the ambiguity function \citep{hysell2008}. This only shows the measurement ambiguity along the range $r$. Due to the three-dimensional imaging capability of phased array ISR systems we will define a new set of terminology to describe this more complicated measurement which is now imaging the ionosphere in three-dimensional coordinates $\mathbf{r}=[x,y,z]^T$. We will represent the sampled coordinates within the radar with $_s$ such as $\mathbf{r}_s$.
+The radar will sample this space into a set of discrete points which will be referred to as $\mathbf{r}_s = [x_s,y_s,z_s]^T$ along with the descritized range $r_s=|\mathbf{r}_s|$. The sampled space will consist of a number of points which are the combinations of the range gates and number of beams. This points can also be referred in the polar coordinates $\mathbf{r}_s = [r_s,\theta_s,\phi_s]^T$, where $\theta_s$ is the sampled elevation angle, $\phi_s$ is the sampled azimuth angle.
 
-Specifically we will refer to the measurement ambiguity in the range dimension as the range ambiguity, $W(\tau,r_s,r)$. The measurement ambiguity in the elevation and azimuth angles will be referred to as the angular or cross range ambiguity $F(\theta_s,\phi_s,\theta,\phi)$, where $\theta$ is the physical elevation angle, $\phi$ is the physical azimuth angle, $\theta_s$ is the elevation angle that the radar is pointing at and $\phi_s$ is the azimuth angle that the radar is pointing at. The since these two functions are separable they can be multiplied together to form the full spatial ambiguity $K(\tau,\mathbf{r},\mathbf{r}_s)$. Lastly integration time for each measurement will be referred to the time ambiguity. Again like the full spatial ambiguity function we can multiply the space and time ambiguity functions to get the Space-Time ambiguity function which will be represented as $L(\tau,\mathbf{r}_s,t_s,\mathbf{r},t)$ .% Might want to go through math from the kernel stuff.
+For notation purposes we use two different sets of time commonly known in radar literature as fast-time, $n$ and slow-time, $t$ \citep{richards:fundamentalsigproc}.. Fast-time is used to explore the workings of the radar on the order of the radar systems A/D conversion such as lag formation. Slow-time will used for processes that vary in time on the order of the system's pulse repetition interval such as changing of plasma parameters. The term $n$ will be a sampled parameter while $t$ will represent a continuous time and $t_s$ will be the slow time parameter sampled by the radar. 
+
+%In the ISR literature the measurement ambiguity along the range dimension is often referred to simply as the ambiguity function \citep{hysell2008}. This only shows the measurement ambiguity along the range $r$. Due to the three-dimensional imaging capability of phased array ISR systems we will define a new set of terminology to describe this more complicated measurement which is now imaging the ionosphere in three-dimensional continuous coordinates $\mathbf{r}=[x,y,z]^T$. This coordinate system $\mathbf{r}=[0,0,0]^T$ at the location of the radar. The radar will create a 3-D representation of the ionospheric parameters in to discrete coordinates $\mathbf{r}_s = [x_s,y_s,z_s]^T$.
+
+%Specifically we will refer to the measurement ambiguity in the range dimension as the range ambiguity, $W(\tau,r_s,r)$. The measurement ambiguity in the elevation and azimuth angles will be referred to as the angular or cross range ambiguity $F(\theta_s,\phi_s,\theta,\phi)$, where $\theta$ is the physical elevation angle, $\phi$ is the physical azimuth angle, $\theta_s$ is the elevation angle that the radar is pointing at and $\phi_s$ is the azimuth angle that the radar is pointing at. The since these two functions are separable they can be multiplied together to form the full spatial ambiguity $K(\tau,\mathbf{r},\mathbf{r}_s)$. Lastly integration time for each measurement will be referred to the time ambiguity. Again like the full spatial ambiguity function we can multiply the space and time ambiguity functions to get the Space-Time ambiguity function which will be represented as $L(\tau,\mathbf{r}_s,t_s,\mathbf{r},t)$ .% Might want to go through math from the kernel stuff.
 
 \subsection{Derivation}
 
-In order to develop the space-time ambiguity we will use two different sets of time commonly known in radar literature as fast-time $n$ and slow-time $t$. Fast-time looks at time on the order of the radar systems A/D conversion while slow-time time is looking at time on the order of the system's pulse repetition interval \citep{richards:fundamentalsigproc}. We will use the same reference for fast-time but slow time will be the time it takes the plasma to change state and thus change the ACF.
-
-In order to start we will first develop the range ambiguity which is due to the pulse shape and receiver filter on the ISR systems. If we look at data received by the ISR system at time $n$, with a wavenumber $\mathbf{k}$ and pulse shape $s(n)$, noted as $x(n)$ we can see that the received signal can be represented as the following
+The basic physical mechanism behind ISR is that electron density fluctuations in the ionosphere, $n_e(\mathbf{r},n)$, scatter radio waves which can be observed by the receiver system of the radar \citep{hysell2008}. The emitted radar signal will have a pulse shape $s(n)$ modulated at a central frequency that results in a scattering wave number $\mathbf{k}$. Using the Borne approximation the signal received at time $n$, $x(n)$, can be represented as the following
 
 \begin{equation}
 \label{eq:xt}
-x(n) \propto h(n) \ast \int_{\mathbf{r}} e^{-j\mathbf{k} \cdot \mathbf{r}}  s(n-\frac{2r}{c}) n_e(\mathbf{r},n) d\mathbf{r},
+x(n) = h(n) \ast \int_{\mathbf{r}} e^{-j\mathbf{k} \cdot \mathbf{r}}  s\left(n-\frac{2r}{c}\right) n_e(\mathbf{r},n) d\mathbf{r},
 \end{equation}
 
-\noindent where $h(n)$ is the receiver filter, $n_e(\mathbf{r},n)$ is the electron density fluctuation.  Generally it is assumed that the pass band of the filter is larger then the bandwidth of the electron density fluctuation \citep{kudeki:notes}.  As such it can  be assumed that filter will only act on the the shape of the pulse. This will change Equation \ref{eq:xt} to the following:
+\noindent where $h(n)$ is the receiver filter.  Generally it is assumed that the pass band of the filter is larger then the bandwidth of the electron density fluctuation \citep{kudeki:notes}.  As such it can  be assumed that filter will only act on the the shape of the pulse. This will change (\ref{eq:xt}) to the following:
 
 \begin{equation}
 \label{ex:xtaug}
-x(n) \propto \ast \int_{\mathbf{r}} e^{-j\mathbf{k} \cdot \mathbf{r}}  a(n-\frac{2r}{c}) n_e(\mathbf{r},n) d\mathbf{r}
+x(n) = \int_{\mathbf{r}} e^{-j\mathbf{k} \cdot \mathbf{r}}  a\left(n-\frac{2r}{c}\right) n_e(\mathbf{r},n) d\mathbf{r}
 \end{equation}
 \noindent where $a(n)= h(n) \ast s(n)$.   
 
-When the autocorrelation of the signal is done we find the following formula, \citep{nikoukar2008}.  
+When the autocorrelation of the signal is done we find the following formula, \citep{nikoukar2008},
+
+\begin{equation}
+\label{ex:acf0}
+\langle x(n)x^*(n')\rangle = \int_{\mathbf{r'}}\int_{\mathbf{r}} e^{-2j \mathbf{k}\cdot \left(\mathbf{r}'-\mathbf{r} \right)}a\left(n-\frac{2r}{c}\right)a^*\left(n+\tau-\frac{2r'}{c}\right) \langle n_e(\mathbf{r},n)n^*_e(\mathbf{r}',n')\rangle d\mathbf{r} d\mathbf{r}'
+\end{equation}
+
+\noindent where $r'$ is the magnitude of the vector $\mathbf{r}'$. If we assume stationarity of the second order statistic of the signal along fast time $n$ we can substitute a lag variable $\tau\equiv n'-n$, (\ref{ex:acf0}) becomes
 
 \begin{equation}
 \label{ex:acf1}
-\langle x(n)x^*(n+\tau)\rangle = \int_{\mathbf{r'}}\int_{\mathbf{r}} e^{-2j \mathbf{k}\cdot \left(\mathbf{r}'-\mathbf{r} \right)}a(n-\frac{2r}{c})a^*(n+\tau-\frac{2r'}{c}) \langle n_e(\mathbf{r},n)n_e(\mathbf{r}',n+\tau)\rangle d\mathbf{r} d\mathbf{r}'
+\langle x(n)x^*(n+\tau)\rangle = \int_{\mathbf{r'}}\int_{\mathbf{r}} e^{-2j \mathbf{k}\cdot \left(\mathbf{r}'-\mathbf{r} \right)}a\left(n-\frac{2r}{c}\right)a^*\left(n+\tau-\frac{2r'}{c}\right) \langle n_e(\mathbf{r},n)n^*_e(\mathbf{r}',n+\tau)\rangle d\mathbf{r} d\mathbf{r}'
 \end{equation}
  
-\noindent where $r'$ is the magnitude of the vector $\mathbf{r}'$. We can make some simplifying assumption at this point that the space-time autocorrelation function of $n_e(\mathbf{r},t)$, $\langle n_e(\mathbf{r},n)n_e(\mathbf{r}',n+\tau)\rangle$, will vanish as the magnitude of $\mathbf{x} \equiv \mathbf{r}'-\mathbf{r} $ increases. Once the spatial correlation is removed we can rewrite Equation \ref{ex:acf1} as 
+\noindent where $r'$ is the magnitude of the vector $\mathbf{r}'$. We can make a simplifying assumption at this point that the space-time autocorrelation function of $n_e(\mathbf{r},t)$, $\langle n_e(\mathbf{r},n)n_e(\mathbf{r}',n+\tau)\rangle$, will vanish as the magnitude of $\mathbf{x} \equiv \mathbf{r}'-\mathbf{r} $ increases. Once the spatial correlation is removed we can rewrite (\ref{ex:acf1}) as 
  
  \begin{equation}
  \label{ex:acf2}
- \langle x(n)x^*(n+\tau)\rangle = \int_{\mathbf{r}} a(n-\frac{2r}{c})a^*(n+\tau -\frac{2r}{c}) \int_{\mathbf{x}} e^{-2j \mathbf{k}\cdot \mathbf{x}} \langle n_e(\mathbf{r},n)n_e(\mathbf{x}+\mathbf{r},n+\tau)\rangle d\mathbf{x} d\mathbf{r}.
+ \langle x(n)x^*(n+\tau)\rangle = \int_{\mathbf{r}} a\left(n-\frac{2r}{c}\right)a^*\left(n+\tau -\frac{2r}{c}\right) \int_{\mathbf{x}} e^{-2j \mathbf{k}\cdot \mathbf{x}} \langle n_e(\mathbf{r},n)n^*_e(\mathbf{x}+\mathbf{r},n+\tau)\rangle d\mathbf{x} d\mathbf{r}.
  \end{equation}
  
  The inner integral is a spatial Fourier transform evaluated at the wave number of the radar $\mathbf{k}$
  \begin{equation}
  \label{eq:spft}
- \langle |n_e(\mathbf{k},r,\tau)|^2\rangle \equiv  \int_{\mathbf{x}} e^{-2j \mathbf{k}\cdot \mathbf{x} } \langle n_e(\mathbf{r},b)n_e(\mathbf{x}+\mathbf{r},n+\tau)\rangle d\mathbf{x}.
+ \langle |n_e(\mathbf{k},r,\tau)|^2\rangle \equiv  \int_{\mathbf{x}} e^{-2j \mathbf{k}\cdot \mathbf{x} } \langle n_e(\mathbf{r},b)n^*_e(\mathbf{x}+\mathbf{r},n+\tau)\rangle d\mathbf{x}.
  \end{equation}
  
- \noindent Equation \ref{ex:acf2} becomes
+ \noindent Now (\ref{ex:acf2}) becomes
  
  \begin{equation}
  \langle x(n)x^*(n+\tau)\rangle = \int_{r} a(n-\frac{2r}{c})a^*(n+\tau -\frac{2r}{c}) \langle |n_e(\tau,\mathbf{k},\mathbf{r})|^2\rangle dr.
  \end{equation}
  %angle ambiguity
  %E_e(\phi,\psi)\text{dirc}_N(\frac{d_1}{\lambda}\sin\phi \cos\psi)\text{dirc}_K\left(\frac{d_2}{\lambda}\sin\phi\sin\psi\right)
- It should be noted that the term $ a(n)a^*(n+\tau)$ is the soft target ambiguity function.  If $n$ is replaced with $2r_s/c$ we can see that the this function represented as $W(\tau,r_s,r)$ \citep{nikoukar:thesis}.  In order to simplify notation we will represent $ \langle |n_e(\tau,\mathbf{k},\mathbf{r})|^2\rangle$, as $R(\tau,\mathbf{r})$. Assuming, for the moment, that $R$ only varies across the range dimension $r$ we can now represent this in the form of a Fredholm integral equation
+ %It should be noted that the term $ a(n)a^*(n+\tau)$ is the soft target ambiguity function.  
+ If $n$ is replaced with $2r_s/c$ we can introduce the range ambiguity function $W(\tau,r_s,r)$ by doing the following substitution \citep{nikoukar:thesis},
+ \begin{equation}
+ \label{eqn:rngamb}
+ W(\tau,r_s,r)= a\left(\frac{2(r_s-r)}{c}\right)a^*\left(\frac{2(r'-r)}{c}+\tau\right).
+ \end{equation}
+ 
+ In order to simplify notation we will represent $ \langle |n_e(\tau,\mathbf{k},\mathbf{r})|^2\rangle$, as $R(\tau,\mathbf{r})$. Assuming, for the moment, that $R$ only varies across the range dimension $r$ we can now represent this in the form of a Fredholm integral equation
  
  \begin{equation}
  \label{eqn:fredfirst}
  \langle x(2r_s/c)x^*(2r_s/c+\tau)\rangle = \int_{r} W(\tau,r_s,r) R(\tau,r) dr.
  \end{equation}
  
-This function is in a way a lag dependent smoothing along the range dimension of $R(\tau,r)$. 
+\noindent The ambiguity in the end $W(\tau,r_s,r)$ is a lag dependent smoothing along the range dimension of $R(\tau,r)$. 
  
 The spatial ambiguity across angle is determined by the antenna beam pattern. In phase array radars this beam pattern is ideally the array factor multiplied by the element pattern \citep{Balanis:2005:ATA:1208379}. The array factor is determined by a number of things including the element spacing in both x and y $(dx,dy)$ and the wave number of the radar, $k$. Making idealized assumptions with no mutual coupling and that the array elements are cross dipole elements AMISR systems will have the following array pattern for pointing angle ($\theta_s,\phi_s$),
- 
+ % make appendix to develop this further.
  \begin{equation}
  \label{eqn:amisrpat}
-F(\theta,\phi,\theta_s,\phi_s) = \frac{1}{2}(1+\cos(\theta)^2)\left[ \frac{1}{MN} \left(1+e^{j(\psi_y/2 + \psi_x)}\right)\frac{\sin((M/2) \psi_x)}{\sin(\psi_x)} \frac{\sin((N/2) \psi_x)}{\sin(\psi_x/2)}\right]^2,
+F(\theta_s,\phi_s,\theta,\phi) = \frac{1}{2}(1+\cos(\theta)^2)\left[ \frac{1}{MN} \left(1+e^{j(\psi_y/2 + \psi_x)}\right)\frac{\sin((M/2) \psi_x)}{\sin(\psi_x)} \frac{\sin((N/2) \psi_x)}{\sin(\psi_x/2)}\right]^2,
  \end{equation}
  
- \noindent where $\psi_x = -k d_x(\sin\theta\cos\phi-\sin\theta_s\cos\phi_s)$, $\psi_y = -k d_y(\sin\theta\sin\phi-\sin\theta_s\sin\phi_s)$.
+ \noindent where $\psi_x = -k d_x(\sin\theta\cos\phi-\sin\theta_s\cos\phi_s)$, $\psi_y = -k d_y(\sin\theta\sin\phi-\sin\theta_s\sin\phi_s)$ and $M$ is the number of elements in the $x$ direction of the array $N$ is the number of elements in the $y$ direction.
 
 
-This spatial ambiguity is a separable function made up of the components of $W(\tau,r)$ and $F(\theta,\phi,\theta_s,\phi_s)$. These two functions can be combined by multiplying, creating the spatial ambiguity function  $K(\tau,\mathbf{r}_s,\mathbf{r})$, and then doing a volume integration. This will create radar system's estimate of the ACF which will be referred to as $\rho(\tau,\mathbf{r}_s)$,
+This spatial ambiguity is a separable function made up of the components of $W(\tau,r)$ and $F(\theta_s,\phi_s,\theta,\phi)$. These two functions can be combined by multiplying the two, creating the spatial ambiguity function  $K(\tau,\mathbf{r}_s,\mathbf{r})$, and then doing a volume integration. This will create radar system's estimate of the ACF which will be referred to as $\rho(\tau,\mathbf{r}_s)$,
 
  %\begin{equation}
 
  \begin{align}
   \label{eqn:volume}
-\rho(\tau,\mathbf{r}_s) &= \int F(\theta,\phi,\theta_s,\phi_s)W(\tau,r_s,r) R(\tau,\mathbf{r}) dV,\\
+\rho(\tau,\mathbf{r}_s) &= \int F(\theta_s,\phi_s,\theta,\phi)W(\tau,r_s,r) R(\tau,\mathbf{r}) dV,\\
 	&= \int K(\tau,\mathbf{r}_s,\mathbf{r}) R(\tau,\mathbf{r})dV.
 \end{align}
  %\end{equation}
