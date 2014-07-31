@@ -297,14 +297,31 @@ After the lag products have been formed an estimate of the noise correlation is 
 
 \begin{figure}
 	\centering
+	\includegraphics[width=3in]{nevsalt}
+	\caption{Electron density vs. altitude.}	
+	\label{fig:nevsalt}
+\end{figure}
+
+\begin{figure}
+	\centering
 	\includegraphics[width=6in]{phantom}
 	\caption{Example images from phantom}	
 	\label{fig:phantom}
 \end{figure}
 
-In order to demonstrate the blurring taking place from the motion of plasma a phantom ionosphere is created where a small plasma enhancement moves through the radar field of view. The background electron density varies in altitude as a Chapman function while the electron and ion temperature remains constant. This is done to avoid having to do full fit and thus only try to measure the electron density. Also estimates of the zeroth lag are only necessary. Added to this is a 35 km radius sphere of enhance electron density of about $5\times 10^{10} $ m$^{-3}$ centered at 400 km altitude moving at 500 m/s along the $\mathbf{y}$ direction. Images from this phantom can be seen in Figure \ref{fig:phantom}. 
+In order to demonstrate the blurring taking place from the motion of plasma a phantom ionosphere is created where a small plasma enhancement moves through the radar field of view. The background electron density varies in altitude as a Chapman function while the electron and ion temperature remains constant. This can be seen in Figure \ref{fig:nevsalt}. This is done to avoid having to do full fit and thus only try to measure the electron density. Also estimates of the zeroth lag are only necessary. Added to this is a 35 km radius sphere of enhance electron density of about $5\times 10^{10} $ m$^{-3}$ centered at 400 km altitude moving at 500 m/s along the $\mathbf{y}$ direction. Images from this phantom can be seen in Figure \ref{fig:phantom}. 
 
-Using the phantom we can see how just simply changing the integration time can impact the reconstruction. In Figure \ref{fig:variable} we can see a case were only 10 pulses are used for the reconstruction. This corresponds to an integration time of about 9 seconds using the 121 beam pattern. The enhancement can be seen with concentrated energy as it moves through the field of view. The problem is that there is a high amount of variance in the reconstruction. Figure \ref{fig:blurred} shows the reconstruction with 200 pulses, 3 minute integration time. The variability has been reduced but there is a large amount of blurring of the enhancement as it moves through the field of view. 
+
+Using the phantom we can see how just simply changing the integration time can impact the reconstruction. In Figure \ref{fig:variable} we can see a case were only 10 pulses are used for the reconstruction. This corresponds to an integration time of about 9 seconds using the 121 beam pattern which can be seen in Figure \ref{fig:beampattern}. The enhancement can be seen with concentrated energy as it moves through the field of view. The problem is that there is a high amount of variance in the reconstruction. Figure \ref{fig:blurred} shows the reconstruction with 200 pulses, 3 minute integration time. The variability has been reduced but there is a large amount of blurring of the enhancement as it moves through the field of view. 
+
+
+\begin{figure}
+	\centering
+	\includegraphics[width=3in]{beampattern}
+	\caption{Beam pattern}	
+	\label{fig:beampattern}
+\end{figure}
+
 \begin{figure}
 	\centering
 	\includegraphics[width=6in]{variabledata}
@@ -344,16 +361,17 @@ In order to give a comparison a phantom was also created with no motion. This ca
 	\label{fig:blurredstat}
 \end{figure}
 
-Lastly we show results of a simulation of with a full fitting. We again use a plasma enhancement moving through the field of view at 500 m/s but the electron and ion tempreture varies with time and altitude. The 
+Lastly we show results of a simulation of with a full fitting. We again use a plasma enhancement moving through the field of view at 500 m/s but the electron and ion tempreture varies with time and altitude. The the background ion and electron temperature vs. height can be seen in Figure \ref{fig:allparamsphantom}. As the electron density enhancement travels through the field of view the temperatures drop by the same ratio that the electron density is enhanced.
 
 
 \begin{figure}
 	\centering
-	\includegraphics[width=6in]{allparamsphantom}
-	\caption{Blurred data after full fitting.}	
+	\includegraphics[width=4in]{tempvsheight}
+	\caption{Ion \& electron temperature vs. height. }	
 	\label{fig:allparamsphantom}
 \end{figure}
 
+The overall phantom at approximately 402 seconds can be seen in Figure \ref{fig:allparamsphantom}. The reconstruction of this field at the same time can be seen in Figure \ref{fig:allparamsblurreddata}. 
 \begin{figure}
 	\centering
 	\includegraphics[width=6in]{allparamsphantom}
