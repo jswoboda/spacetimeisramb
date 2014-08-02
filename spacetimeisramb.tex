@@ -255,7 +255,7 @@ The operator $A$ can be determined through knowledge of the radar system's beam 
 
 \section{Simulation}
 
-In order to determine if it is possible to improve the resolution of ISR processing synthetic data was created using a known condition of a simulated ionosphere. The simulator creates data by deriving filters from the autocorrelation function and applying it to complex white Gaussian noise. In a sense every point in time and space noise plant and filter structure as in Figure \ref{fig:IQdiagram}. The data is then scaled and summed together according to its location in range and angle space to radar.
+In order to show the impact of the ambiguity function, synthetic data was created using a known condition of a simulated ionosphere. The simulator creates data by deriving filters from the autocorrelation function and applying it to complex white Gaussian noise. In a sense every point in time and space noise plant and filter structure as in Figure \ref{fig:IQdiagram}. The data is then scaled and summed together according to its location in range and angle space to radar.
 
 \begin{figure}[h!]
 \centering
@@ -337,29 +337,15 @@ Using the phantom we can see how just simply changing the integration time can i
 	\label{fig:blurred}
 \end{figure}
 
-In order to give a comparison a phantom was also created with no motion. This can be seen in Figure \ref{fig:phantomstat}. Images using the same integration time as in Figure \ref{fig:variable} for the stationary phantom can be seen in Figure \ref{fig:variablestat}. Another set of images using the longer integration time can be seen in Figure \ref{fig:blurredstat}. These images show that the blurring is on the same order between both integration times.
+In order to give a comparison a phantom was also created with no motion. This can be seen in first pane Figure \ref{fig:statreconstruct}. An image using the same integration time as in Figure \ref{fig:variable} for the stationary phantom is the center pane in Figure \ref{fig:statreconstruct}. Another image using the longer integration time can be seen in right pane of Figure \ref{fig:statreconstruct}. These images show that the blurring is on the same order between both integration times.
 
 \begin{figure}
 	\centering
-	\includegraphics[width=6in]{phantomstation}
-	\caption{Example images from phantom}	
-	\label{fig:phantomstat}
+	\includegraphics[width=6in]{stationary}
+	\caption{Stationary phantom along with both types of reconstructions.}	
+	\label{fig:statreconstruct}
 \end{figure}
 
-\begin{figure}
-	\centering
-	\includegraphics[width=6in]{variabledatastation}
-	\caption{Example images from short integration of stationary plasma}	
-	\label{fig:variablestat}
-\end{figure}
-
-
-\begin{figure}
-	\centering
-	\includegraphics[width=6in]{blurreddatastation}
-	\caption{Example images from longer integration time of stationary plasma}	
-	\label{fig:blurredstat}
-\end{figure}
 
 Lastly we show results of a simulation of with a full fitting. We again use a plasma enhancement moving through the field of view at 500 m/s but the electron and ion tempreture varies with time and altitude. The the background ion and electron temperature vs. height can be seen in Figure \ref{fig:allparamsphantom}. As the electron density enhancement travels through the field of view the temperatures drop by the same ratio that the electron density is enhanced.
 
@@ -371,7 +357,8 @@ Lastly we show results of a simulation of with a full fitting. We again use a pl
 	\label{fig:allparamsphantom}
 \end{figure}
 
-The overall phantom at approximately 402 seconds can be seen in Figure \ref{fig:allparamsphantom}. The reconstruction of this field at the same time can be seen in Figure \ref{fig:allparamsblurreddata}. 
+The phantoms for each parameter at approximately 402 seconds can be seen in Figure \ref{fig:allparamsphantom}. The reconstruction of this field at the same time can be seen in Figure \ref{fig:allparamsblurreddata}. The reconstruction does not seem to show the electron density enhancement even in a blurred form. This is likely due to the nonlinear nature of the fitting.
+
 \begin{figure}
 	\centering
 	\includegraphics[width=6in]{allparamsphantom}
