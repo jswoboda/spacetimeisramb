@@ -71,6 +71,33 @@ There has been no formal derivation of an ambiguity function for all three spati
 
 These three-dimensional reconstructions often consist of taking the fitted parameters and then interpolating them to a Cartesian space from the system's natural spherical coordinate space \citep{Butler:2013ul}. The step of fitting the autocorrelation function to the theoretical functions to find the final plasma parameters is a non-linear operation. Because of this it is impossible to exactly predict the impact on the parameter values as different plasma populations move through the field of view of the radar. Alternatively it is possible to treat the formation of the autocorrelation estimates as a linear process with each lag as an independent channel \citep{nikoukar2008}.
 
+Using this methodology we can make a lot of parallels between ISR and CCD cameras.
+
+\begin{figure}[h!]
+    \centering
+    \subfigure[CCD No Blur]{
+        \includegraphics[height=2in]{ccddiagramnoblur}
+        \label{sfig:ccdnoblur}}
+    \quad
+    \subfigure[CCD With Blur]{
+        \includegraphics[height=2in]{ccddiagramblur}
+        \label{sfig:ccdblur}}
+    \caption{CCD camera}
+    \label{fig:ccd}
+\end{figure}
+
+\begin{figure}[h!]
+    \centering
+    \subfigure[Radar No Blur]{
+        \includegraphics[height=2in]{radardiagramnoblur}
+        \label{sfig:radarnoblur}}
+    \quad
+    \subfigure[Radar With Blur]{
+        \includegraphics[height=2in]{radardiagramblur}
+        \label{sfig:radarblur}}
+    \caption{Radar}
+    \label{fig:radarblur}
+\end{figure}
 In this publication we will develop a model for a full three dimensional space-time ambiguity function for 3-D ISR systems. This function can also be modified to show the ambiguity within the rest frame of the moving plasma. In the end this full three dimensional can be represented as kernel in a Fredholm integral equation like in Equation \ref{eqn:friedholm} with $f(s)$ being the lag of the autocorrelation function at a specific time and position. 
 
 \begin{equation}
@@ -388,6 +415,11 @@ With this in mind one can go a step further and investigate super resolution met
 %%%%%%%%%%%%%% Conclusion %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Conclusion}
+We have presented a new method for analyzing incoherent scatter radar processing through use of the full space-time ambiguity function. This allows for taking into account the antenna beam pattern, pulse pattern and time integration. Through simulation we have shown how plasma motion can impact reconstruction of parameters which compounded with the non-linear nature of the parameter fitting step can create errors which are hard to predict. Lastly we have suggested a number of ways using three dimensional ISR systems we could mitigate these errors and reconstruct parameters at higher resolutions then what is currently possible.
+
+\appendix
+\section{Derivation of Idealized AMISR Array Pattern} \label{App:AMISRarr}
+
 \bibliographystyle{BibTeX/agufull08}
 \bibliography{BibTeX/litreview}
 
