@@ -190,14 +190,14 @@ When the autocorrelation of the signal is done we find the following formula, \c
  
 \noindent The ambiguity in the end $W(\tau,r_s,r)$ is a lag dependent smoothing along the range dimension of $R(\tau,r)$. 
  
-The spatial ambiguity across angle is determined by the antenna beam pattern. In phase array radars this beam pattern is ideally the array factor multiplied by the element pattern \citep{Balanis:2005:ATA:1208379}. The array factor is determined by a number of things including the element spacing in both x and y $(dx,dy)$ and the wave number of the radar, $k$. Making idealized assumptions with no mutual coupling and that the array elements are cross dipole elements AMISR systems will have the following array pattern for pointing angle ($\theta_s,\phi_s$),
+The spatial ambiguity across angle is determined by the antenna beam pattern. In phase array radars this beam pattern is ideally the array factor multiplied by the element pattern \citep{Balanis:2005:ATA:1208379}. The array factor is determined by a number of things including the element spacing in both x and y $(dx,dy)$ and the wave number of the radar, $k$. Making idealized assumptions with no mutual coupling and that the array elements are cross dipole elements AMISR systems will have the following antenna pattern for pointing angle ($\theta_s,\phi_s$),
  % make appendix to develop this further.
  \begin{equation}
  \label{eqn:amisrpat}
 F(\theta_s,\phi_s,\theta,\phi) = \frac{1}{2}(1+\cos(\theta)^2)\left[ \frac{1}{MN} \left(1+e^{j(\psi_y/2 + \psi_x)}\right)\frac{\sin((M/2) \psi_x)}{\sin(\psi_x)} \frac{\sin((N/2) \psi_x)}{\sin(\psi_x/2)}\right]^2,
  \end{equation}
  
- \noindent where $\psi_x = -k d_x(\sin\theta\cos\phi-\sin\theta_s\cos\phi_s)$, $\psi_y = -k d_y(\sin\theta\sin\phi-\sin\theta_s\sin\phi_s)$ and $M$ is the number of elements in the $x$ direction of the array $N$ is the number of elements in the $y$ direction.
+ \noindent where $\psi_x = -k d_x(\sin\theta\cos\phi-\sin\theta_s\cos\phi_s)$, $\psi_y = -k d_y(\sin\theta\sin\phi-\sin\theta_s\sin\phi_s)$ and $M$ is the number of elements in the $x$ direction of the array $N$ is the number of elements in the $y$ direction(see Appendix: \ref{App:AMISRarr} for derivation).
 
 
 This spatial ambiguity is a separable function made up of the components of $W(\tau,r)$ and $F(\theta_s,\phi_s,\theta,\phi)$. These two functions can be combined by multiplying the two, creating the spatial ambiguity function  $K(\tau,\mathbf{r}_s,\mathbf{r})$, and then doing a volume integration. This will create radar system's estimate of the ACF which will be referred to as $\rho(\tau,\mathbf{r}_s)$,
@@ -254,7 +254,7 @@ A change of variables where $\mathbf{r}' = \mathbf{r}+\mathbf{v}t$ acts as a Gal
 \rho(\tau,\mathbf{r}_s,t_s)= \int \int_{t_s}^{t_s+T} K(\tau,\mathbf{r}_s,\mathbf{r}'-\mathbf{v}t)R(\tau,\mathbf{r}')dtdV.
 \end{equation}
 
-\noindent Since $R(\tau,\mathbf{r}')$ is no longer dependent on $t$ (\ref{eqn:L4}) becomes,
+\noindent Since $R(\tau,\mathbf{r}')$ is no longer dependent on $t$ Equation\ref{eqn:L4} becomes,
 
 \begin{equation}
 \label{eqn:L5}
@@ -419,6 +419,46 @@ We have presented a new method for analyzing incoherent scatter radar processing
 
 \appendix
 \section{Derivation of Idealized AMISR Array Pattern} \label{App:AMISRarr}
+The current antenna on the AMISR systems is made up 8x16 set of panel of half wave cross dipoles. Each panel has 32 cross dipoles in a 8x4 hexagonal configuration. In the current set up at the Poker Flat site this yields at 4096 element array in a 64x64 element hexagonal configuration.
+
+In order to simplify the antenna can be treated as two rectangular arrays of cross dipoles interleaved together. In the $x$ direction each of these arrays will have a spacing of $2d_x$ with $M/2$ elements. The $y$ direction will be of length $N$ elements and spacing $d_y$. Using basic planar phase array theory, \citep{Balanis:2005:ATA:1208379}, we can start with the linear array pattern from the first array can be represented as 
+
+\begin{equation}
+\label{eqn:arrpat1}
+E_1(\theta,\phi) =\displaystyle \sum_{m=1}^{M/2}\sum_{n=1}^{N} e^{-j2\left(m-1\right)kd_x\sin\theta\cos\phi -j\left(n-1\right) k d_y\sin\theta\sin\phi}.
+\end{equation}
+
+\noindent Since the second array can be though of a shifted version of the first in the $x$ direction we get the following
+
+\begin{equation}
+\label{eqn:arrpat2}
+E_2(\theta,\phi) =\displaystyle \sum_{m=1}^{M/2}\sum_{n=1}^{N} e^{-j\left(2m-1\right)kd_x\sin\theta\cos\phi -j\left(n-1/2\right) k d_y\sin\theta\sin\phi}.
+\end{equation}
+In order to simplify notation we will make the following substitutions, $\psi_x = -k d_x\sin\theta\cos\phi$, $\psi_y = -k d_y\sin\theta\sin\phi$. Using Equations \ref{eqn:arrpat1} and \ref{eqn:arrpat2} we can see the following relationship,
+
+\begin{equation}
+\label{eqn:arrpateqn}
+E_2(\theta,\phi)  = e^{j(\psi_y/2 + \psi_x)} E_1(\theta,\phi)  = \displaystyle \sum_{m=1}^{M/2}\sum_{n=1}^{N} e^{-j2\left(m-1\right) \psi_x -j\left(n-1\right) \psi_y}.
+\end{equation}
+
+\noindent Adding $E_1$ and $E_2$ together we get the following linear array pattern
+
+\begin{equation} \label{eq1}
+\begin{split}
+E(\theta,\phi) &= \displaystyle  \left(1+e^{j(\psi_y/2 + \psi_x)}\right)\sum_{m=1}^{M/2}\sum_{n=1}^{N} e^{-j2\left(m-1\right) \psi_x -j\left(n-1\right) \psi_y}.\\
+& = \frac{1}{MN} \left(1+e^{j(\psi_y/2 + \psi_x)}\right)\frac{\sin((M/2) \psi_x)}{\sin(\psi_x)} \frac{\sin((N/2) \psi_x)}{\sin(\psi_x/2)}.
+\end{split}
+\end{equation}
+
+Since the array is steerable this can be taken into account in the equations by simply changing the definitions of $\psi_x $ and $\psi_y$ to $\psi_x = k d_x(\sin\theta\cos\phi-\sin\theta_s\cos\phi_s)$, and $\psi_y = k d_y(\sin\theta\sin\phi-\sin\theta_s\sin\phi_s)$. Lastly the antenna pattern of a single cross dipole can be represented as $ \frac{1}{2}(1+\cos(\theta)^2)$\citep{Balanis:2005:ATA:1208379}. By taking the squared magnitude of the array factor and multiplying it with the pattern of the dipole we get Equation \ref{eqn:amisrpat},
+
+
+ \begin{equation}
+ \label{eqn:amisrpatfinal}
+F(\theta_s,\phi_s,\theta,\phi) = \frac{1}{2}(1+\cos(\theta)^2)\left| \frac{1}{MN} \left(1+e^{j(\psi_y/2 + \psi_x)}\right)\frac{\sin((M/2) \psi_x)}{\sin(\psi_x)} \frac{\sin((N/2) \psi_x)}{\sin(\psi_x/2)}\right|^2.
+ \end{equation}
+ 
+ 
 
 \bibliographystyle{BibTeX/agufull08}
 \bibliography{BibTeX/litreview}
