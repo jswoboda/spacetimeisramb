@@ -117,7 +117,7 @@ The three dimensional nature of the problem requires first defining the spatial 
 
 The radar will sample this space into a set of discrete points which will be referred to as $\mathbf{r}_s = [x_s,y_s,z_s]^T$ along with the descritized range $r_s=|\mathbf{r}_s|$. The sampled space will consist of a number of points which are the combinations of the range gates and number of beams. This points can also be referred in the polar coordinates $\mathbf{r}_s = [r_s,\theta_s,\phi_s]^T$, where $\theta_s$ is the sampled elevation angle, $\phi_s$ is the sampled azimuth angle.
 
-For notation purposes we use two different sets of time commonly known in radar literature as fast-time, $n$ and slow-time, $t$ \citep{richards:fundamentalsigproc}.. Fast-time is used to explore the workings of the radar on the order of the radar systems A/D conversion such as lag formation. Slow-time will used for processes that vary in time on the order of the system's pulse repetition interval (PRI). In order to form estimates of the ACFs it is assumed that the plasma parameters parameters will change on the order of 10 to hundreds of PRIs. The term $n$ will be a sampled parameter while $t$ will represent a continuous time and $t_s$ will be the slow time parameter sampled by the radar. 
+For notation purposes we use two different sets of time commonly known in radar literature as fast-time, $n$ and slow-time, $t$ \citep{richards:fundamentalsigproc}.. Fast-time is used to explore the workings of the radar on the order of the radar systems A/D conversion such as lag formation. Slow-time will used for processes that vary in time on the order of the system's pulse repetition interval (PRI). In order to form estimates  of the ACFs, with desired statistical properties, it is assumed that the plasma parameters parameters will change on the order of 10 to hundreds of PRIs. The term $n$ will be a sampled parameter while $t$ will represent a continuous time and $t_s$ will be the slow time parameter sampled by the radar. The sampling of $t_s$ can at lowest be the PRI but generally it is sampled once in an integration period so the reconstructed parameters can be considered as independent measurements in time.
 
 %In the ISR literature the measurement ambiguity along the range dimension is often referred to simply as the ambiguity function \citep{hysell2008}. This only shows the measurement ambiguity along the range $r$. Due to the three-dimensional imaging capability of phased array ISR systems we will define a new set of terminology to describe this more complicated measurement which is now imaging the ionosphere in three-dimensional continuous coordinates $\mathbf{r}=[x,y,z]^T$. This coordinate system $\mathbf{r}=[0,0,0]^T$ at the location of the radar. The radar will create a 3-D representation of the ionospheric parameters in to discrete coordinates $\mathbf{r}_s = [x_s,y_s,z_s]^T$.
 
@@ -129,66 +129,136 @@ The basic physical mechanism behind ISR is that electron density fluctuations in
 
 \begin{equation}
 \label{eq:xt}
-x(n) = h(n) \ast \int_{\mathbf{r}} e^{-j\mathbf{k} \cdot \mathbf{r}}  s\left(n-\frac{2r}{c}\right) n_e(\mathbf{r},n) d\mathbf{r},
+x(n) = h(n) \ast \int e^{-j\mathbf{k} \cdot \mathbf{r}}  s\left(n-\frac{2r}{c}\right) n_e(\mathbf{r},n) d\mathbf{r},
 \end{equation}
 
-\noindent where $h(n)$ is the receiver filter.  Generally it is assumed that the pass band of the filter is larger then the bandwidth of the electron density fluctuation \citep{kudeki:notes}.  As such it can  be assumed that filter will only act on the the shape of the pulse. This will change Equation \ref{eq:xt} to the following:
+\noindent where $h(n)$ is the receiver filter. In modern ISR systems this signal $x(n)$ is then sampled at discrete points in fast-time which will be referred to as $n_s$. The convolution and sampling operation can be brought in the integral as the following,
 
 \begin{equation}
 \label{ex:xtaug}
-x(n) = \int_{\mathbf{r}} e^{-j\mathbf{k} \cdot \mathbf{r}}  a\left(n-\frac{2r}{c}\right) n_e(\mathbf{r},n) d\mathbf{r}
+x(n_s) = \int e^{-j\mathbf{k} \cdot \mathbf{r}}  s\left(n-\frac{2r}{c}\right) n_e(\mathbf{r},n)h(n_s-n) d\mathbf{r}dn
 \end{equation}
-\noindent where $a(n)= h(n) \ast s(n)$.   
 
-When the autocorrelation of the signal is done we find the following formula, \citep{nikoukar2008},
 
-\begin{equation}
+Once the signal has been received and sampled the autocorrelation function is then to be estimated from the sampled signal $x(n_s)$. The full expression of the underlying autocorrelation of this signal is the following, 
+
+\begin{multline}
 \label{ex:acf0}
-\langle x(n)x^*(n')\rangle = \int_{\mathbf{r'}}\int_{\mathbf{r}} e^{-2j \mathbf{k}\cdot \left(\mathbf{r}'-\mathbf{r} \right)}a\left(n-\frac{2r}{c}\right)a^*\left(n+\tau-\frac{2r'}{c}\right) \langle n_e(\mathbf{r},n)n^*_e(\mathbf{r}',n')\rangle d\mathbf{r} d\mathbf{r}'
-\end{equation}
+\langle x(n_s)x^*(n_s')\rangle =  \int e^{-j \mathbf{k}\cdot \left(\mathbf{r}'-\mathbf{r} \right)}s\left(n-\frac{2r}{c}\right)s^*\left(n'-\frac{2r'}{c}\right) \\ h(n_s-n)h(n_s'-n')\langle n_e(\mathbf{r},n)n^*_e(\mathbf{r}',n')\rangle d\mathbf{r} d\mathbf{r}'dn dn',
+\end{multline}
 
-\noindent where $r'$ is the magnitude of the vector $\mathbf{r}'$. If we assume stationarity of the second order statistic of the signal along fast time $n$ we can substitute a lag variable $\tau\equiv n'-n$, Equation \ref{ex:acf0} becomes
+\noindent where $r'$ is the magnitude of the vector $\mathbf{r}'$. By assuming stationarity of the second order statistics of the signal along fast time, we can substitute the in the lag variables $\tau\equiv n'-n$, and $\tau_s\equiv n_s'-n_s$. With these substitutions Equation \ref{ex:acf0} becomes
 
-\begin{equation}
+
+\begin{multline}
 \label{ex:acf1}
-\langle x(n)x^*(n+\tau)\rangle = \int_{\mathbf{r'}}\int_{\mathbf{r}} e^{-2j \mathbf{k}\cdot \left(\mathbf{r}'-\mathbf{r} \right)}a\left(n-\frac{2r}{c}\right)a^*\left(n+\tau-\frac{2r'}{c}\right) \langle n_e(\mathbf{r},n)n^*_e(\mathbf{r}',n+\tau)\rangle d\mathbf{r} d\mathbf{r}'.
-\end{equation}
+\langle x(n_s)x^*(n_s+\tau_s)\rangle =\int e^{-j \mathbf{k}\cdot \left(\mathbf{r}'-\mathbf{r} \right)}s\left(n-\frac{2r}{c}\right)s^*\left(n+\tau-\frac{2r'}{c}\right) \\ h(n_s-n)h(n_s+\tau_s-n-\tau) \langle n_e(\mathbf{r},n)n^*_e(\mathbf{r}',n+\tau)\rangle d\mathbf{r} d\mathbf{r}' dnd\tau
+\end{multline}
+
+\noindent We can make a simplifying assumption at this point that the space-time autocorrelation function of $n_e(\mathbf{r},t)$, $\langle n_e(\mathbf{r},n)n_e(\mathbf{r}',n+\tau)\rangle$, will go to zero as the magnitude of $\mathbf{x} \equiv \mathbf{r}'-\mathbf{r}$ increases. The rate that the space-time autocorrelation goes to zero will be such that $\tau\gg \frac{2||\mathbf{x}||}{c}$ thus in the argument of the pulse shape $r\approx r'$. This allows Equation \ref{ex:acf1} to be rewritten as 
  
-\noindent We can make a simplifying assumption at this point that the space-time autocorrelation function of $n_e(\mathbf{r},t)$, $\langle n_e(\mathbf{r},n)n_e(\mathbf{r}',n+\tau)\rangle$, will go to zero as the magnitude of $\mathbf{x} \equiv \mathbf{r}'-\mathbf{r}$ increases. The rate that the space-time autocorrelation goes to zero will be such that $\tau\gg ||\mathbf{x}||$ thus in the argument of the pulse shape $r\approx r'$. This allows Equation \ref{ex:acf1} to be rewritten as 
- 
- \begin{equation}
+ \begin{multline}
  \label{ex:acf2}
- \langle x(n)x^*(n+\tau)\rangle = \int_{\mathbf{r}} a\left(n-\frac{2r}{c}\right)a^*\left(n+\tau -\frac{2r}{c}\right) \int_{\mathbf{x}} e^{-2j \mathbf{k}\cdot \mathbf{x}} \langle n_e(\mathbf{r},n)n^*_e(\mathbf{x}+\mathbf{r},n+\tau)\rangle d\mathbf{x} d\mathbf{r}.
- \end{equation}
- 
- The inner integral is a spatial Fourier transform evaluated at the wave number of the radar $\mathbf{k}$
+ \langle x(n_s)x^*(n_s+\tau)\rangle = \int s\left(n-\frac{2r}{c}\right)s^*\left(n+\tau -\frac{2r}{c}\right) h(n_s-n)h^*(n_s+\tau_s-n-\tau) \\\left[\int e^{-2j \mathbf{k}\cdot \mathbf{x}} \langle n_e(\mathbf{r},n)n^*_e(\mathbf{x}+\mathbf{r},n+\tau)\rangle d\mathbf{x} \right]d\mathbf{r}dn d\tau.
+ \end{multline}
+
+The inner integral is a spatial Fourier transform evaluated at the wave number of the radar $\mathbf{k}$. By again asserting stationary along slow time we can represent the true ACF as the following,
  \begin{equation}
  \label{eq:spft}
- \langle |n_e(\mathbf{k},r,\tau)|^2\rangle \equiv  \int_{\mathbf{x}} e^{-2j \mathbf{k}\cdot \mathbf{x} } \langle n_e(\mathbf{r},b)n^*_e(\mathbf{x}+\mathbf{r},n+\tau)\rangle d\mathbf{x}.
+R(\tau,\mathbf{r})= \langle |n_e(\mathbf{k},r,\tau)|^2\rangle \equiv  \int_{\mathbf{x}} e^{-2j \mathbf{k}\cdot \mathbf{x} } \langle n_e(\mathbf{r},b)n^*_e(\mathbf{x}+\mathbf{r},n+\tau)\rangle d\mathbf{x}.
  \end{equation}
  
  \noindent Now Equation \ref{ex:acf2} becomes
  
  \begin{equation}
- \langle x(n)x^*(n+\tau)\rangle = \int_{r} a(n-\frac{2r}{c})a^*(n+\tau -\frac{2r}{c}) \langle |n_e(\tau,\mathbf{k},\mathbf{r})|^2\rangle dr.
+ \langle x(n_s)x^*(n_s+\tau_s)\rangle = \int \langle |n_e(\tau,\mathbf{k},\mathbf{r})|^2\rangle\left[\int s(n-\frac{2r}{c})s^*(n+\tau -\frac{2r}{c})h(n_s-n)h^*(n_s+\tau_s-n-\tau) dn \right]d\tau dr.
  \end{equation}
- %angle ambiguity
- %E_e(\phi,\psi)\text{dirc}_N(\frac{d_1}{\lambda}\sin\phi \cos\psi)\text{dirc}_K\left(\frac{d_2}{\lambda}\sin\phi\sin\psi\right)
- %It should be noted that the term $ a(n)a^*(n+\tau)$ is the soft target ambiguity function.  
- If $n$ is replaced with $2r_s/c$ we can introduce the range ambiguity function $W(\tau,r_s,r)$ by doing the following substitution \citep{nikoukar:thesis},
+
+ If $n_s$ is replaced with $2r_s/c$ we can introduce the range ambiguity function $W(\tau_s,r_s,\tau,r)$ by doing the following substitution,
  \begin{equation}
  \label{eqn:rngamb}
- W(\tau,r_s,r)= a\left(\frac{2(r_s-r)}{c}\right)a^*\left(\frac{2(r'-r)}{c}+\tau\right).
+ W(\tau_s,r_s,\tau,r)= \int s(n-\frac{2r}{c})s^*(n+\tau -\frac{2r}{c})h(2r_s/c-n)h^*(2r_s/c+\tau_s-n-\tau) dn.
  \end{equation}
  
- In order to simplify notation we will represent $ \langle |n_e(\tau,\mathbf{k},\mathbf{r})|^2\rangle$, as $R(\tau,\mathbf{r})$. Assuming, for the moment, that $R$ only varies across the range dimension $r$ we can now represent this in the form of a Fredholm integral equation
+Assuming, for the moment, that $R(\tau,\mathbf{r})$ only varies across the range dimension $r$ we can now represent this in the form of a Fredholm integral equation
  
  \begin{equation}
  \label{eqn:fredfirst}
- \langle x(2r_s/c)x^*(2r_s/c+\tau)\rangle = \int_{r} W(\tau,r_s,r) R(\tau,r) dr.
+ \langle x(2r_s/c)x^*(2r_s/c+\tau_s)\rangle = \int W(\tau_s,r_s,\tau,r)R(\tau,r) drd\tau.
  \end{equation}
  
-\noindent The ambiguity in the end $W(\tau,r_s,r)$ is a lag dependent smoothing along the range dimension of $R(\tau,r)$. 
+\noindent The range ambiguity function, $W(\tau_s,r_s,\tau,r)$, can be thought of as a smoothing operator along the range and lag dimensions of $R(\tau,r)$. 
+
+%% Old stuff 
+ 
+ 
+ 
+%Recently some publications have assumed the bandwidth of the receiver was much larger then the bandwidth of the fluctuations in electron density thus it can be assumed that filter will only act on the the shape of the pulse\citep{nikoukar2008}. Others though take impact of the receiver filter into
+%This will change Equation \ref{eq:xt} to the following:
+%
+%\begin{equation}
+%\label{ex:xtaug}
+%x(n) = \int_{\mathbf{r}} e^{-j\mathbf{k} \cdot \mathbf{r}}  a\left(n-\frac{2r}{c}\right) n_e(\mathbf{r},n) d\mathbf{r}
+%\end{equation}
+%\noindent where $a(n)= h(n) \ast s(n)$.   
+%
+%
+%\noindent where $r'$ is the magnitude of the vector $\mathbf{r}'$. 
+%
+%
+%If we assume stationarity of the second order statistic of the signal along fast time $n$ we can substitute a lag variable $\tau\equiv n'-n$, Equation \ref{ex:acf0} becomes
+%
+%
+%When the autocorrelation of the signal is done we find the following formula, \citep{nikoukar2008},
+%
+%\begin{equation}
+%\label{ex:acf0}
+%\langle x(n)x^*(n')\rangle = \int_{\mathbf{r'}}\int_{\mathbf{r}} e^{-j \mathbf{k}\cdot \left(\mathbf{r}'-\mathbf{r} \right)}a\left(n-\frac{2r}{c}\right)a^*\left(n'-\frac{2r'}{c}\right) \langle n_e(\mathbf{r},n)n^*_e(\mathbf{r}',n')\rangle d\mathbf{r} d\mathbf{r}'
+%\end{equation}
+%
+%\noindent where $r'$ is the magnitude of the vector $\mathbf{r}'$. If we assume stationarity of the second order statistic of the signal along fast time $n$ we can substitute a lag variable $\tau\equiv n'-n$, Equation \ref{ex:acf0} becomes
+%
+%\begin{equation}
+%\label{ex:acf1}
+%\langle x(n)x^*(n+\tau)\rangle = \int_{\mathbf{r'}}\int_{\mathbf{r}} e^{-j \mathbf{k}\cdot \left(\mathbf{r}'-\mathbf{r} \right)}a\left(n-\frac{2r}{c}\right)a^*\left(n+\tau-\frac{2r'}{c}\right) \langle n_e(\mathbf{r},n)n^*_e(\mathbf{r}',n+\tau)\rangle d\mathbf{r} d\mathbf{r}'.
+%\end{equation}
+% 
+%\noindent We can make a simplifying assumption at this point that the space-time autocorrelation function of $n_e(\mathbf{r},t)$, $\langle n_e(\mathbf{r},n)n_e(\mathbf{r}',n+\tau)\rangle$, will go to zero as the magnitude of $\mathbf{x} \equiv \mathbf{r}'-\mathbf{r}$ increases. The rate that the space-time autocorrelation goes to zero will be such that $\tau\gg \frac{2||\mathbf{x}||}{c}$ thus in the argument of the pulse shape $r\approx r'$. This allows Equation \ref{ex:acf1} to be rewritten as 
+% 
+% \begin{equation}
+% \label{ex:acf2}
+% \langle x(n)x^*(n+\tau)\rangle = \int_{\mathbf{r}} a\left(n-\frac{2r}{c}\right)a^*\left(n+\tau -\frac{2r}{c}\right) \int_{\mathbf{x}} e^{-2j \mathbf{k}\cdot \mathbf{x}} \langle n_e(\mathbf{r},n)n^*_e(\mathbf{x}+\mathbf{r},n+\tau)\rangle d\mathbf{x} d\mathbf{r}.
+% \end{equation}
+% 
+% The inner integral is a spatial Fourier transform evaluated at the wave number of the radar $\mathbf{k}$
+% \begin{equation}
+% \label{eq:spft}
+% \langle |n_e(\mathbf{k},r,\tau)|^2\rangle \equiv  \int_{\mathbf{x}} e^{-2j \mathbf{k}\cdot \mathbf{x} } \langle n_e(\mathbf{r},b)n^*_e(\mathbf{x}+\mathbf{r},n+\tau)\rangle d\mathbf{x}.
+% \end{equation}
+% 
+% \noindent Now Equation \ref{ex:acf2} becomes
+% 
+% \begin{equation}
+% \langle x(n)x^*(n+\tau)\rangle = \int_{r} a(n-\frac{2r}{c})a^*(n+\tau -\frac{2r}{c}) \langle |n_e(\tau,\mathbf{k},\mathbf{r})|^2\rangle dr.
+% \end{equation}
+% %angle ambiguity
+% %E_e(\phi,\psi)\text{dirc}_N(\frac{d_1}{\lambda}\sin\phi \cos\psi)\text{dirc}_K\left(\frac{d_2}{\lambda}\sin\phi\sin\psi\right)
+% %It should be noted that the term $ a(n)a^*(n+\tau)$ is the soft target ambiguity function.  
+% If $n$ is replaced with $2r_s/c$ we can introduce the range ambiguity function $W(\tau,r_s,r)$ by doing the following substitution \citep{nikoukar:thesis},
+% \begin{equation}
+% \label{eqn:rngamb}
+% W(\tau,r_s,r)= a\left(\frac{2(r_s-r)}{c}\right)a^*\left(\frac{2(r'-r)}{c}+\tau\right).
+% \end{equation}
+% 
+% In order to simplify notation we will represent $ \langle |n_e(\tau,\mathbf{k},\mathbf{r})|^2\rangle$, as $R(\tau,\mathbf{r})$. Assuming, for the moment, that $R$ only varies across the range dimension $r$ we can now represent this in the form of a Fredholm integral equation
+% 
+% \begin{equation}
+% \label{eqn:fredfirst}
+% \langle x(2r_s/c)x^*(2r_s/c+\tau)\rangle = \int_{r} W(\tau,r_s,r) R(\tau,r) dr.
+% \end{equation}
+% 
+%\noindent The ambiguity in the end $W(\tau,r_s,r)$ is a lag dependent smoothing along the range dimension of $R(\tau,r)$. 
+%% end of old stuff
  
 The spatial ambiguity across angle is determined by the antenna beam pattern. In phase array radars this beam pattern is ideally the array factor multiplied by the element pattern \citep{Balanis:2005:ATA:1208379}. The array factor is determined by a number of things including the element spacing in both x and y $(dx,dy)$ and the wave number of the radar, $k$. Making idealized assumptions with no mutual coupling and that the array elements are cross dipole elements AMISR systems will have the following antenna pattern for pointing angle ($\theta_s,\phi_s$),
  % make appendix to develop this further.
@@ -200,14 +270,14 @@ F(\theta_s,\phi_s,\theta,\phi) = \frac{1}{2}(1+\cos(\theta)^2)\left[ \frac{1}{MN
  \noindent where $\psi_x = -k d_x(\sin\theta\cos\phi-\sin\theta_s\cos\phi_s)$, $\psi_y = -k d_y(\sin\theta\sin\phi-\sin\theta_s\sin\phi_s)$ and $M$ is the number of elements in the $x$ direction of the array $N$ is the number of elements in the $y$ direction(see Appendix: \ref{App:AMISRarr} for derivation).
 
 
-This spatial ambiguity is a separable function made up of the components of $W(\tau,r)$ and $F(\theta_s,\phi_s,\theta,\phi)$. These two functions can be combined by multiplying the two, creating the spatial ambiguity function  $K(\tau,\mathbf{r}_s,\mathbf{r})$, and then doing a volume integration. This will create radar system's estimate of the ACF with one pulse which will be referred to as $\rho(\tau,\mathbf{r}_s)$,
+This spatial ambiguity is a separable function made up of the components of $W(\tau_s,\tau,r_s,r)$ and $F(\theta_s,\phi_s,\theta,\phi)$. These two functions can be combined by multiplying the two, creating the spatial ambiguity function  $K(\tau_s,\mathbf{r}_s,\tau,\mathbf{r})$, and then doing a volume integration. This will create radar system's estimate of the ACF with one pulse which will be referred to as $\rho(\tau_s,\mathbf{r}_s)$,
 
  %\begin{equation}
 
  \begin{align}
   \label{eqn:volume}
-\rho(\tau,\mathbf{r}_s) &= \int F(\theta_s,\phi_s,\theta,\phi)W(\tau,r_s,r) R(\tau,\mathbf{r}) dV,\\
-	&= \int K(\tau,\mathbf{r}_s,\mathbf{r}) R(\tau,\mathbf{r})dV.
+\rho(\tau_s,\mathbf{r}_s) &= \int F(\theta_s,\phi_s,\theta,\phi)W(\tau_s,r_s,\tau,r) R(\tau,\mathbf{r}) dV,\\
+	&= \int K(\tau_s,\mathbf{r}_s,\tau,\mathbf{r}) R(\tau,\mathbf{r})dV.
 \end{align}
  %\end{equation}
 A rendering of an example of this full ambiguity function for an uncoded long pulse and antenna pattern in Equation \ref{eqn:amisrpat} for four beams can be seen in Figure \ref{fig:amb4}.
@@ -219,19 +289,23 @@ A rendering of an example of this full ambiguity function for an uncoded long pu
 	\label{fig:amb4}
 \end{figure}
 
-This one pulse is a single sample of a random process. In order to create a usable estimate of the ACF numerous instances of this ACF need to be averaged together to reduce the variance in order to fit the estimate to a theoretical ACF that is tied to specific parameter values.
+This one pulse is a single sample of a random process. In order to create a usable estimate numerous instances of this ACF need to be averaged together to reduce the variance in order to fit the estimate to a theoretical ACF that is tied to plasma parameter values. To show the impact of this averaging to create the estimate of the ACF we will add slow-time dependence to $R(\tau,\mathbf{r},t)$ along with another separable function $G(t_s,t)$ to the kernel. This function $G(t_s,t)$, while reducing the variance can create blurring of the ACF if the plasma parameters change with in a non-coherent processing interval. Since the radar is sampling the space with individual pulses this function can take the form of a summation of dirac delta functions 
 
-Lastly, since the radar requires a finite amount of time to average pulses to create the estimate of the ACF we will add slow-time dependence to $R$. We will add another separable function $G(t_s,t)$ to the kernel,
+\begin{equation}
+\label{eqn:Gexp}
+G(t_s,t) = \displaystyle \sum_{j=0}^J\alpha_j \delta(t-t_s-jT_{PRI}),
+\end{equation}
 
+\noindent where $J$ is the number of pulses used over a non-coherent processing interval, $T_{PRI}$ is the PRI time period and $\alpha_j$ is the weights that the radar assigns to the pulses. The weights are generally set to $1/J$ to simply average the pulses. With Equation \ref{eqn:Gexp} incorporated into the overall ambiguity we see the full integral equation,
 
 \begin{align}
 \label{eqn:sptamb}
-\rho(\tau,\mathbf{r}_s,t_s) &= \int G(t_s,t)K(\tau,\mathbf{r}_s,\mathbf{r})R(\tau,\mathbf{r},t) dV dt\\
-	\rho(\tau,\mathbf{r}_s,t_s) &=\int L(\tau,\mathbf{r}_s,t_s,\mathbf{r},t)R(\tau,\mathbf{r},t)dVdt.%\\
+\rho(\tau_s,\mathbf{r}_s,t_s) &= \int G(t_s,t)K(\tau_s,\mathbf{r}_s,\tau,\mathbf{r})R(\tau,\mathbf{r},t) dV dt\\
+	\rho(\tau_s,\mathbf{r}_s,t_s) &=\int L(\tau_s,\mathbf{r}_s,t_s,\tau,\mathbf{r},t)R(\tau,\mathbf{r},t)dVdt.%\\
 	%L(\tau,\mathbf{r}_s,t_s,\mathbf{r},t) &= G(t_s,t)F(\theta_s,\phi_s,\theta,\phi)W(\tau,r_s,r)
 \end{align}
 
-\noindent The final kernel, $L(\tau,\mathbf{r}_s,t_s,\mathbf{r},t)$ encompasses the full space-time ambiguity.
+\noindent The final kernel, $L(\tau_s,\mathbf{r}_s,t_s,\tau,\mathbf{r},t)$ encompasses the full space-time ambiguity.
 
 \subsection{Ambiguity after Frame Transformation}
 
@@ -239,34 +313,34 @@ We will now focus on the impact of the motion of plasma as it is going through t
 
 \begin{equation}
 \label{eqn:L2}
-\rho(\tau,\mathbf{r}_s,t_s) = \int K(\tau,\mathbf{r}_s,\mathbf{r}) \int_{t_s}^{t_s+T}R(\tau,\mathbf{r},t) dt dV.
+\rho(\tau_s,\mathbf{r}_s,t_s) = \int K(\tau_s,\mathbf{r}_s,\tau,\mathbf{r}) \left[\int_{t_s}^{t_s+T}R(\tau,\mathbf{r},t) dt\right] dV.
 \end{equation}
 
 Of specific interest are instances in the high latitude ionosphere where embedded plasma structures are moving due to the electric field of the magnetosphere. Because of this it will be assumed that the plasma is rigid object and will not deform with respect to $\mathbf{r}$ over time period $[t_0,t_0+T]$. Also it will be assumed that it will be moving with a constant velocity $\mathbf{v}$. Thus $R(\tau,\mathbf{r},t)\Rightarrow R(\tau,\mathbf{r}+\mathbf{v}t)$. At this point Equation \ref{eqn:L2} becomes,
 
 \begin{equation}
 \label{eqn:L3}
-\rho(\tau,\mathbf{r}_s,t_s) = \int \int_{t_s}^{t_s+T} K(\tau,\mathbf{r}_s,\mathbf{r})R(\tau,\mathbf{r}+\mathbf{v}t)dtdV\end{equation}
+\rho(\tau_s,\mathbf{r}_s,t_s) = \int \int_{t_s}^{t_s+T} K(\tau_s,\mathbf{r}_s,\tau,\mathbf{r})R(\tau,\mathbf{r}+\mathbf{v}t)dtdV\end{equation}
 
 A change of variables where $\mathbf{r}' = \mathbf{r}+\mathbf{v}t$ acts as a Galilean transform and applies a warping to the kernel and changing the frame of reference. Then Equation \ref{eqn:L3} becomes
 
 \begin{equation}
 \label{eqn:L4}
-\rho(\tau,\mathbf{r}_s,t_s)= \int \int_{t_s}^{t_s+T} K(\tau,\mathbf{r}_s,\mathbf{r}'-\mathbf{v}t)R(\tau,\mathbf{r}')dtdV.
+\rho(\tau_s,\mathbf{r}_s,t_s)= \int \int_{t_s}^{t_s+T} K(\tau_s,\mathbf{r}_s,\tau,\mathbf{r}'-\mathbf{v}t)R(\tau,\mathbf{r}')dtdV.
 \end{equation}
 
 \noindent Since $R(\tau,\mathbf{r}')$ is no longer dependent on $t$ Equation\ref{eqn:L4} becomes,
 
 \begin{equation}
 \label{eqn:L5}
-\rho(\tau,\mathbf{r}_s,t_s)= \int \left[ \;\; \int_{t_s}^{t_s+T}  K(\tau,\mathbf{r}_s,\mathbf{r}'-\mathbf{v}t)dt \;\; \right]R(\tau,\mathbf{r}')dV.
+\rho(\tau_s,\mathbf{r}_s,t_s)= \int \left[ \;\; \int_{t_s}^{t_s+T}  K(\tau_s,\mathbf{r}_s,\tau,\mathbf{r}'-\mathbf{v}t)dt \;\; \right]R(\tau,\mathbf{r}')dV.
 \end{equation}
 
 By performing the integration in $t$ the problem can now be simplified further back to a Fredholm integral equation by simply replacing the terms  in the square brackets as a new kernel $A$,
 
 \begin{equation}
 \label{eqn:L6}
-\rho(\tau,\mathbf{r}_s,t_s)= \int A(\tau,\mathbf{r}_s,t_s,\mathbf{r}') R(\tau,\mathbf{r}')dV.
+\rho(\tau_s,\mathbf{r}_s,t_s)= \int A(\tau_s,\mathbf{r}_s,t_s,\tau,\mathbf{r}') R(\tau,\mathbf{r}')dV.
 \end{equation}
 
 \noindent The impact of the plasma velocity on the ambiguity function can be seen in Figure \ref{fig:ambtime}. This is the same ambiguity as seen in Figure \ref{fig:amb4} but with a velocity of 500 m/s in the $y$ direction over a period of 2 minutes. This velocity creates a larger ambiguity function in the frame of reference of the moving plasma.
