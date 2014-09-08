@@ -65,7 +65,7 @@ Another set of techniques often shown in the literature focus on reducing the im
 
 The other set of post processing methods, such as in \citet{nikoukar2008} and \citet{Virtanen:2008vx}, treat the problem as a linear inverse problem of the lags. Methods such as total-variations or Tikihonov regularization can be applied to the lags to try to fill in the missing information nation from the null space of the operator. These methods are easy to compute and can rely on a large body of knowledge from engineering communities that study linear inverse problems. 
 
-Recently phased array technology has started to be leveraged by ISR community. The Advance Modular Incoherent Scatter Radar (AMISR) systems have already been deployed both at the Poker Flat Alaska (PFISR) and Resolute Bay Canada (RISR) \citep{amisr.site}. The EISCAT-3D project is currently being developed using phased array technology as well and will be capable of multistatic processing \citep{eiscat3ddesign}. These new systems are already being used to create three dimensional reconstructions of plasma parameters \citep{Semeter2009738}, \citep{Nicolls:2007ie, dahlgren2012di,Dahlgren:2012dq}. 
+Recently phased array technology has started to be leveraged by ISR community. The Advance Modular Incoherent Scatter Radar (AMISR) systems have already been deployed both at the Poker Flat Alaska (PFISR) and Resolute Bay Canada (RISR) \citep{amisr.site}. The EISCAT-3D project is currently being developed using phased array technology as well and will be capable of multistatic processing \citep{eiscat3ddesign}. These new systems are already being used to create three dimensional reconstructions of plasma parameters \citep{Semeter2009738, Nicolls:2007ie, dahlgren2012di,Dahlgren:2012dq}. 
 
 There has been no formal derivation of an ambiguity function for all three spatial dimensions for these systems, although up until recently ISR systems, which only had dish antennas, could not mitigate the finite beam width effects. In a highly dynamic region like the high latitude ionosphere this lack of knowledge can be problematic. There are numerous phenomena such as polar cap patches that may be moving through the field of view at very high speeds \citep{dahlgren2012di}. This motion can cause an apparent expansion in the shape of the beams if one represents the beams in the frame of reference of the moving plasma.
 
@@ -98,12 +98,14 @@ Using this methodology we can make many parallels between ISR and CCD cameras. I
     \caption{Radar}
     \label{fig:radarblur}
 \end{figure}
-In this publication we will develop a model for a full three dimensional space-time ambiguity function for 3-D ISR systems. This function can also be modified to show the ambiguity within the rest frame of the moving plasma. In the end this full three dimensional can be represented as kernel in a Fredholm integral equation like in Equation \ref{eqn:friedholm} with $f(s)$ being the lag of the autocorrelation function at a specific time and position. 
+In this publication we will develop a model for a full three dimensional space-time ambiguity function for 3-D ISR systems. This function can also be modified to show the ambiguity within the rest frame of the moving plasma. In the end this full three dimensional can be represented as kernel in a Fredholm integral equation,
 
 \begin{equation}
 \label{eqn:friedholm}
 g(t) = \int_a^b K(t,s) f(s) ds
 \end{equation}
+
+\noindent where, for ISR, $f(s)$ is the lag of the autocorrelation function at a specific time and position.
 
 The impact of the three-dimensional ambiguity on moving plasma will be shown through simulation. This ISR simulator fully emulates the ISR data creation process at the IQ level. 
 
@@ -117,7 +119,7 @@ The three dimensional nature of the problem requires first defining the spatial 
 
 The radar will sample this space into a set of discrete points which will be referred to as $\mathbf{r}_s = [x_s,y_s,z_s]^T$ along with the descritized range $r_s=|\mathbf{r}_s|$. The sampled space will consist of a number of points which are the combinations of the range gates and number of beams. This points can also be referred in the polar coordinates $\mathbf{r}_s = [r_s,\theta_s,\phi_s]^T$, where $\theta_s$ is the sampled elevation angle, $\phi_s$ is the sampled azimuth angle.
 
-For notation purposes we use two different sets of time commonly known in radar literature as fast-time, $n$ and slow-time, $t$ \citep{richards:fundamentalsigproc}.. Fast-time is used to explore the workings of the radar on the order of the radar systems A/D conversion such as lag formation. Slow-time will used for processes that vary in time on the order of the system's pulse repetition interval (PRI). In order to form estimates  of the ACFs, with desired statistical properties, it is assumed that the plasma parameters parameters will change on the order of 10 to hundreds of PRIs. The term $n$ will be a sampled parameter while $t$ will represent a continuous time and $t_s$ will be the slow time parameter sampled by the radar. The sampling of $t_s$ can at lowest be the PRI but generally it is sampled once in an integration period so the reconstructed parameters can be considered as independent measurements in time.
+For notation purposes we use two different sets of time commonly known in radar literature as fast-time, $n$ and slow-time, $t$ \citep{richards:fundamentalsigproc}.. Fast-time is used to explore the workings of the radar on the order of the radar systems A/D conversion such as lag formation. Slow-time will used for processes that vary in time on the order of the system's pulse repetition interval (PRI). In order to form estimates  of the ACFs, with desired statistical properties, it is assumed that the plasma parameters parameters will change on the order of 10's to hundreds of PRIs. The term $n$ will be a sampled parameter while $t$ will represent a continuous time and $t_s$ will be the slow time parameter sampled by the radar. The sampling of $t_s$ can at lowest be the PRI but generally it is sampled once in a non-coherent processing interval (NCPI), or a period of time it takes the radar to average the desired number of pulses. This is done so the reconstructed parameters can be considered an independent measurements in time. 
 
 %In the ISR literature the measurement ambiguity along the range dimension is often referred to simply as the ambiguity function \citep{hysell2008}. This only shows the measurement ambiguity along the range $r$. Due to the three-dimensional imaging capability of phased array ISR systems we will define a new set of terminology to describe this more complicated measurement which is now imaging the ionosphere in three-dimensional continuous coordinates $\mathbf{r}=[x,y,z]^T$. This coordinate system $\mathbf{r}=[0,0,0]^T$ at the location of the radar. The radar will create a 3-D representation of the ionospheric parameters in to discrete coordinates $\mathbf{r}_s = [x_s,y_s,z_s]^T$.
 
@@ -289,14 +291,14 @@ A rendering of an example of this full ambiguity function for an uncoded long pu
 	\label{fig:amb4}
 \end{figure}
 
-This one pulse is a single sample of a random process. In order to create a usable estimate numerous instances of this ACF need to be averaged together to reduce the variance in order to fit the estimate to a theoretical ACF that is tied to plasma parameter values. To show the impact of this averaging to create the estimate of the ACF we will add slow-time dependence to $R(\tau,\mathbf{r},t)$ along with another separable function $G(t_s,t)$ to the kernel. This function $G(t_s,t)$, while reducing the variance can create blurring of the ACF if the plasma parameters change with in a non-coherent processing interval. Since the radar is sampling the space with individual pulses this function can take the form of a summation of dirac delta functions 
+This one pulse is a single sample of a random process. In order to create a usable estimate numerous instances of this ACF need to be averaged together to reduce the variance in order to fit the estimate to a theoretical ACF that is tied to plasma parameter values. To show the impact of this averaging to create the estimate of the ACF we will add slow-time dependence to $R(\tau,\mathbf{r},t)$ along with another separable function $G(t_s,t)$ to the kernel. This function $G(t_s,t)$, while reducing the variance can create blurring of the ACF if the plasma parameters change with in a NCPI. Since the radar is sampling the space with individual pulses this function can take the form of a summation of Dirac delta functions 
 
 \begin{equation}
 \label{eqn:Gexp}
-G(t_s,t) = \displaystyle \sum_{j=0}^J\alpha_j \delta(t-t_s-jT_{PRI}),
+G(t_s,t) = \displaystyle \sum_{j=0}^{J-1}\alpha_j \delta(t-t_s-jT_{PRI}),
 \end{equation}
 
-\noindent where $J$ is the number of pulses used over a non-coherent processing interval, $T_{PRI}$ is the PRI time period and $\alpha_j$ is the weights that the radar assigns to the pulses. The weights are generally set to $1/J$ to simply average the pulses. With Equation \ref{eqn:Gexp} incorporated into the overall ambiguity we see the full integral equation,
+\noindent where $J$ is the number of pulses used over a NCPI, $T_{PRI}$ is the PRI time period and $\alpha_j$ is the weights that the radar assigns to the pulses. The weights are generally set to $1/J$ to simply average the pulses. With Equation \ref{eqn:Gexp} incorporated into the overall ambiguity we see the full integral equation,
 
 \begin{align}
 \label{eqn:sptamb}
@@ -309,34 +311,27 @@ G(t_s,t) = \displaystyle \sum_{j=0}^J\alpha_j \delta(t-t_s-jT_{PRI}),
 
 \subsection{Ambiguity after Frame Transformation}
 
-We will now focus on the impact of the motion of plasma as it is going through the field of view of the radar. We will assume that the radar is integrating over a length of time $T$ beginning at $t_s$. The kernel $L$ will be represented as a separable function $K$ and $G$ as in Equation \ref{eqn:sptamb}. In this case $G$ will be an indicator function of length $T$ and centered at $t_0+1/2$. This will change Equation \ref{eqn:sptamb} to the following,
+We will now focus on the impact of the motion of plasma as it is going through the field of view of the radar. We will assume that the radar is integrating over a length of time $T$ beginning at $t_s$. The kernel $L$ will be represented as a separable function $K$ and $G$ as in Equation \ref{eqn:sptamb}. In this case $G$ will be a summation of Dirac delta functions with weights of $1/J$. This will change Equation \ref{eqn:sptamb} to the following,
 
 \begin{equation}
 \label{eqn:L2}
-\rho(\tau_s,\mathbf{r}_s,t_s) = \int K(\tau_s,\mathbf{r}_s,\tau,\mathbf{r}) \left[\int_{t_s}^{t_s+T}R(\tau,\mathbf{r},t) dt\right] dV.
+\rho(\tau_s,\mathbf{r}_s,t_s) = \int K(\tau_s,\mathbf{r}_s,\tau,\mathbf{r}) \left[(1/J)\int_{t_s}^{t_s+T} \displaystyle \sum_{j=0}^{J-1} \delta(t-t_s-jT_{PRI})R(\tau,\mathbf{r},t) dt\right] dV.
 \end{equation}
 
-Of specific interest are instances in the high latitude ionosphere where embedded plasma structures are moving due to the electric field of the magnetosphere. Because of this it will be assumed that the plasma is rigid object and will not deform with respect to $\mathbf{r}$ over time period $[t_0,t_0+T]$. Also it will be assumed that it will be moving with a constant velocity $\mathbf{v}$. Thus $R(\tau,\mathbf{r},t)\Rightarrow R(\tau,\mathbf{r}+\mathbf{v}t)$. At this point Equation \ref{eqn:L2} becomes,
+Of specific interest are instances in the high latitude ionosphere where embedded plasma structures are moving due to the electric field of the magnetosphere. Because of this it will be assumed that the plasma is rigid object and will not deform with respect to $\mathbf{r}$ over time period $[t_0,t_0+T]$ where $T=JT_{PRI}$ is the time for one NCPI. Also it will be assumed that it will be moving with a constant velocity $\mathbf{v}$. Thus $R(\tau,\mathbf{r},t)\Rightarrow R(\tau,\mathbf{r}+\mathbf{v}t)$. The assumption of rigidity, although not specifically realistic \citep{Tsunoda:1988ul}, is useful because it shows the utility of this frame work to analyze the impacts on the true resolution of the ISR systems. With these assumption Equation \ref{eqn:L2} becomes,
 
 \begin{equation}
 \label{eqn:L3}
-\rho(\tau_s,\mathbf{r}_s,t_s) = \int \int_{t_s}^{t_s+T} K(\tau_s,\mathbf{r}_s,\tau,\mathbf{r})R(\tau,\mathbf{r}+\mathbf{v}t)dtdV\end{equation}
+\rho(\tau_s,\mathbf{r}_s,t_s) =(1/J) \int \int_{t_s}^{t_s+T} \displaystyle \sum_{j=0}^{J-1}\delta(t-t_s-jT_{PRI}) K(\tau_s,\mathbf{r}_s,\tau,\mathbf{r})R(\tau,\mathbf{r}+\mathbf{v}t)dtdV\end{equation}
 
-A change of variables where $\mathbf{r}' = \mathbf{r}+\mathbf{v}t$ acts as a Galilean transform and applies a warping to the kernel and changing the frame of reference. Then Equation \ref{eqn:L3} becomes
-
-\begin{equation}
-\label{eqn:L4}
-\rho(\tau_s,\mathbf{r}_s,t_s)= \int \int_{t_s}^{t_s+T} K(\tau_s,\mathbf{r}_s,\tau,\mathbf{r}'-\mathbf{v}t)R(\tau,\mathbf{r}')dtdV.
-\end{equation}
-
-\noindent Since $R(\tau,\mathbf{r}')$ is no longer dependent on $t$ Equation\ref{eqn:L4} becomes,
+A change of variables where $\mathbf{r}' = \mathbf{r}+\mathbf{v}t$ acts as a Galilean transform and applies a warping to the kernel and changing the frame of reference. Since $R(\tau,\mathbf{r}')$ is no longer dependent on $t$ Equation \ref{eqn:L3} becomes,
 
 \begin{equation}
 \label{eqn:L5}
-\rho(\tau_s,\mathbf{r}_s,t_s)= \int \left[ \;\; \int_{t_s}^{t_s+T}  K(\tau_s,\mathbf{r}_s,\tau,\mathbf{r}'-\mathbf{v}t)dt \;\; \right]R(\tau,\mathbf{r}')dV.
+\rho(\tau_s,\mathbf{r}_s,t_s)= (1/J)\int \left[ \;\;  \displaystyle \sum_{j=0}^{J-1} K(\tau_s,\mathbf{r}_s,\tau,\mathbf{r}'-\mathbf{v}(t_s+jT_{PRI})) \;\; \right]R(\tau,\mathbf{r}')dV.
 \end{equation}
 
-By performing the integration in $t$ the problem can now be simplified further back to a Fredholm integral equation by simply replacing the terms  in the square brackets as a new kernel $A$,
+By performing the integration in $t$ the problem can now be simplified further back to a Fredholm integral equation by simply replacing the terms in the square brackets as a new kernel $A(\tau_s,\mathbf{r}_s,t_s,\tau,\mathbf{r}')$,
 
 \begin{equation}
 \label{eqn:L6}
@@ -378,7 +373,7 @@ After the IQ data has been created it is processed in to create an estimates of 
 \label{fig:chain}
 \end{figure}
 
-The sampled I/Q can be represented as $x(n) \in\mathbb{C}^N$ where $N$ is the number of samples in an inter pulse period.  At this point the first step in estimating the autocorrelation function is taken.  For each range gate $m\in 0,1,...M-1$ an autocorrelation is estimated for each lag of $l \in 0,1...,L-1$.  To get better statistics this operation is performed for each pulse $j\in 0,1,...J-1$ and then summed over the $J$ pulses.  The entire operation to form the initial estimate of $\hat{R}(m,l)$ can be seen in Equation \ref{lagpro}:
+The sampled I/Q can be represented as $x(n) \in\mathbb{C}^N$ where $N$ is the number of samples in an inter pulse period.  At this point the first step in estimating the autocorrelation function is taken.  For each range gate $m\in 0,1,...M-1$ an autocorrelation is estimated for each lag of $l \in 0,1...,L-1$.  To get better statistics this operation is performed for each pulse $j\in 0,1,...J-1$ and then summed over the $J$ pulses.  The entire operation to form the initial estimate of $\hat{R}(m,l)$ is the following,
 
 \begin{equation}
 \label{lagpro}
@@ -388,7 +383,7 @@ The sampled I/Q can be represented as $x(n) \in\mathbb{C}^N$ where $N$ is the nu
 
 The case shown in Equation \ref{lagpro} is a centered lag product, other types of lag products calculations are available but generally a centered product is used. In the centered lag product case range gate index $m$ and sample index $n$ can be related by $m=n-\lfloor L/2\rfloor$ and the maximum lag and sample relation is $M=N-\lceil L/2 \rceil$. 
 
-After the lag products have been formed an estimate of the noise correlation is subtracted out of $\hat{R}(m,l)$, which is defined as $\hat{R}_w(m,l)$:
+After the lag products have been formed an estimate of the noise correlation is subtracted out of $\hat{R}(m,l)$, which is defined as $\hat{R}_w(m,l)$,
 
 \begin{equation}
 \label{lagpronoise}
@@ -477,8 +472,7 @@ The phantoms for each parameter at approximately 402 seconds can be seen in Figu
 %%%%%%%%%%%%%% Mitigation %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Possible Mitigation Techniques}
-There are a number of possible ways to remove the ISR operator function to the data. A relatively simply way to remove the problem is to process the data in the frame of reference of the plasma. This technique includes measuring the ion velocity of the plasma and then integrating the beams that the plasma is present in as it moves through the field of view.
-
+There are a number of possible ways to remove the ISR operator function to the data. A relatively simply way to remove the problem is to process the data in the frame of reference of the plasma. Already it has been shown that it is possible to measure the vector velocity of plasma flows, \citep{butler:imagingfregiondrifts}. After measuring the velocity instead of integrating in the same beam one could integrate across different beams using this knowledge. This would allow for ACF to be formed from the same populations of plasma as it moves through the field of view.
 
 In order to reconstruct the plasma parameters it is necessary to do some sort of regularization. There are two type of regularization that can be applied in this case the first is parameter based regularization, like full profile analysis, and the other is data based regularization. The term parameter based regularization in this case means applying constraints to the physical parameters that are often determined after fitting. This requires a large amount of calculation because the fitting and constraints are done in one step. Currently full profile analysis has only been applied along the range dimension and not in all three spatial dimensions. Extending this to three dimensions may make these algorithms computationally infeasible.
 
@@ -509,6 +503,7 @@ E_1(\theta,\phi) =\displaystyle \sum_{m=1}^{M/2}\sum_{n=1}^{N} e^{-j2\left(m-1\r
 \label{eqn:arrpat2}
 E_2(\theta,\phi) =\displaystyle \sum_{m=1}^{M/2}\sum_{n=1}^{N} e^{-j\left(2m-1\right)kd_x\sin\theta\cos\phi -j\left(n-1/2\right) k d_y\sin\theta\sin\phi}.
 \end{equation}
+
 In order to simplify notation we will make the following substitutions, $\psi_x = -k d_x\sin\theta\cos\phi$, $\psi_y = -k d_y\sin\theta\sin\phi$. Using Equations \ref{eqn:arrpat1} and \ref{eqn:arrpat2} we can see the following relationship,
 
 \begin{equation}
@@ -527,14 +522,11 @@ E(\theta,\phi) &= \displaystyle  \left(1+e^{j(\psi_y/2 + \psi_x)}\right)\sum_{m=
 
 Since the array is steerable this can be taken into account in the equations by simply changing the definitions of $\psi_x $ and $\psi_y$ to $\psi_x = k d_x(\sin\theta\cos\phi-\sin\theta_s\cos\phi_s)$, and $\psi_y = k d_y(\sin\theta\sin\phi-\sin\theta_s\sin\phi_s)$. Lastly the antenna pattern of a single cross dipole can be represented as $ \frac{1}{2}(1+\cos(\theta)^2)$\citep{Balanis:2005:ATA:1208379}. By taking the squared magnitude of the array factor and multiplying it with the pattern of the dipole we get Equation \ref{eqn:amisrpat},
 
-
- \begin{equation}
- \label{eqn:amisrpatfinal}
+\begin{equation}
+\label{eqn:amisrpatfinal}
 F(\theta_s,\phi_s,\theta,\phi) = \frac{1}{2}(1+\cos(\theta)^2)\left| \frac{1}{MN} \left(1+e^{j(\psi_y/2 + \psi_x)}\right)\frac{\sin((M/2) \psi_x)}{\sin(\psi_x)} \frac{\sin((N/2) \psi_x)}{\sin(\psi_x/2)}\right|^2.
- \end{equation}
+\end{equation}
  
- 
-
 \bibliographystyle{BibTeX/agufull08}
 \bibliography{BibTeX/litreview}
 
