@@ -14,7 +14,7 @@
 \graphicspath{{Figs/}}
 
 \authorrunninghead{SWOBODA ET AL.}
-\titlerunninghead{3-D ISR}
+\titlerunninghead{ESA ISR}
 
 
 \authoraddr{Corresponding author: J. P. Swoboda,
@@ -25,7 +25,7 @@ Boston, MA 02215, USA.
 
 \begin{document}
 
-\title{Space-Time Ambiguity Function in 3-D ISR}
+\title{Space-Time Ambiguity Function for Electronically Scanned ISR}
 %%%%%%%%%%%%%% Author Info %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \authors{John Swoboda,\altaffilmark{1}
 Joshua Semeter,\altaffilmark{1} Philip Erickson \altaffilmark{2}}
@@ -36,9 +36,11 @@ Boston University, Boston, Massachusetts, USA.}
 MIT Haystack Observatory, Westford Massachusetts, USA.}
 %%%%%%%%%%%%%% Abstract %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\begin{abstract}By leveraging electronically steerable phased array antenna technology, incoherent scatter radars (ISR) have now become full three-dimensional remote sensors for ionosphere plasmas. Currently these systems are operating in the high latitude region where the ionosphere is highly dynamic in both space and time. Because of the highly dynamic nature of the ionosphere in this region it is import to differentiate between artifacts and the true behavior of the plasma. Often the three dimension data is fitted in a spherical coordinate space and then the parameters are interpolated to a Cartesian grid. This and other sources of error could be impacting the reconstructions of the plasma parameters.
+\begin{abstract} Electronically steerable array (ESA) technology has recently been used in incoherent scatter radars (ISR). These arrays allow for pulse-to-pulse steering of the antenna beam as opposed to a dish antenna which can only measure plasma parameters along one beam at a time. This allows for the simultaneous measurement of ionospheric plasma parameters in a three-dimensional space within a one point in time.  
 
-In this study we present a new way of analyzing 3-D dimension ISR through use of the space-time ambiguity function. This concept is similar to the range ambiguity function that is used in traditional ISR for scanning antenna systems but has been extended to all spatial dimension along with time as well.
+Currently these systems are operating in the high latitude region where the ionosphere is highly dynamic in both space and time. Because of the highly dynamic nature of the ionosphere in this region it is important to differentiate between artifacts and the true behavior of the plasma. Often the three dimensional data is fitted in a spherical coordinate space and then the parameters are interpolated to a Cartesian grid. This and other sources of error could be impacting the reconstructions of the plasma parameters.
+
+In this study we present a new way of analyzing ISR through use of the space-time ambiguity function. This concept is similar to the range ambiguity function that is used in traditional ISR for scanning antenna systems but has been extended to all spatial dimension along with time as well.
 
 The use of this new ambiguity function allow us to pose this problem in terms of a  linear inverse problem for the lags of the intrinsic plasma autocorrelation function. From this we can explore the impact of non-stationarity in the plasma parameters in both time and space. Along with showing possible artifacts we will begin to explore ways of reducing these artifacts.
 
@@ -52,26 +54,43 @@ The use of this new ambiguity function allow us to pose this problem in terms of
 %%%%%%%%%%%%%% Intro %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Introduction}
-Incoherent scatter radar (ISR) systems have enabled researchers since the 1950's to explore the ionosphere \citep{gordon58}. Using methodology developed by Dougherty, Farley and others these systems can give measurements of electron density $N_e$, Ion temperature $T_i$, electron temperature $T_e$, Ion velocity $V_i$ and other plasma parameters \citep{dougherty:farley1960, farleydougherty:ISR2, doughteryfarley:ISR3, hagfors1961}. These parameters are measured by fitting a nonlinear theoretic autocorrelation function (ACF) model derived from first principles physics to an estimated intrapulse time autocorrelation of the scattered radar signal \citep{Lehtinen1996435}. 
+Incoherent scatter radar (ISR) is a powerful tool for exploring the ionosphere. These systems can give measurements of electron density $N_e$, ion temperature $T_i$, electron temperature $T_e$, ion velocity $V_i$ and other plasma parameters \citep{dougherty:farley1960, farleydougherty:ISR2, doughteryfarley:ISR3, hagfors1961}. These parameters are measured by fitting a nonlinear theoretic autocorrelation function (ACF) model derived from first principles physics to an estimated time autocorrelation or, alternatively, the power spectrum of the scattered radar signal \citep{Lehtinen1996435}. 
+
+In order to get an estimate of the ACF with reasonable statistical properties numerous pulses have to be averaged together. With traditional dish antennas the ISR system would build these statistics in a limited number of ways. One method consists of pointing the radar beam in a specific direction and hold it there until enough pulses were integrated to get the desired statistics. Alternatively, the beam could be scanned through a field of view and collect pulses while moving. These techniques have an implicit assumptions about the stationarity of the plasma parameters. The first method assumes a stationarity in time while the pulses are collected while the second technique assumes that the velocity of the plasma is known and the beam is scanning along it's velocity or more simply that the plasma parameters are not changing along the motion of the beam.
+
+In many cases, especially in the high latitude ionosphere, these stationarity assumptions are not met. Phenomena such as polar cap patches that may be moving through the field of view at very high speeds and may only be with in the beam for a  short period of time\citep{dahlgren2012di}. Poleward Boundary intensifications also break this assumption.
 %This initial work showed the nonlinear relationship between the plasma parameters and the incoherent scatter autocorrelation function. 
 
-As with any real world measurement method there is limit to the spatial and temporal resolution of ISR systems. This resolution is determined by the ability of the sensor to create independent measurements of the ACF in time and space of what is essentially a zero-mean complex Gaussian process. At space and time extents smaller then these resolutions the random process that the ACF is derived from is assumed to be stationary. In ISR literature the ambiguity function encapsulates the spatial resolution in the range dimension. This ambiguity emerges as a function of range and correlation lag due to the pulse modulation and the finite bandwidth of the receiver \citep{farley1969}. The time resolution is determined by how long it takes to average the autocorrelation function to reduce the variance of the estimate to a desired level.
+%As with any real world measurement method there is a limit to the spatial and temporal resolution of ISR systems. This resolution is determined by the ability of the sensor to create independent statistical estimates of the ACF in time and space of what is essentially a zero-mean complex Gaussian process. At space and time extents smaller then these resolutions the random process that the ACF is derived from is assumed to be stationary. In ISR literature the ambiguity function encapsulates the spatial resolution in the range dimension. This ambiguity emerges as a function of range and correlation lag due to the pulse modulation and the finite bandwidth of the receiver \citep{farley1969}. The time resolution is determined by how long it takes to average the autocorrelation function to reduce the variance of the estimate to a desired level.
 
 %The hard target radar world also uses an ambiguity to analyze resolution but it is a function of time delay and Doppler mismatch. The CPI for a pulse doppler is like the time ambiguity. This ambiguity is tied to 
 
-This assumption of stationarity at the level of the ambiguity function constrains the measurement and creates a blurring and other forms of artifacts due to the non-linear fitting of plasma parameters. In order to reduce the impact of these ambiguities a number techniques have been developed. Some techniques include trying to reduce the extent of the ambiguity function by adjusting the waveform. Barker code wave forms are used in ISR but mainly for low altitude studies of the E-region due to the inability to form a spectrum from them. Another method for reducing the ambiguity in range is using alternating codes \citep{grayfarley:isrcomppulse, lehtinen;ac, Sultzer1993, 1989AdSpR...9..153S}. %These codes though do reduce the amount of power returned from a specific volume of plasma.
+%This assumption of stationarity at the level of the ambiguity function constrains the measurement and creates a blurring and other forms of artifacts due to the non-linear fitting of plasma parameters. In order to reduce the impact of these ambiguities a number techniques have been developed. Some techniques include trying to reduce the extent of the ambiguity function by adjusting the waveform. Barker code wave forms are used in ISR but mainly for low altitude studies of the E-region due to the inability to form a spectrum from them. Another method for reducing the ambiguity in range is using alternating codes \citep{grayfarley:isrcomppulse, lehtinen;ac, Sultzer1993, 1989AdSpR...9..153S}. %These codes though do reduce the amount of power returned from a specific volume of plasma.
 
-Another set of techniques often shown in the literature focus on reducing the impact of the ambiguity function through post processing. The first method, full profile analysis, consists of fitting physical parameter values to entire range extent taking into account all of the correlations between all locations \citep{holt1992, Lehtinen1989133, Lehtinen:1997uh,hysell2008}. This technique often places constraints on the physical parameters as in \citet{hysell2008}. Because the the relationship between the autocorrelation function and the lags are non-linear this method often yields algorithms that require a large amount computation to calculate the covariance matrices between all of the values.
+%Another set of techniques often shown in the literature focus on reducing the impact of the ambiguity function through post processing. The first method, full profile analysis, consists of fitting physical parameter values to entire range extent taking into account all of the correlations between all locations \citep{holt1992, Lehtinen1989133, Lehtinen:1997uh,hysell2008}. This technique often places constraints on the physical parameters as in \citet{hysell2008}. Because the the relationship between the autocorrelation function and the lags are non-linear this method often yields algorithms that require a large amount computation to calculate the covariance matrices between all of the values.
 
-The other set of post processing methods, such as in \citet{nikoukar2008} and \citet{Virtanen:2008vx}, treat the problem as a linear inverse problem of the lags. Methods such as total-variations or Tikihonov regularization can be applied to the lags to try to fill in the missing information nation from the null space of the operator. These methods are easy to compute and can rely on a large body of knowledge from engineering communities that study linear inverse problems. 
+%The other set of post processing methods, such as in \citet{nikoukar2008} and \citet{Virtanen:2008vx}, treat the problem as a linear inverse problem of the lags. Methods such as total-variations or Tikihonov regularization can be applied to the lags to try to fill in the missing information nation from the null space of the operator. These methods are easy to compute and can rely on a large body of knowledge from engineering communities that study linear inverse problems. 
 
-Recently phased array technology has started to be leveraged by ISR community. The Advance Modular Incoherent Scatter Radar (AMISR) systems have already been deployed both at the Poker Flat Alaska (PFISR) and Resolute Bay Canada (RISR) \citep{amisr.site}. The EISCAT-3D project is currently being developed using phased array technology as well and will be capable of multistatic processing \citep{eiscat3ddesign}. These new systems are already being used to create three dimensional reconstructions of plasma parameters \citep{Semeter2009738, Nicolls:2007ie, dahlgren2012di,Dahlgren:2012dq}. 
+Recently electronically scannable array (ESA) technology has started to be leveraged by ISR community. The Advance Modular Incoherent Scatter Radar (AMISR) systems have already been deployed both at the Poker Flat Alaska (PFISR) and Resolute Bay Canada (RISR) \citep{amisr.site}. The EISCAT-3D project is currently being developed using phased array technology as well and will be capable of multistatic processing \citep{eiscat3ddesign}. These new systems are already being used in a number of different ways including creating three dimensional reconstructions of plasma parameters \citep{Semeter2009738, Nicolls:2007ie, dahlgren2012di,Dahlgren:2012dq}. 
 
-There has been no formal derivation of an ambiguity function for all three spatial dimensions for these systems, although up until recently ISR systems, which only had dish antennas, could not mitigate the finite beam width effects. In a highly dynamic region like the high latitude ionosphere this lack of knowledge can be problematic. There are numerous phenomena such as polar cap patches that may be moving through the field of view at very high speeds \citep{dahlgren2012di}. This motion can cause an apparent expansion in the shape of the beams if one represents the beams in the frame of reference of the moving plasma.
+These new systems differentiate themselves from dish antennas in a fundamental way. Instead of dwelling in a single beam or scanning along a prescribed direction, an electronically phased array can move to a different beam position within its field of view on a pulse by pulse basis. This yields a new flexibility to integrate not only along time but in space in an arbitrary direction and can relax the assumptions of stationarity for traditional dish antennas.
 
-These three-dimensional reconstructions often consist of taking the fitted parameters and then interpolating them to a Cartesian space from the system's natural spherical coordinate space \citep{Butler:2013ul}. The step of fitting the autocorrelation function to the theoretical functions to find the final plasma parameters is a non-linear operation. Because of this it is impossible to exactly predict the impact on the parameter values as different plasma populations move through the field of view of the radar. Alternatively it is possible to treat the formation of the autocorrelation estimates as a linear process with each lag as an independent channel \citep{nikoukar2008}.
+In order to take advantage of this new flexibility we will put forth the idea of the space-time ambiguity function. This concept extends the range ambiguity to all three spatial dimensions along with time. In the end thisambiguity can be represented as kernel in a Fredholm integral equation,
 
-Using this methodology we can make many parallels between ISR and CCD cameras. In cameras bluring can take place when an object moves over a space covered by one pixel while the shutter is open and the CCD is collecting photons. A diagram of this can be seen in Figure \ref{fig:ccd}. The same holds for ISR except that the pixels are no longer square and instead are determined by the beam shape and pulse pulse pattern. This is shown in the diagrams in Figure \ref{fig:radarblur}.
+\begin{equation}
+\label{eqn:friedholm}
+\rho(\mathbf{r}_{s}) = \int K(\mathbf{r}_{s},\mathbf{r}) R(\mathbf{r}) d\mathbf{r}
+\end{equation}
+
+\noindent where, for ISR, $R(\mathbf{r}))$ is the lag of the autocorrelation function at a specific time and position.
+
+
+
+%There has been no formal derivation of an ambiguity function for all three spatial dimensions for these systems, although up until recently ISR systems, which only had dish antennas, could not mitigate the finite beam width effects. In a highly dynamic region like the high latitude ionosphere this lack of knowledge can be problematic. There are numerous phenomena such as polar cap patches that may be moving through the field of view at very high speeds \citep{dahlgren2012di}. This motion can cause an apparent expansion in the shape of the beams if one represents the beams in the frame of reference of the moving plasma.
+
+%These three-dimensional reconstructions often consist of taking the fitted parameters and then interpolating them to a Cartesian space from the system's natural spherical coordinate space \citep{Butler:2013ul}. The step of fitting the autocorrelation function to the theoretical functions to find the final plasma parameters is a non-linear operation. Because of this it is impossible to exactly predict the impact on the parameter values as different plasma populations move through the field of view of the radar. Alternatively it is possible to treat the formation of the autocorrelation estimates as a linear process with each lag as an independent channel \citep{nikoukar2008}.
+
+By using this formulation many parables between ISR and classic camera blurring problems can be made. In cameras blurring can take place when an object moves over a space covered by one pixel while the shutter is open and the CCD is collecting photons. A diagram of this can be seen in Figure \ref{fig:ccd}. The same holds for ISR except that the pixels are no longer square and instead are determined by the beam shape and pulse pattern. This is shown in the diagrams in Figure \ref{fig:radarblur}.
 
 \begin{figure}[h!]
     \centering
@@ -98,18 +117,15 @@ Using this methodology we can make many parallels between ISR and CCD cameras. I
     \caption{Radar}
     \label{fig:radarblur}
 \end{figure}
-In this publication we will develop a model for a full three dimensional space-time ambiguity function for 3-D ISR systems. This function can also be modified to show the ambiguity within the rest frame of the moving plasma. In the end this full three dimensional can be represented as kernel in a Fredholm integral equation,
+%In this publication we will develop a model for a full three dimensional space-time ambiguity function for 3-D ISR systems. This function can also be modified to show the ambiguity within the rest frame of the moving plasma. In the end this full three dimensional can be represented as kernel in a Fredholm integral equation,
 
-\begin{equation}
-\label{eqn:friedholm}
-g(t) = \int_a^b K(t,s) f(s) ds
-\end{equation}
+%\begin{equation}
+%\label{eqn:friedholm}
+%\rho(\mathbf{r}_{s}) = \int K(\mathbf{r}_{s},\mathbf{r}) R(\mathbf{r}) d\mathbf{r}
+%\end{equation}
 
-\noindent where, for ISR, $f(s)$ is the lag of the autocorrelation function at a specific time and position.
-
-The impact of the three-dimensional ambiguity on moving plasma will be shown through simulation. This ISR simulator fully emulates the ISR data creation process at the IQ level. 
-
-Lastly possible mitigation techniques will be explored. These mitigation techniques will borrow heavily from the image and signal processing literature.
+%\noindent where, for ISR, $R(\mathbf{r}))$ is the lag of the autocorrelation function at a specific time and position.
+In this publication we will describe a model for the full space-time ambiguity function for ISR systems. The impact of the three-dimensional ambiguity on moving plasma will be shown through specific cases related to the polar cap patches. A simulation of a polar cap patch using a full ISR simulator, which creates ISR data at the IQ level, will be shown. Lastly possible mitigation techniques will be explored. These mitigation techniques will borrow heavily from the image and signal processing literature.
 
 
 %%%%%%%%%%%%%% Ambiguity Derivation%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -520,7 +536,7 @@ E(\theta,\phi) &= \displaystyle  \left(1+e^{j(\psi_y/2 + \psi_x)}\right)\sum_{m=
 \end{split}
 \end{equation}
 
-Since the array is steerable this can be taken into account in the equations by simply changing the definitions of $\psi_x $ and $\psi_y$ to $\psi_x = k d_x(\sin\theta\cos\phi-\sin\theta_s\cos\phi_s)$, and $\psi_y = k d_y(\sin\theta\sin\phi-\sin\theta_s\sin\phi_s)$. Lastly the antenna pattern of a single cross dipole can be represented as $ \frac{1}{2}(1+\cos(\theta)^2)$\citep{Balanis:2005:ATA:1208379}. By taking the squared magnitude of the array factor and multiplying it with the pattern of the dipole we get Equation \ref{eqn:amisrpat},
+Since the array is steerable this can be taken into account in the equations by simply changing the definitions of $\psi_x $ and $\psi_y$ to $\psi_x = k d_x(\sin\theta\cos\phi-\sin\theta_s\cos\phi_s)$, and $\psi_y = k d_y(\sin\theta\sin\phi-\sin\theta_s\sin\phi_s)$. Lastly the antenna pattern of a single cross dipole can be represented as $ \frac{1}{2}(1+\cos^2(\theta))$\citep{Balanis:2005:ATA:1208379}. By taking the squared magnitude of the array factor and multiplying it with the pattern of the dipole we get Equation \ref{eqn:amisrpat},
 
 \begin{equation}
 \label{eqn:amisrpatfinal}
