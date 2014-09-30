@@ -36,11 +36,11 @@ Boston University, Boston, Massachusetts, USA.}
 MIT Haystack Observatory, Westford Massachusetts, USA.}
 %%%%%%%%%%%%%% Abstract %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\begin{abstract} Electronically steerable array (ESA) technology has recently been used in incoherent scatter radars (ISR). These arrays allow for pulse-to-pulse steering of the antenna beam as opposed to a dish antenna which can only measure plasma parameters along one beam at a time. This allows for the simultaneous measurement of ionospheric plasma parameters in a three-dimensional space within a one point in time.  
+\begin{abstract} Electronically steerable array (ESA) technology has recently been used in incoherent scatter radars (ISR). These arrays allow for pulse-to-pulse steering of the antenna beam as opposed to a dish antenna which can only measure plasma parameters along one beam at a time. This allows for more flexibility in the measurement of ionospheric plasma parameters.  
 
 Currently these systems are operating in the high latitude region where the ionosphere is highly dynamic in both space and time. Because of the highly dynamic nature of the ionosphere in this region it is important to differentiate between artifacts and the true behavior of the plasma. Often the three dimensional data is fitted in a spherical coordinate space and then the parameters are interpolated to a Cartesian grid. This and other sources of error could be impacting the reconstructions of the plasma parameters.
 
-In this study we present a new way of analyzing ISR through use of the space-time ambiguity function. This concept is similar to the range ambiguity function that is used in traditional ISR for scanning antenna systems but has been extended to all spatial dimension along with time as well.
+To take advantage of the new flexibility of ESA system we present a new way of analyzing ISR through use of the space-time ambiguity function. This concept is similar to the range ambiguity function that is used in traditional ISR for scanning antenna systems but has been extended to all spatial dimensions along with time as well. 
 
 The use of this new ambiguity function allow us to pose this problem in terms of a  linear inverse problem for the lags of the intrinsic plasma autocorrelation function. From this we can explore the impact of non-stationarity in the plasma parameters in both time and space. Along with showing possible artifacts we will begin to explore ways of reducing these artifacts.
 
@@ -75,7 +75,7 @@ Recently electronically scannable array (ESA) technology has started to be lever
 
 These new systems differentiate themselves from dish antennas in a fundamental way. Instead of dwelling in a single beam or scanning along a prescribed direction, an electronically phased array can move to a different beam position within its field of view on a pulse by pulse basis. This yields a new flexibility to integrate not only along time but in space in an arbitrary direction and can relax the assumptions of stationarity for traditional dish antennas.
 
-In order to take advantage of this new flexibility we will put forth the idea of the space-time ambiguity function. This concept extends the range ambiguity to all three spatial dimensions along with time. In the end thisambiguity can be represented as kernel in a Fredholm integral equation,
+In order to take advantage of this new flexibility we will put forth the idea of the space-time ambiguity function. This concept extends the range ambiguity to all three spatial dimensions along with time. In the end this ambiguity can be represented as kernel in a Fredholm integral equation,
 
 \begin{equation}
 \label{eqn:friedholm}
