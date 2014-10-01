@@ -71,7 +71,7 @@ In many cases, especially in the high latitude ionosphere, these stationarity as
 
 %The other set of post processing methods, such as in \citet{nikoukar2008} and \citet{Virtanen:2008vx}, treat the problem as a linear inverse problem of the lags. Methods such as total-variations or Tikihonov regularization can be applied to the lags to try to fill in the missing information nation from the null space of the operator. These methods are easy to compute and can rely on a large body of knowledge from engineering communities that study linear inverse problems. 
 
-Recently electronically scannable array (ESA) technology has started to be leveraged by ISR community. The Advance Modular Incoherent Scatter Radar (AMISR) systems have already been deployed both at the Poker Flat Alaska (PFISR) and Resolute Bay Canada (RISR) \citep{amisr.site}. The EISCAT-3D project is currently being developed using phased array technology as well and will be capable of multistatic processing \citep{eiscat3ddesign}. These new systems are already being used in a number of different ways including creating three dimensional reconstructions of plasma parameters \citep{Semeter2009738, Nicolls:2007ie, dahlgren2012di,Dahlgren:2012dq}. 
+Recently electronically scannable array (ESA) technology has started to be leveraged by ISR community. The Advance Modular Incoherent Scatter Radar (AMISR) systems have already been deployed both at the Poker Flat Alaska (PFISR) and Resolute Bay Canada (RISR) \citep{amisr.site}. The EISCAT-3D project is currently being developed using phased array technology as well and will be capable of multistatic processing \citep{eiscat3ddesign}. These new systems are already being used in a number of different ways including creating volumetric reconstructions of plasma parameters \citep{Semeter2009738, Nicolls:2007ie, dahlgren2012di,Dahlgren:2012dq}. 
 
 These new systems differentiate themselves from dish antennas in a fundamental way. Instead of dwelling in a single beam or scanning along a prescribed direction, an electronically phased array can move to a different beam position within its field of view on a pulse by pulse basis. This yields a new flexibility to integrate not only along time but in space in an arbitrary direction and can relax the assumptions of stationarity for traditional dish antennas.
 
@@ -131,11 +131,14 @@ In this publication we will describe a model for the full space-time ambiguity f
 %%%%%%%%%%%%%% Ambiguity Derivation%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Space-Time Ambiguity}
-The three dimensional nature of the problem requires first defining the spatial coordinate system, $\mathbf{r}=[x,y,z]^T$. For this coordinate system, $\mathbf{r}=[0,0,0]^T$ at the location of the radar and thus $r=|\mathbf{r}|$, also known as the range variable. This allows for the use of polar coordinates $\mathbf{r} =  [r,\theta_,\phi]^T$ where $\theta$ is the physical elevation angle, $\phi$ is the physical azimuth angle.
 
-The radar will sample this space into a set of discrete points which will be referred to as $\mathbf{r}_s = [x_s,y_s,z_s]^T$ along with the descritized range $r_s=|\mathbf{r}_s|$. The sampled space will consist of a number of points which are the combinations of the range gates and number of beams. This points can also be referred in the polar coordinates $\mathbf{r}_s = [r_s,\theta_s,\phi_s]^T$, where $\theta_s$ is the sampled elevation angle, $\phi_s$ is the sampled azimuth angle.
+The space-time ambiguity can be thought of as a kernel to a combined volume and time integration. As such definitions of space and time coordinates are needed. 
 
-For notation purposes we use two different sets of time commonly known in radar literature as fast-time, $n$ and slow-time, $t$ \citep{richards:fundamentalsigproc}.. Fast-time is used to explore the workings of the radar on the order of the radar systems A/D conversion such as lag formation. Slow-time will used for processes that vary in time on the order of the system's pulse repetition interval (PRI). In order to form estimates  of the ACFs, with desired statistical properties, it is assumed that the plasma parameters parameters will change on the order of 10's to hundreds of PRIs. The term $n$ will be a sampled parameter while $t$ will represent a continuous time and $t_s$ will be the slow time parameter sampled by the radar. The sampling of $t_s$ can at lowest be the PRI but generally it is sampled once in a non-coherent processing interval (NCPI), or a period of time it takes the radar to average the desired number of pulses. This is done so the reconstructed parameters can be considered an independent measurements in time. 
+First a three dimensional coordinate system is defined as $\mathbf{r}=[x,y,z]^T$. For this coordinate system, $\mathbf{r}=[0,0,0]^T$ at the location of the radar and thus $r=|\mathbf{r}|$, also known as the range variable. This allows for the use of polar coordinates $\mathbf{r} =  [r,\theta_,\phi]^T$ where $\theta$ is the physical elevation angle, $\phi$ is the physical azimuth angle.
+
+The radar will sample this space into a set of discrete points which will be referred to as $\mathbf{r}_s = [x_s,y_s,z_s]^T$ along with the discretized range $r_s=|\mathbf{r}_s|$. The sampled space will consist of a number of points which are the combinations of range gates and number of beams. These points can also be referred in the polar coordinates $\mathbf{r}_s = [r_s,\theta_s,\phi_s]^T$, where $\theta_s$ is the sampled elevation angle, $\phi_s$ is the sampled azimuth angle.
+
+For notation purposes we use two different sets of time commonly known in radar literature as fast-time, $n$ and slow-time, $t$ \citep{richards:fundamentalsigproc}.. Fast-time is used to explore the workings of the radar on the order of the radar systems A/D conversion such as lag formation. Slow-time will used for processes that vary in time on the order of the system's pulse repetition interval (PRI). In order to form estimates  of the ACFs, with desired statistical properties, it is assumed that the plasma parameters parameters will change on the order of 10's to hundreds of PRIs. The terms $n$ and $t$ will represent a continuous variables while $n_s$ and $t_s$ will be the fast time and slow time parameters sampled by the radar. The sampling rate of $n_s$ will be the sampling rate of the A/D converters. The sampling of $t_s$ can at the highest rate, be the PRI and at lowest, sampled once in a non-coherent processing interval (NCPI), or a period of time it takes the radar to average the desired number of pulses. 
 
 %In the ISR literature the measurement ambiguity along the range dimension is often referred to simply as the ambiguity function \citep{hysell2008}. This only shows the measurement ambiguity along the range $r$. Due to the three-dimensional imaging capability of phased array ISR systems we will define a new set of terminology to describe this more complicated measurement which is now imaging the ionosphere in three-dimensional continuous coordinates $\mathbf{r}=[x,y,z]^T$. This coordinate system $\mathbf{r}=[0,0,0]^T$ at the location of the radar. The radar will create a 3-D representation of the ionospheric parameters in to discrete coordinates $\mathbf{r}_s = [x_s,y_s,z_s]^T$.
 
@@ -143,14 +146,14 @@ For notation purposes we use two different sets of time commonly known in radar 
 
 \subsection{Derivation}
 
-The basic physical mechanism behind ISR is that electron density fluctuations in the ionosphere, $n_e(\mathbf{r},n)$, scatter radio waves which can be observed by the receiver system of the radar \citep{hysell2008}. The emitted radar signal will have a pulse shape $s(n)$ modulated at a central frequency that results in a scattering wave number $\mathbf{k}$. Using the Borne approximation the signal received at time $n$, $x(n)$, can be represented as the following
+The basic physical mechanism behind ISR is that electron density fluctuations in the ionosphere, $n_e(\mathbf{r},n)$, scatter radio waves which can be observed by the receiver system of the radar \citep{dougherty:farley1960}. The emitted radar signal at the transmitter will have a pulse shape $s(n)$ modulated at a central frequency that results in a scattering wave number $\mathbf{k}$. Using the Born approximation the signal received at time $n$, $x(n)$, can be represented as the following
 
 \begin{equation}
 \label{eq:xt}
 x(n) = h(n) \ast \int e^{-j\mathbf{k} \cdot \mathbf{r}}  s\left(n-\frac{2r}{c}\right) n_e(\mathbf{r},n) d\mathbf{r},
 \end{equation}
 
-\noindent where $h(n)$ is the receiver filter. In modern ISR systems this signal $x(n)$ is then sampled at discrete points in fast-time which will be referred to as $n_s$. The convolution and sampling operation can be brought in the integral as the following,
+\noindent where $h(n)$ is the receiver filter and the $\ast$ represents the convolution operator. In modern ISR systems this signal $x(n)$ is then sampled at discrete points in fast-time which will be referred to as $n_s$. The convolution and sampling operation can be brought in the integral as the following,
 
 \begin{equation}
 \label{ex:xtaug}
@@ -158,14 +161,14 @@ x(n_s) = \int e^{-j\mathbf{k} \cdot \mathbf{r}}  s\left(n-\frac{2r}{c}\right) n_
 \end{equation}
 
 
-Once the signal has been received and sampled the autocorrelation function is then to be estimated from the sampled signal $x(n_s)$. The full expression of the underlying autocorrelation of this signal is the following, 
+Once the signal has been received and sampled the autocorrelation function is then estimated from the sampled signal $x(n_s)$. The full expression of the underlying autocorrelation of this signal is the following, 
 
 \begin{multline}
 \label{ex:acf0}
 \langle x(n_s)x^*(n_s')\rangle =  \int e^{-j \mathbf{k}\cdot \left(\mathbf{r}'-\mathbf{r} \right)}s\left(n-\frac{2r}{c}\right)s^*\left(n'-\frac{2r'}{c}\right) \\ h(n_s-n)h(n_s'-n')\langle n_e(\mathbf{r},n)n^*_e(\mathbf{r}',n')\rangle d\mathbf{r} d\mathbf{r}'dn dn',
 \end{multline}
 
-\noindent where $r'$ is the magnitude of the vector $\mathbf{r}'$. By assuming stationarity of the second order statistics of the signal along fast time, we can substitute the in the lag variables $\tau\equiv n'-n$, and $\tau_s\equiv n_s'-n_s$. With these substitutions Equation \ref{ex:acf0} becomes
+\noindent where $r'$ is the magnitude of the vector $\mathbf{r}'$. By assuming stationarity of second order signal statistics along fast time, we can then substitute the the lag variables $\tau\equiv n'-n$, and $\tau_s\equiv n_s'-n_s$. With these substitutions Equation \ref{ex:acf0} becomes
 
 
 \begin{multline}
@@ -180,7 +183,7 @@ Once the signal has been received and sampled the autocorrelation function is th
  \langle x(n_s)x^*(n_s+\tau)\rangle = \int s\left(n-\frac{2r}{c}\right)s^*\left(n+\tau -\frac{2r}{c}\right) h(n_s-n)h^*(n_s+\tau_s-n-\tau) \\\left[\int e^{-2j \mathbf{k}\cdot \mathbf{x}} \langle n_e(\mathbf{r},n)n^*_e(\mathbf{x}+\mathbf{r},n+\tau)\rangle d\mathbf{x} \right]d\mathbf{r}dn d\tau.
  \end{multline}
 
-The inner integral is a spatial Fourier transform evaluated at the wave number of the radar $\mathbf{k}$. By again asserting stationary along slow time we can represent the true ACF as the following,
+The inner integral is a spatial Fourier transform evaluated at the wave number of the radar $\mathbf{k}$. By again asserting stationarity along slow time we can represent the true ACF as the following,
  \begin{equation}
  \label{eq:spft}
 R(\tau,\mathbf{r})= \langle |n_e(\mathbf{k},r,\tau)|^2\rangle \equiv  \int_{\mathbf{x}} e^{-2j \mathbf{k}\cdot \mathbf{x} } \langle n_e(\mathbf{r},b)n^*_e(\mathbf{x}+\mathbf{r},n+\tau)\rangle d\mathbf{x}.
@@ -285,10 +288,10 @@ The spatial ambiguity across angle is determined by the antenna beam pattern. In
 F(\theta_s,\phi_s,\theta,\phi) = \frac{1}{2}(1+\cos(\theta)^2)\left[ \frac{1}{MN} \left(1+e^{j(\psi_y/2 + \psi_x)}\right)\frac{\sin((M/2) \psi_x)}{\sin(\psi_x)} \frac{\sin((N/2) \psi_x)}{\sin(\psi_x/2)}\right]^2,
  \end{equation}
  
- \noindent where $\psi_x = -k d_x(\sin\theta\cos\phi-\sin\theta_s\cos\phi_s)$, $\psi_y = -k d_y(\sin\theta\sin\phi-\sin\theta_s\sin\phi_s)$ and $M$ is the number of elements in the $x$ direction of the array $N$ is the number of elements in the $y$ direction(see Appendix: \ref{App:AMISRarr} for derivation).
+ \noindent where $\psi_x = -k d_x(\sin\theta\cos\phi-\sin\theta_s\cos\phi_s)$, $\psi_y = -k d_y(\sin\theta\sin\phi-\sin\theta_s\sin\phi_s)$ and $M$ is the number of elements in the $x$ direction of the array, and $N$ is the number of elements in the $y$ direction(see Appendix: \ref{App:AMISRarr} for derivation).
 
 
-This spatial ambiguity is a separable function made up of the components of $W(\tau_s,\tau,r_s,r)$ and $F(\theta_s,\phi_s,\theta,\phi)$. These two functions can be combined by multiplying the two, creating the spatial ambiguity function  $K(\tau_s,\mathbf{r}_s,\tau,\mathbf{r})$, and then doing a volume integration. This will create radar system's estimate of the ACF with one pulse which will be referred to as $\rho(\tau_s,\mathbf{r}_s)$,
+The spatial ambiguity is a separable function made up of the components of $W(\tau_s,\tau,r_s,r)$ and $F(\theta_s,\phi_s,\theta,\phi)$. These two functions can be combined by multiplying the two, creating the spatial ambiguity function  $K(\tau_s,\mathbf{r}_s,\tau,\mathbf{r})$, and then doing a volume integration. This will create radar system's estimate of the ACF using one pulse which will be referred to as $\rho(\tau_s,\mathbf{r}_s)$,
 
  %\begin{equation}
 
@@ -307,7 +310,7 @@ A rendering of an example of this full ambiguity function for an uncoded long pu
 	\label{fig:amb4}
 \end{figure}
 
-This one pulse is a single sample of a random process. In order to create a usable estimate numerous instances of this ACF need to be averaged together to reduce the variance in order to fit the estimate to a theoretical ACF that is tied to plasma parameter values. To show the impact of this averaging to create the estimate of the ACF we will add slow-time dependence to $R(\tau,\mathbf{r},t)$ along with another separable function $G(t_s,t)$ to the kernel. This function $G(t_s,t)$, while reducing the variance can create blurring of the ACF if the plasma parameters change with in a NCPI. Since the radar is sampling the space with individual pulses this function can take the form of a summation of Dirac delta functions 
+This one pulse is a single sample of a random process. In order to create a usable estimate multiple samples of this ACF need to be averaged together to reduce the variance to sufficient levels in order to fit the estimate to a theoretical ACF that is tied to plasma parameter values. To show the impact of this averaging to create the estimate of the ACF we will add slow-time dependence to $R(\tau,\mathbf{r},t)$ along with another separable function $G(t_s,t)$ to the kernel. This function $G(t_s,t)$, while reducing the variance can create blurring of the ACF if the plasma parameters change with in a NCPI. Since the radar is sampling the space with individual pulses this function can take the form of a summation of Dirac delta functions 
 
 \begin{equation}
 \label{eqn:Gexp}
@@ -334,13 +337,13 @@ We will now focus on the impact of the motion of plasma as it is going through t
 \rho(\tau_s,\mathbf{r}_s,t_s) = \int K(\tau_s,\mathbf{r}_s,\tau,\mathbf{r}) \left[(1/J)\int_{t_s}^{t_s+T} \displaystyle \sum_{j=0}^{J-1} \delta(t-t_s-jT_{PRI})R(\tau,\mathbf{r},t) dt\right] dV.
 \end{equation}
 
-Of specific interest are instances in the high latitude ionosphere where embedded plasma structures are moving due to the electric field of the magnetosphere. Because of this it will be assumed that the plasma is rigid object and will not deform with respect to $\mathbf{r}$ over time period $[t_0,t_0+T]$ where $T=JT_{PRI}$ is the time for one NCPI. Also it will be assumed that it will be moving with a constant velocity $\mathbf{v}$. Thus $R(\tau,\mathbf{r},t)\Rightarrow R(\tau,\mathbf{r}+\mathbf{v}t)$. The assumption of rigidity is possible to make over the time period of the NCPI, on the order of a few minutes, while the plasma moves through the field of view of the radar. One example can be taken from the high latitude ionosphere while large scale features in structures such as patches decay on the order of hours\citep{Tsunoda:1988ul}. This assumption is useful because it shows the utility of this frame work to analyze the impacts on the true resolution of the ISR systems. With these assumption Equation \ref{eqn:L2} becomes,
+Of specific interest are instances in the high latitude ionosphere where embedded plasma structures are moving due to the electric field of the magnetosphere. Because of this it will be assumed that the plasma is a rigid object and will not deform with respect to $\mathbf{r}$ over time period $[t_0,t_0+T]$ where $T=JT_{PRI}$ is the time for one NCPI. Also it will be assumed that it will be moving with a constant velocity $\mathbf{v}$. Thus $R(\tau,\mathbf{r},t)\Rightarrow R(\tau,\mathbf{r}+\mathbf{v}t)$. The assumption of rigidity is possible to make over the time period of the NCPI, on the order of a few minutes, while the plasma moves through the field of view of the radar. One example can be taken from the high latitude ionosphere while large scale features in structures such as patches decay on the order of hours\citep{Tsunoda:1988ul}. This assumption is useful because it shows the utility of this frame work to analyze the impacts on the true resolution of the ISR systems. With these assumption Equation \ref{eqn:L2} becomes,
 
 \begin{equation}
 \label{eqn:L3}
 \rho(\tau_s,\mathbf{r}_s,t_s) =(1/J) \int \int_{t_s}^{t_s+T} \displaystyle \sum_{j=0}^{J-1}\delta(t-t_s-jT_{PRI}) K(\tau_s,\mathbf{r}_s,\tau,\mathbf{r})R(\tau,\mathbf{r}+\mathbf{v}t)dtdV\end{equation}
 
-A change of variables where $\mathbf{r}' = \mathbf{r}+\mathbf{v}t$ acts as a Galilean transform and applies a warping to the kernel and changing the frame of reference. Since $R(\tau,\mathbf{r}')$ is no longer dependent on $t$ Equation \ref{eqn:L3} becomes,
+A change of variables to $\mathbf{r}' = \mathbf{r}+\mathbf{v}t$ acts as a Galilean transform and applies a warping to the kernel, changing the frame of reference. Since $R(\tau,\mathbf{r}')$ is no longer dependent on $t$ Equation \ref{eqn:L3} becomes,
 
 \begin{equation}
 \label{eqn:L5}
@@ -362,13 +365,13 @@ By performing the integration in $t$ the problem can now be simplified further b
 	\label{fig:ambtime}
 \end{figure}
 
-The operator $A$ can be determined through knowledge of the radar system's beam pattern along with the experiments pulse pattern, integration time and velocity of the plasma. This velocity $\mathbf{v}$ can be estimated by taking measurements of the Doppler shift and using a methodology seen in \citep{butler:imagingfregiondrifts}. Once the operator has been determined standard processing techniques can be used as if the plasma is not moving.%debluring methods can be applied.
+The operator $A$ can be determined through knowledge of the radar system's beam pattern along with the experiments pulse pattern, integration time and velocity of the plasma. This velocity $\mathbf{v}$ can be estimated by taking measurements of the Doppler shift and using a methodology seen in \citep{butler:imagingfregiondrifts}. Once the operator has been determined standard processing techniques can be used as if the plasma is not moving, under the previous assumptions.%debluring methods can be applied.
 
 %%%%%%%%%%%%%% Simulation %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Simulation}
 
-In order to show the impact of the ambiguity function, synthetic data was created using a known condition of a simulated ionosphere. The simulator creates data by deriving filters from the autocorrelation function and applying it to complex white Gaussian noise. In a sense every point in time and space noise plant and filter structure as in Figure \ref{fig:IQdiagram}. The data is then scaled and summed together according to its location in range and angle space to radar.
+In order to show the impact of the ambiguity function, synthetic data was created using a known condition of a simulated ionosphere. The simulator creates data by deriving time filters from the autocorrelation function and applying them to complex white Gaussian noise generators. Stating this in another way, every point in time and space has a noise plant and filter structure as in Figure \ref{fig:IQdiagram}. The data is then scaled and summed together according to its location in range and angle space to radar.
 
 \begin{figure}[h!]
 \centering
@@ -377,7 +380,7 @@ In order to show the impact of the ambiguity function, synthetic data was create
 \label{fig:IQdiagram}
 \end{figure}
 
-After the IQ data has been created it is processed in to create an estimates of the ACF at desired points of space. This processing follows flow chart seen in Figure \ref{fig:chain}.
+After the IQ data has been created it is processed to create estimates of the ACF at desired points of space. This processing a follows flow chart seen in Figure \ref{fig:chain}.
 
 \begin{figure}[!t]
 \centering
