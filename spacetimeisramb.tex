@@ -178,17 +178,17 @@ Once the signal has been received and sampled the autocorrelation function is th
 \langle x(n_s)x^*(n_s+\tau_s)\rangle =\int e^{-j \mathbf{k}\cdot \left(\mathbf{r}'-\mathbf{r} \right)}s\left(n-\frac{2r}{c}\right)s^*\left(n+\tau-\frac{2r'}{c}\right) \\ h(n_s-n)h(n_s+\tau_s-n-\tau) \langle n_e(\mathbf{r},n)n^*_e(\mathbf{r}',n+\tau)\rangle d\mathbf{r} d\mathbf{r}' dnd\tau
 \end{multline}
 
-\noindent We can make a simplifying assumption at this point that the space-time autocorrelation function of $n_e(\mathbf{r},t)$, $\langle n_e(\mathbf{r},n)n_e(\mathbf{r}',n+\tau)\rangle$, will go to zero as the magnitude of $\mathbf{x} \equiv \mathbf{r}'-\mathbf{r}$ increases beyond the debye length\citep{farley1969}. The rate that the space-time autocorrelation goes to zero will be such that $\tau\gg \frac{2||\mathbf{x}||}{c}$ thus in the argument of the pulse shape $r\approx r'$. This allows Equation \ref{ex:acf1} to be rewritten as 
+\noindent We can make a simplifying assumption at this point that the space-time autocorrelation function of $n_e(\mathbf{r},t)$, $\langle n_e(\mathbf{r},n)n_e(\mathbf{r}',n+\tau)\rangle$, will go to zero as the magnitude of $\mathbf{y} \equiv \mathbf{r}'-\mathbf{r}$ increases beyond the debye length\citep{farley1969}. The rate that the space-time autocorrelation goes to zero will be such that $\tau\gg \frac{2||\mathbf{y}||}{c}$ thus in the argument of the pulse shape $r\approx r'$. This allows Equation \ref{ex:acf1} to be rewritten as 
  
  \begin{multline}
  \label{ex:acf2}
- \langle x(n_s)x^*(n_s+\tau)\rangle = \int s\left(n-\frac{2r}{c}\right)s^*\left(n+\tau -\frac{2r}{c}\right) h(n_s-n)h^*(n_s+\tau_s-n-\tau) \\\left[\int e^{-2j \mathbf{k}\cdot \mathbf{x}} \langle n_e(\mathbf{r},n)n^*_e(\mathbf{x}+\mathbf{r},n+\tau)\rangle d\mathbf{x} \right]d\mathbf{r}dn d\tau.
+ \langle x(n_s)x^*(n_s+\tau)\rangle = \int s\left(n-\frac{2r}{c}\right)s^*\left(n+\tau -\frac{2r}{c}\right) h(n_s-n)h^*(n_s+\tau_s-n-\tau) \\\left[\int e^{-2j \mathbf{k}\cdot \mathbf{y}} \langle n_e(\mathbf{r},n)n^*_e(\mathbf{y}+\mathbf{r},n+\tau)\rangle d\mathbf{y} \right]d\mathbf{r}dn d\tau.
  \end{multline}
 
 The inner integral is a spatial Fourier transform evaluated at the wave number of the radar $\mathbf{k}$. By again asserting stationarity along slow time we can represent the true ACF as the following,
  \begin{equation}
  \label{eq:spft}
-R(\tau,\mathbf{r})= \langle |n_e(\mathbf{k},r,\tau)|^2\rangle \equiv  \int_{\mathbf{x}} e^{-2j \mathbf{k}\cdot \mathbf{x} } \langle n_e(\mathbf{r},b)n^*_e(\mathbf{x}+\mathbf{r},n+\tau)\rangle d\mathbf{x}.
+R(\tau,\mathbf{r})= \langle |n_e(\mathbf{k},r,\tau)|^2\rangle \equiv  \int e^{-2j \mathbf{k}\cdot \mathbf{y} } \langle n_e(\mathbf{r},b)n^*_e(\mathbf{y}+\mathbf{r},n+\tau)\rangle d\mathbf{y}.
  \end{equation}
  
  \noindent Now Equation \ref{ex:acf2} becomes
@@ -246,17 +246,17 @@ Assuming, for the moment, that $R(\tau,\mathbf{r})$ only varies across the range
 %\langle x(n)x^*(n+\tau)\rangle = \int_{\mathbf{r'}}\int_{\mathbf{r}} e^{-j \mathbf{k}\cdot \left(\mathbf{r}'-\mathbf{r} \right)}a\left(n-\frac{2r}{c}\right)a^*\left(n+\tau-\frac{2r'}{c}\right) \langle n_e(\mathbf{r},n)n^*_e(\mathbf{r}',n+\tau)\rangle d\mathbf{r} d\mathbf{r}'.
 %\end{equation}
 % 
-%\noindent We can make a simplifying assumption at this point that the space-time autocorrelation function of $n_e(\mathbf{r},t)$, $\langle n_e(\mathbf{r},n)n_e(\mathbf{r}',n+\tau)\rangle$, will go to zero as the magnitude of $\mathbf{x} \equiv \mathbf{r}'-\mathbf{r}$ increases. The rate that the space-time autocorrelation goes to zero will be such that $\tau\gg \frac{2||\mathbf{x}||}{c}$ thus in the argument of the pulse shape $r\approx r'$. This allows Equation \ref{ex:acf1} to be rewritten as 
+%\noindent We can make a simplifying assumption at this point that the space-time autocorrelation function of $n_e(\mathbf{r},t)$, $\langle n_e(\mathbf{r},n)n_e(\mathbf{r}',n+\tau)\rangle$, will go to zero as the magnitude of $\mathbf{y} \equiv \mathbf{r}'-\mathbf{r}$ increases. The rate that the space-time autocorrelation goes to zero will be such that $\tau\gg \frac{2||\mathbf{y}||}{c}$ thus in the argument of the pulse shape $r\approx r'$. This allows Equation \ref{ex:acf1} to be rewritten as 
 % 
 % \begin{equation}
 % \label{ex:acf2}
-% \langle x(n)x^*(n+\tau)\rangle = \int_{\mathbf{r}} a\left(n-\frac{2r}{c}\right)a^*\left(n+\tau -\frac{2r}{c}\right) \int_{\mathbf{x}} e^{-2j \mathbf{k}\cdot \mathbf{x}} \langle n_e(\mathbf{r},n)n^*_e(\mathbf{x}+\mathbf{r},n+\tau)\rangle d\mathbf{x} d\mathbf{r}.
+% \langle x(n)x^*(n+\tau)\rangle = \int_{\mathbf{r}} a\left(n-\frac{2r}{c}\right)a^*\left(n+\tau -\frac{2r}{c}\right) \int_{\mathbf{y}} e^{-2j \mathbf{k}\cdot \mathbf{y}} \langle n_e(\mathbf{r},n)n^*_e(\mathbf{y}+\mathbf{r},n+\tau)\rangle d\mathbf{y} d\mathbf{r}.
 % \end{equation}
 % 
 % The inner integral is a spatial Fourier transform evaluated at the wave number of the radar $\mathbf{k}$
 % \begin{equation}
 % \label{eq:spft}
-% \langle |n_e(\mathbf{k},r,\tau)|^2\rangle \equiv  \int_{\mathbf{x}} e^{-2j \mathbf{k}\cdot \mathbf{x} } \langle n_e(\mathbf{r},b)n^*_e(\mathbf{x}+\mathbf{r},n+\tau)\rangle d\mathbf{x}.
+% \langle |n_e(\mathbf{k},r,\tau)|^2\rangle \equiv  \int_{\mathbf{y}} e^{-2j \mathbf{k}\cdot \mathbf{y} } \langle n_e(\mathbf{r},b)n^*_e(\mathbf{y}+\mathbf{r},n+\tau)\rangle d\mathbf{y}.
 % \end{equation}
 % 
 % \noindent Now Equation \ref{ex:acf2} becomes
@@ -373,7 +373,7 @@ The operator $A$ can be determined through knowledge of the radar system's beam 
 
 \section{Simulation}
 
-In order to show the impact of the ambiguity function, synthetic data was created using a known condition of a simulated ionosphere. The simulator and fitting methodology are first shown. This is followed by two case studies of a dynamic ionosphere.
+Although Figures \ref{fig:amb4} and \ref{fig:ambtime} show the spatial extent of the space-time ambiguity function both with and without target motion, the impact of this on the reconstruction data can better shown through simulation. To do so we show data from a 3-D ISR simulator with a known ionosphere. In the following section we describe this simulator along with two case studies to show the impact of this ambiguity on properly reconstructing the parameters in the ionosphere.
 
 \subsection{Simulator}
 The simulator creates data by deriving time filters from the autocorrelation function and applying them to complex white Gaussian noise generators. Stating this in another way, every point in time and space has a noise plant and filter structure as in Figure \ref{fig:IQdiagram}. The data is then scaled and summed together according to its location in range and angle space to radar.
@@ -397,7 +397,7 @@ After the IQ data has been created it is processed to create estimates of the AC
 \label{fig:chain}
 \end{figure}
 
-The sampled I/Q can be represented as $x(n) \in\mathbb{C}^N$ where $N$ is the number of samples in an inter pulse period.  At this point the first step in estimating the autocorrelation function is taken.  For each range gate $m\in 0,1,...M-1$ an autocorrelation is estimated for each lag of $l \in 0,1...,L-1$.  To get better statistics this operation is performed for each pulse $j\in 0,1,...J-1$ and then summed over the $J$ pulses.  The entire operation to form the initial estimate of $\hat{R}(m,l)$ is the following,
+The sampled I/Q can be represented as $x(n) \in\mathbb{C}^N$ where $N$ is the number of samples in an inter pulse period.  At this point the first step in estimating the autocorrelation function is taken.  For each range gate $m\in 0,1,...M-1$ an autocorrelation is estimated for each lag of $l \in 0,1...,L-1$.  This operation of forming the ACF estimates repeats for each pulse, $j\in 0,1,...J-1$, and is then summed over the $J$ pulses. The entire operation to form the initial estimate of $\hat{R}(m,l)$ is the following,
 
 \begin{equation}
 \label{lagpro}
@@ -405,7 +405,7 @@ The sampled I/Q can be represented as $x(n) \in\mathbb{C}^N$ where $N$ is the nu
 \end{equation}
 
 
-The case shown in Equation \ref{lagpro} is a centered lag product, other types of lag products calculations are available but generally a centered product is used. In the centered lag product case range gate index $m$ and sample index $n$ can be related by $m=n-\lfloor L/2\rfloor$ and the maximum lag and sample relation is $M=N-\lceil L/2 \rceil$. 
+The case shown in Equation \ref{lagpro} is a centered lag product, other types of lag product calculations are available but generally a centered product is used. In the centered lag product case range gate index $m$ and sample index $n$ can be related by $m=n-\lfloor L/2\rfloor$ and the maximum lag and sample relation is $M=N-\lceil L/2 \rceil$. 
 
 After the lag products have been formed an estimate of the noise correlation is subtracted out of $\hat{R}(m,l)$, which is defined as $\hat{R}_w(m,l)$,
 
@@ -414,25 +414,31 @@ After the lag products have been formed an estimate of the noise correlation is 
 \hat{R}_w(m_w,l) = \displaystyle\sum\limits_{j=0}^{J-1} w(m_w-\lfloor l/2\rfloor,j)w^*(m_w+\lceil l/2 \rceil,j),
 \end{equation}
 
-\noindent where $w(n_w)$ is the background noise process of the radar.  Often the noise process is sampled during a calibration period for the radar when nothing is being emitted.  The final estimate of the autocorrelation function after the noise subtraction and summation rule will be represented by $\hat{R}_f(m,l)$. At this point a summation rule is applied and the data is sent off to be fit. The final parameters are derived through a standard Levenberg-Marquart non-linear fitting of $n_e$, $T_i$, $T_e$, $V_i$.
+\noindent where $w(n_w)$ is the background noise process of the radar. Often the noise process is sampled during a calibration period for the radar when nothing is being emitted. 
+
+The final estimate of the autocorrelation function after the noise subtraction and summation rule will be represented by $\hat{R}_f(m,l)$. At this point a summation rule is applied and the data is sent off to be fit. The final parameters are derived through a standard Levenberg-Marquart non-linear least-squares fitting of $n_e$, $T_i$, $T_e$ \citep{levenberg1944}.\footnote{I just checked my code and it seems that I did not use $V_i$ in my fitting. If this needs to be redone please let me know.}
 
 \begin{figure}
 	\centering
 	\includegraphics[width=3in]{nevsalt}
-	\caption{Electron density vs. altitude.}	
+	\caption{Electron Density vs. Altitude.}	
 	\label{fig:nevsalt}
 \end{figure}
 
 \begin{figure}
 	\centering
 	\includegraphics[width=6in]{phantom}
-	\caption{Example images from phantom}	
+	\caption{Images from Phantom.}	
 	\label{fig:phantom}
 \end{figure}
 
 \subsection{Case 1}
-In order to demonstrate the blurring taking place from the motion of plasma a phantom ionosphere is created where a small plasma enhancement moves through the radar field of view. The background electron density varies in altitude as a Chapman function while the electron and ion temperature remains constant. This can be seen in Figure \ref{fig:nevsalt}. This is done to avoid having to do full fit and thus only try to measure the electron density. Also estimates of the zeroth lag are only necessary. Added to this is a 35 km radius sphere of enhance electron density of about $5\times 10^{10} $ m$^{-3}$ centered at 400 km altitude moving at 500 m/s along the $\mathbf{y}$ direction. Images from this phantom can be seen in Figure \ref{fig:phantom}. 
 
+%In order to demonstrate the efficacy of the proposed framework, we consider a simplifying case corresponding to conditions expected in the polar cap ionosphere under southward IMF conditions. Specifically, we consider a structure density field translating at a constant convection velocity, where variations in the underlying potential field occur over scales that are large compared to radar FOV
+
+The first example is simplistic case of a small plasma enhancement moving through the radar field of view. This case is meant to model conditions expected in the polar cap ionosphere under southward IMF conditions \citep{Dahlgren:2012dq}. The background electron density varies in altitude as a Chapman function, shown in Figure \ref{fig:nevsalt}, while the electron and ion temperature remains constant. By only varying the electron density the blurring from the space-time ambiguity function can be observed easier, while also showing trade offs between statistical variance and blurring. \footnote{I think we had a better way of stating this }
+
+Embedded in the background there is a 35 km radius sphere of enhance electron density of about $5\times 10^{10} $ m$^{-3}$ centered at 400 km altitude moving at 500 m/s along the $\mathbf{y}$ direction. Images from this phantom can be seen in Figure \ref{fig:phantom}. 
 
 Using the phantom we can see how just simply changing the integration time can impact the reconstruction. In Figure \ref{fig:variable} we can see a case were only 10 pulses are used for the reconstruction. This corresponds to an integration time of about 9 seconds using the 121 beam pattern which can be seen in Figure \ref{fig:beampattern}. The enhancement can be seen with concentrated energy as it moves through the field of view. The problem is that there is a high amount of variance in the reconstruction. Figure \ref{fig:blurred} shows the reconstruction with 200 pulses, 3 minute integration time. The variability has been reduced but there is a large amount of blurring of the enhancement as it moves through the field of view. 
 
@@ -440,14 +446,14 @@ Using the phantom we can see how just simply changing the integration time can i
 \begin{figure}
 	\centering
 	\includegraphics[width=3in]{beampattern}
-	\caption{Beam pattern}	
+	\caption{Beam Pattern}	
 	\label{fig:beampattern}
 \end{figure}
 
 \begin{figure}
 	\centering
 	\includegraphics[width=6in]{variabledata}
-	\caption{Example images from variable data}	
+	\caption{Images from Reconstruction Using Only 10 Pulses.}	
 	\label{fig:variable}
 \end{figure}
 
@@ -455,11 +461,11 @@ Using the phantom we can see how just simply changing the integration time can i
 \begin{figure}
 	\centering
 	\includegraphics[width=6in]{blurreddata}
-	\caption{Example images from blurred data}	
+	\caption{Images from Reconstruction Using 200 Pulses.}	
 	\label{fig:blurred}
 \end{figure}
 
-In order to give a comparison a phantom was also created with no motion. This can be seen in first pane Figure \ref{fig:statreconstruct}. An image using the same integration time as in Figure \ref{fig:variable} for the stationary phantom is the center pane in Figure \ref{fig:statreconstruct}. Another image using the longer integration time can be seen in right pane of Figure \ref{fig:statreconstruct}. These images show that the blurring is on the same order between both integration times.
+In order to give a comparison a phantom was also created one with no motion. This can be seen in first pane Figure \ref{fig:statreconstruct}. An image using the same integration time as in Figure \ref{fig:variable} for the stationary phantom is the center pane in Figure \ref{fig:statreconstruct}. Another image using the longer integration time can be seen in right pane of Figure \ref{fig:statreconstruct}. These images show that the blurring is on the same order between both integration times.
 
 \begin{figure}
 	\centering
@@ -469,13 +475,13 @@ In order to give a comparison a phantom was also created with no motion. This ca
 \end{figure}
 
 \subsection{Case 2}
-Lastly we show results of a simulation of the plasma density enhancement through the field of view with full fitting. We again use a plasma enhancement moving through the field of view at 500 m/s but the electron and ion tempreture varies with time and altitude. The the background ion and electron temperature vs. height can be seen in Figure \ref{fig:allparamsphantom}. As the electron density enhancement travels through the field of view the temperatures drop by the same ratio that the electron density is enhanced.
+Lastly, we show results of a simulation of the plasma density enhancement through the field of view but the ion and electron temperatures are allowed to vary. We again use a plasma enhancement moving through the field of view at 500 m/s but the electron and ion temperature varies with time and altitude. The the background ion and electron temperature vs. height can be seen in Figure \ref{fig:allparamsphantom}. As the electron density enhancement travels through the field of view the temperatures drop by the same ratio that the electron density is enhanced.
 
 
 \begin{figure}
 	\centering
 	\includegraphics[width=4in]{tempvsheight}
-	\caption{Ion \& electron temperature vs. height. }	
+	\caption{Ion \& Electron Temperature vs. Height. }	
 	\label{fig:allparamsphantom}
 \end{figure}
 
@@ -484,14 +490,14 @@ The phantoms for each parameter at approximately 402 seconds can be seen in Figu
 \begin{figure}
 	\centering
 	\includegraphics[width=6in]{allparamsphantom}
-	\caption{Phantom of parameters.}	
+	\caption{Phantom of Parameters.}	
 	\label{fig:allparamsphantom}
 \end{figure}
 
 \begin{figure}
 	\centering
 	\includegraphics[width=6in]{allparamsblurreddata}
-	\caption{Blurred data after full fitting.}	
+	\caption{Interpolated Data after Full Fitting.}	
 	\label{fig:allparamsblurreddata}
 \end{figure}
 %%%%%%%%%%%%%% Mitigation %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
