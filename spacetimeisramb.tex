@@ -418,6 +418,8 @@ After the lag products have been formed an estimate of the noise correlation is 
 
 The final estimate of the autocorrelation function after the noise subtraction and summation rule will be represented by $\hat{R}_f(m,l)$. At this point a summation rule is applied and the data is sent off to be fit. The final parameters are derived through a standard Levenberg-Marquart non-linear least-squares fitting of $n_e$, $T_i$, $T_e$ \citep{levenberg1944}.\footnote{I just checked my code and it seems that I did not use $V_i$ in my fitting. If this needs to be redone please let me know.}
 
+\subsection{Case 1}
+
 \begin{figure}
 	\centering
 	\includegraphics[width=3in]{nevsalt}
@@ -432,15 +434,15 @@ The final estimate of the autocorrelation function after the noise subtraction a
 	\label{fig:phantom}
 \end{figure}
 
-\subsection{Case 1}
-
 %In order to demonstrate the efficacy of the proposed framework, we consider a simplifying case corresponding to conditions expected in the polar cap ionosphere under southward IMF conditions. Specifically, we consider a structure density field translating at a constant convection velocity, where variations in the underlying potential field occur over scales that are large compared to radar FOV
 
-The first example is simplistic case of a small plasma enhancement moving through the radar field of view. This case is meant to model conditions expected in the polar cap ionosphere under southward IMF conditions \citep{Dahlgren:2012dq}. The background electron density varies in altitude as a Chapman function, shown in Figure \ref{fig:nevsalt}, while the electron and ion temperature remains constant. By only varying the electron density the blurring from the space-time ambiguity function can be observed easier, while also showing trade offs between statistical variance and blurring. \footnote{I think we had a better way of stating this }
+The first example is a simple case of a small plasma enhancement moving through the radar field of view. This case is meant to model conditions expected in the polar cap ionosphere under southward IMF conditions \citep{Dahlgren:2012dq}. The background electron density varies in altitude as a Chapman function, shown in Figure \ref{fig:nevsalt}, while the electron and ion temperature remains constant. 
 
-Embedded in the background there is a 35 km radius sphere of enhance electron density of about $5\times 10^{10} $ m$^{-3}$ centered at 400 km altitude moving at 500 m/s along the $\mathbf{y}$ direction. Images from this phantom can be seen in Figure \ref{fig:phantom}. 
+Embedded in the background there is a 35 km radius sphere of enhanced electron density of $5\times 10^{10} $ m$^{-3}$ centered at 400 km altitude moving at 500 m/s along the $\mathbf{y}$ direction. Images from this phantom can be seen in Figure \ref{fig:phantom}. For the ease of comparison the phantom is only shown in areas where its in the radar's field of view. The positions of the 121 beam used for this case can be seen in Figure \ref{fig:beampattern}.
 
-Using the phantom we can see how just simply changing the integration time can impact the reconstruction. In Figure \ref{fig:variable} we can see a case were only 10 pulses are used for the reconstruction. This corresponds to an integration time of about 9 seconds using the 121 beam pattern which can be seen in Figure \ref{fig:beampattern}. The enhancement can be seen with concentrated energy as it moves through the field of view. The problem is that there is a high amount of variance in the reconstruction. Figure \ref{fig:blurred} shows the reconstruction with 200 pulses, 3 minute integration time. The variability has been reduced but there is a large amount of blurring of the enhancement as it moves through the field of view. 
+Because only the electron density is varying the fitting method becomes simply a power estimate as the electron density is directly proportional to the return power if the temperature ration is known. This example allows the blurring from the space-time ambiguity function can be observed easier, while also showing trade offs between statistical variance and blurring. \footnote{I think we had a better way of stating this. }
+
+Using the phantom we can see how just simply changing the integration time can impact the reconstruction. In Figure \ref{fig:variable} we can see a case were only 10 pulses are used for the reconstruction,which corresponds to an integration time of about 9 seconds. The enhancement can be seen as it moves through the field of view although there is that there is a high amount of variance in the reconstruction. Figure \ref{fig:blurred} shows the reconstruction with 200 pulses, 3 minute integration time. The variability has been reduced but there is a large amount of blurring of the enhancement as it moves through the field of view. 
 
 
 \begin{figure}
@@ -475,7 +477,7 @@ In order to give a comparison a phantom was also created one with no motion. Thi
 \end{figure}
 
 \subsection{Case 2}
-Lastly, we show results of a simulation of the plasma density enhancement through the field of view but the ion and electron temperatures are allowed to vary. We again use a plasma enhancement moving through the field of view at 500 m/s but the electron and ion temperature varies with time and altitude. The the background ion and electron temperature vs. height can be seen in Figure \ref{fig:allparamsphantom}. As the electron density enhancement travels through the field of view the temperatures drop by the same ratio that the electron density is enhanced.
+Lastly, we show results of a simulation of the plasma density enhancement through the field of view but the ion and electron temperatures are allowed to vary. We again use a plasma enhancement moving through the field of view at 500 m/s but the electron and ion temperature varies with time and altitude. The the background ion and electron temperature vs. height can be seen in Figure \ref{fig:allparamsphantom}. As the electron density enhancement travels through the field of view the temperatures drop by the same ratio that the electron density is enhanced. This is done to keep the variance the same.
 
 
 \begin{figure}
