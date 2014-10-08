@@ -42,7 +42,7 @@ Currently these systems are operating in the high latitude region where the iono
 
 To take advantage of the new flexibility of ESA system we present a new way of analyzing ISR through use of the space-time ambiguity function. This concept is similar to the range ambiguity function that is used in traditional ISR for scanning antenna systems but has been extended to all spatial dimensions along with time as well. 
 
-The use of this new ambiguity function allow us to pose this problem in terms of a  linear inverse problem for the lags of the intrinsic plasma autocorrelation function. From this we can explore the impact of non-stationarity in the plasma parameters in both time and space. Along with showing possible artifacts we will begin to explore ways of reducing these artifacts.
+The use of this new ambiguity function allow us to pose this problem in terms of a  linear inverse problem for the lags of the intrinsic plasma autocorrelation function. From this we can explore the impact of non-uniformity in the plasma parameters in both time and space. Along with showing possible artifacts we will begin to discuss ways of reducing these artifacts.
 
 \end{abstract}
 
@@ -54,9 +54,9 @@ The use of this new ambiguity function allow us to pose this problem in terms of
 %%%%%%%%%%%%%% Intro %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Introduction}
-Incoherent scatter radar (ISR) is a powerful tool for exploring the ionosphere. These systems can give measurements of electron density $N_e$, ion temperature $T_i$, electron temperature $T_e$, ion velocity $V_i$ and other plasma parameters \citep{dougherty:farley1960, farleydougherty:ISR2, doughteryfarley:ISR3, hagfors1961}. These parameters are measured by fitting a nonlinear theoretic autocorrelation function (ACF) model derived from first principles physics to an estimated time autocorrelation or, alternatively, the power spectrum of the radar signal scattered off of random electron density fluctuations \citep{Lehtinen1996435}. 
+Incoherent scatter radar (ISR) is a powerful tool for exploring the ionosphere. These systems can give measurements of electron density $N_e$, ion temperature $T_i$, electron temperature $T_e$, ion velocity $V_i$ and other plasma parameters \citep{dougherty:farley1960, farleydougherty:ISR2, doughteryfarley:ISR3, hagfors1961}. These parameters are measured by fitting a nonlinear theoretic autocorrelation function (ACF) model derived from first principles physics to an estimated time autocorrelation, or alternatively, the power spectrum of the radar signal scattered off of random electron density fluctuations \citep{Lehtinen1996435}. 
 
-This is an estimation of a second order statistic of an inherently random process of scattering from electrons. In order to get an estimate of the ACF with reasonable statistical properties numerous pulses have to be averaged together. With traditional dish antennas the ISR system would build these statistics in a limited number of ways. One method consists of pointing the radar beam in a specific direction and hold it there until enough pulses were integrated to get the desired statistics. Alternatively, the beam could be scanned through a field of view and collect pulses while moving. These techniques have an implicit assumption about the uniformity of the plasma parameters within the beam and thus the stationarity of the ACF. The first method assumes a stationarity of the ACF in time while the pulses are collected while the second technique assumes that the velocity of the plasma is known and the beam is scanning along it's velocity or more simply that the plasma parameters, and thus the ACF, are not changing along the motion of the beam.
+This is an estimation of a second order statistic of an inherently random process of scattering from electrons. In order to get an estimate of the ACF with reasonable statistical properties numerous pulses have to be averaged together. With traditional dish antennas the ISR system would build these statistics in a limited number of ways. One method consists of pointing the radar beam in a specific direction and hold it there until enough pulses were integrated to get the desired statistics. Alternatively, the beam could be scanned through a field of view and collect pulses while moving. These techniques have an implicit assumption about the uniformity of the plasma parameters within the beam while pulses are being integrated. This leads to the assumption of the stationarity of the ACF within a time and spatial resolution of the radar. %The first method assumes a stationarity of the ACF in time while the pulses are collected while the second technique assumes that the velocity of the plasma is known and the beam is scanning along it's velocity or more simply that the plasma parameters, and thus the ACF, are not changing along the motion of the beam.
 
 In many cases, especially in the high latitude ionosphere, this stationarity assumption is not met. Phenomena such as polar cap patches that may be moving through the field of view at very high speeds and may only be with in the beam for a  short period of time\citep{dahlgren2012di}. Poleward Boundary intensifications also can break these assumptions due to the two dimensional structure \citep{JGRA:JGRA17576, JGRA:JGRA16190}.
 %This initial work showed the nonlinear relationship between the plasma parameters and the incoherent scatter autocorrelation function. 
@@ -71,9 +71,9 @@ In many cases, especially in the high latitude ionosphere, this stationarity ass
 
 %The other set of post processing methods, such as in \citet{nikoukar2008} and \citet{Virtanen:2008vx}, treat the problem as a linear inverse problem of the lags. Methods such as total-variations or Tikihonov regularization can be applied to the lags to try to fill in the missing information nation from the null space of the operator. These methods are easy to compute and can rely on a large body of knowledge from engineering communities that study linear inverse problems. 
 
-Recently electronically scannable array (ESA) technology has started to be leveraged by ISR community. The Advance Modular Incoherent Scatter Radar (AMISR) systems have already been deployed both at the Poker Flat Alaska (PFISR) and Resolute Bay Canada (RISR) \citep{amisr.site}. The EISCAT-3D project is currently being developed using phased array technology as well and will be capable of multistatic processing \citep{eiscat3ddesign}. These new systems are already being used in a number of different ways including creating volumetric reconstructions of plasma parameters \citep{Semeter2009738, Nicolls:2007ie, dahlgren2012di,Dahlgren:2012dq}. 
+Recently electronically scannable array (ESA) technology has started to be leveraged by ISR community. The Advance Modular Incoherent Scatter Radar (AMISR) systems have already been deployed both at the Poker Flat Alaska (PFISR) and Resolute Bay Canada (RISR) \citep{amisr.site}. The EISCAT-3D project is currently being developed using phased array technology as well and will be capable of multistatic processing \citep{eiscat3ddesign}. These new systems are already being used in a number of different ways including creating volumetric reconstructions of plasma parameters \citep{Semeter2009738, Nicolls:2007ie, dahlgren2012di,Dahlgren:2012dq}. These reconstructions mainly consist of taking ISR data after parameters have been fit in a spherical coordinate system and then interpolate them into a Cartesian space.
 
-These new systems differentiate themselves from dish antennas in a fundamental way. Instead of dwelling in a single beam or scanning along a prescribed direction, an ESA can move to a different beam position within its field of view on a pulse by pulse basis. This yields a new flexibility to integrate not only along time but in space in an arbitrary direction. This can help to relax the assumption of stationarity in that now the plasma can move into a different beam and have the returns from the same plasma be integrated together. As opposed to the case with a dish antenna where the returns from different plasma would be improperly averaged together.
+These new ESA based systems differentiate themselves from dish antennas in a fundamental way. Instead of dwelling in a single beam or scanning along a prescribed direction, an ESA can move to a different beam position within its field of view on a pulse by pulse basis. This yields a new flexibility to integrate not only along time but in space in an arbitrary direction. This can help to relax the assumption of stationarity in that now the plasma can move into a different beam and have the returns from the same plasma be integrated together. As opposed to the case with a dish antenna where the returns from different plasma would be improperly averaged together.
 
 In order to take advantage of this new flexibility we will put forth the idea of the space-time ambiguity function. This concept extends the range ambiguity to all three spatial dimensions along with time. In the end this ambiguity can be represented as kernel in a Fredholm integral equation,
 
@@ -125,7 +125,7 @@ By using this formulation many parables between ISR and classic camera blurring 
 %\end{equation}
 
 %\noindent where, for ISR, $R(\mathbf{r}))$ is the lag of the autocorrelation function at a specific time and position.
-In this publication we will describe a model for the full space-time ambiguity function for ISR systems. The impact of the three-dimensional ambiguity on moving plasma will be shown through specific cases related to the polar cap patches. A simulation of a polar cap patch using a full ISR simulator, which creates ISR data at the IQ level, will be shown. Lastly possible mitigation techniques will be explored. These mitigation techniques will borrow heavily from the image and signal processing literature.
+In this publication we will describe a model for the full space-time ambiguity function for ISR systems. The impact of the three-dimensional ambiguity on moving plasma will be shown through specific cases related to the polar cap patches. A simulation of a polar cap patch using a full ISR simulator, which creates ISR data at the IQ level, will be shown. Lastly possible mitigation techniques will be explored. %These mitigation techniques will borrow heavily from the image and signal processing literature.
 
 
 %%%%%%%%%%%%%% Ambiguity Derivation%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -138,7 +138,7 @@ First a three dimensional coordinate system is defined as $\mathbf{r}=[x,y,z]^T$
 
 The radar will sample this space into a set of discrete points which will be referred to as $\mathbf{r}_s = [x_s,y_s,z_s]^T$ along with the discretized range $r_s=|\mathbf{r}_s|$. The sampled space will consist of a number of points which are the combinations of range gates and number of beams. These points can also be referred in the polar coordinates $\mathbf{r}_s = [r_s,\theta_s,\phi_s]^T$, where $\theta_s$ is the sampled elevation angle, $\phi_s$ is the sampled azimuth angle.
 
-For notation purposes we use two different sets of time commonly known in radar literature as fast-time, $n$ and slow-time, $t$ \citep{richards:fundamentalsigproc}. Fast-time is used to describe processes with correlation less then one PRI. Slow-time will used for processes decorrelate in time on the order of the system's pulse repetition interval (PRI). In order to form estimates of the ACFs, with desired statistical properties, it is assumed that the plasma parameters parameters will change on the order of many tens too hundreds of PRIs. Generally for incoherent scatter the in the E-region of the ionosphere and above the decorrelation time is less then a PRI, thus the ACFs are formed over fast-time.
+For notation purposes we use two different sets of time commonly known in radar literature as fast-time, $n$ and slow-time, $t$ \citep{richards:fundamentalsigproc}. Fast-time is used to describe processes with correlation time less then one pulse repetition interval (PRI). Slow-time will used for processes decorrelate in time on the order of the system's PRI. In order to form estimates of the ACFs, with desired statistical properties, it is assumed that the plasma parameters parameters will change on the order of many tens too hundreds of PRIs. Generally for incoherent scatter the in the E-region of the ionosphere and above the decorrelation time is less then a PRI, thus the ACFs are formed over fast-time.
 
 The terms $n$ and $t$ will represent a continuous variables while $n_s$ and $t_s$ will be the fast time and slow time parameters sampled by the radar. The sampling rate of $n_s$ will be the sampling rate of the A/D converters. The sampling of $t_s$ can at the highest rate, be the PRI and at lowest, sampled once in a non-coherent processing interval (NCPI), or a period of time it takes the radar to average the desired number of pulses. 
 
@@ -178,7 +178,7 @@ Once the signal has been received and sampled the autocorrelation function is th
 \langle x(n_s)x^*(n_s+\tau_s)\rangle =\int e^{-j \mathbf{k}\cdot \left(\mathbf{r}'-\mathbf{r} \right)}s\left(n-\frac{2r}{c}\right)s^*\left(n+\tau-\frac{2r'}{c}\right) \\ h(n_s-n)h(n_s+\tau_s-n-\tau) \langle n_e(\mathbf{r},n)n^*_e(\mathbf{r}',n+\tau)\rangle d\mathbf{r} d\mathbf{r}' dnd\tau
 \end{multline}
 
-\noindent We can make a simplifying assumption at this point that the space-time autocorrelation function of $n_e(\mathbf{r},t)$, $\langle n_e(\mathbf{r},n)n_e(\mathbf{r}',n+\tau)\rangle$, will go to zero as the magnitude of $\mathbf{y} \equiv \mathbf{r}'-\mathbf{r}$ increases beyond the debye length\citep{farley1969}. The rate that the space-time autocorrelation goes to zero will be such that $\tau\gg \frac{2||\mathbf{y}||}{c}$ thus in the argument of the pulse shape $r\approx r'$. This allows Equation \ref{ex:acf1} to be rewritten as 
+\noindent We can make a simplifying assumption at this point that the space-time autocorrelation function of $n_e(\mathbf{r},t)$, $\langle n_e(\mathbf{r},n)n_e(\mathbf{r}',n+\tau)\rangle$, will go to zero as the magnitude of $\mathbf{y} \equiv \mathbf{r}'-\mathbf{r}$ increases beyond the debye length\citep{farley1969}. Thus the rate that the spatial autocorrelation goes to zero will be such that $\tau\gg \frac{2||\mathbf{y}||}{c}$ thus in the argument of the pulse shape $r\approx r'$. This allows Equation \ref{ex:acf1} to be rewritten as 
  
  \begin{multline}
  \label{ex:acf2}
@@ -283,7 +283,7 @@ Assuming, for the moment, that $R(\tau,\mathbf{r})$ only varies across the range
 %\noindent The ambiguity in the end $W(\tau,r_s,r)$ is a lag dependent smoothing along the range dimension of $R(\tau,r)$. 
 %% end of old stuff
  
-The spatial ambiguity across angle is determined by the antenna beam pattern. In phase array radars this beam pattern is ideally the array factor multiplied by the element pattern \citep{Balanis:2005:ATA:1208379}. The array factor is determined by a number of things including the element spacing in both x and y $(dx,dy)$ and the wave number of the radar, $k$. Making idealized assumptions with no mutual coupling and that the array elements are cross dipole elements AMISR systems will have the following antenna pattern for pointing angle ($\theta_s,\phi_s$),
+The spatial ambiguity across the azimuth and elevation angles is determined by the antenna beam pattern. In phased array antennas this beam pattern is ideally the array factor multiplied by the element pattern \citep{Balanis:2005:ATA:1208379}. The array factor is determined by a number of things including the element spacing in both x and y $(dx,dy)$ and the wave number of the radar, $k$. For example, by making idealized assumptions with no mutual coupling and that the array elements are cross dipole elements, AMISR systems will have the following antenna pattern for pointing angle ($\theta_s,\phi_s$), \footnote{I could change this to a general phase array antenna pattern.}
  % make appendix to develop this further.
  \begin{equation}
  \label{eqn:amisrpat}
@@ -303,7 +303,7 @@ The spatial ambiguity is a separable function made up of the components of $W(\t
 	&= \int K(\tau_s,\mathbf{r}_s,\tau,\mathbf{r}) R(\tau,\mathbf{r})dV.
 \end{align}
  %\end{equation}
-A rendering of an example of this full ambiguity function for an uncoded long pulse and antenna pattern in Equation \ref{eqn:amisrpat} for four beams can be seen in Figure \ref{fig:amb4}.
+A rendering of an example of this full spatial ambiguity function for an uncoded long pulse and antenna pattern in Equation \ref{eqn:amisrpat} for four beams can be seen in Figure \ref{fig:amb4}.
 
 \begin{figure}
 	\centering
@@ -339,7 +339,7 @@ We will now focus on the impact of the motion of plasma as it is going through t
 \rho(\tau_s,\mathbf{r}_s,t_s) = \int K(\tau_s,\mathbf{r}_s,\tau,\mathbf{r}) \left[(1/J)\int_{t_s}^{t_s+T} \displaystyle \sum_{j=0}^{J-1} \delta(t-t_s-jT_{PRI})R(\tau,\mathbf{r},t) dt\right] dV.
 \end{equation}
 
-Of specific interest are instances in the high latitude ionosphere where embedded plasma structures are moving due to the electric field of the magnetosphere. Because of this it will be assumed that the plasma is a rigid object and will not deform with respect to $\mathbf{r}$ over time period $[t_0,t_0+T]$ where $T=JT_{PRI}$ is the time for one NCPI. Also it will be assumed that it will be moving with a constant velocity $\mathbf{v}$. Thus $R(\tau,\mathbf{r},t)\Rightarrow R(\tau,\mathbf{r}+\mathbf{v}t)$. The assumption of rigidity is possible to make over the time period of the NCPI, on the order of a few minutes, while the plasma moves through the field of view of the radar. One example can be taken from the high latitude ionosphere while large scale features in structures such as patches decay on the order of hours\citep{Tsunoda:1988ul}. This assumption is useful because it shows the utility of this frame work to analyze the impacts on the true resolution of the ISR systems. With these assumption Equation \ref{eqn:L2} becomes,
+Of specific interest are instances in the high latitude ionosphere where embedded plasma structures are moving due to the electric field of the magnetosphere. Because of this it will be assumed that the plasma is a rigid object and will not deform with respect to $\mathbf{r}$ over time period $[t_0,t_0+T]$ where $T=JT_{PRI}$ is the time for one NCPI. Also it will be assumed that it will be moving with a constant velocity $\mathbf{v}$. Thus $R(\tau,\mathbf{r},t)\Rightarrow R(\tau,\mathbf{r}+\mathbf{v}t)$. The assumption of rigidity is possible to make over the time period of the NCPI, on the order of a few minutes, while the plasma moves through the field of view of the radar. One example can be taken from the high latitude ionosphere while large scale features in structures such as patches decay on the order of hours\citep{Tsunoda:1988ul}. This assumption is useful because it shows the utility of this frame work to analyze the impacts on the true resolution of the ISR systems. With these assumptions Equation \ref{eqn:L2} becomes,
 
 \begin{equation}
 \label{eqn:L3}
@@ -397,7 +397,7 @@ After the IQ data has been created it is processed to create estimates of the AC
 \label{fig:chain}
 \end{figure}
 
-The sampled I/Q can be represented as $x(n) \in\mathbb{C}^N$ where $N$ is the number of samples in an inter pulse period.  At this point the first step in estimating the autocorrelation function is taken.  For each range gate $m\in 0,1,...M-1$ an autocorrelation is estimated for each lag of $l \in 0,1...,L-1$.  This operation of forming the ACF estimates repeats for each pulse, $j\in 0,1,...J-1$, and is then summed over the $J$ pulses. The entire operation to form the initial estimate of $\hat{R}(m,l)$ is the following,
+The sampled I/Q can be represented as $x(n_s) \in\mathbb{C}^N$ where $N$ is the number of samples in an inter pulse period.  At this point the first step in estimating the autocorrelation function is taken.  For each range gate $m\in 0,1,...M-1$ an autocorrelation is estimated for each lag of $l \in 0,1...,L-1$.  This operation of forming the ACF estimates repeats for each pulse, $j\in 0,1,...J-1$, and is then summed over the $J$ pulses. The entire operation to form the initial estimate of $\hat{R}(m,l)$ is the following,
 
 \begin{equation}
 \label{lagpro}
@@ -405,7 +405,7 @@ The sampled I/Q can be represented as $x(n) \in\mathbb{C}^N$ where $N$ is the nu
 \end{equation}
 
 
-The case shown in Equation \ref{lagpro} is a centered lag product, other types of lag product calculations are available but generally a centered product is used. In the centered lag product case range gate index $m$ and sample index $n$ can be related by $m=n-\lfloor L/2\rfloor$ and the maximum lag and sample relation is $M=N-\lceil L/2 \rceil$. 
+The case shown in Equation \ref{lagpro} is a centered lag product, other types of lag product calculations are available but generally a centered product is used. In the centered lag product case range gate index $m$ and sample index $n$ can be related by $m=n_s-\lfloor L/2\rfloor$ and the maximum lag and sample relation is $M=N-\lceil L/2 \rceil$. 
 
 After the lag products have been formed an estimate of the noise correlation is subtracted out of $\hat{R}(m,l)$, which is defined as $\hat{R}_w(m,l)$,
 
@@ -442,7 +442,7 @@ Embedded in the background there is a 35 km radius sphere of enhanced electron d
 
 Because only the electron density is varying the fitting method becomes simply a power estimate as the electron density is directly proportional to the return power if the temperature ration is known. This example allows the blurring from the space-time ambiguity function can be observed easier, while also showing trade offs between statistical variance and blurring. \footnote{I think we had a better way of stating this. }
 
-Using the phantom we can see how just simply changing the integration time can impact the reconstruction. In Figure \ref{fig:variable} we can see a case were only 10 pulses are used for the reconstruction,which corresponds to an integration time of about 9 seconds. The enhancement can be seen as it moves through the field of view although there is that there is a high amount of variance in the reconstruction. Figure \ref{fig:blurred} shows the reconstruction with 200 pulses, 3 minute integration time. The variability has been reduced but there is a large amount of blurring of the enhancement as it moves through the field of view. 
+Using the phantom we can see how just simply changing the integration time can impact the reconstruction. In Figure \ref{fig:variable} we can see a case were only 10 pulses are used for the reconstruction,which corresponds to an integration time of about 9 seconds. The enhancement can be seen as it moves through the field of view although there is that there is a high amount of variance in the reconstruction. Figure \ref{fig:blurred} shows the reconstruction with 200 pulses, 3 minute integration time. The variability has been reduced but there is a large amount of blurring of the enhancement as it moves through the field of view. % make variance measurement plots
 
 
 \begin{figure}
@@ -467,17 +467,17 @@ Using the phantom we can see how just simply changing the integration time can i
 	\label{fig:blurred}
 \end{figure}
 
-In order to give a comparison a phantom was also created one with no motion. This can be seen in first pane Figure \ref{fig:statreconstruct}. An image using the same integration time as in Figure \ref{fig:variable} for the stationary phantom is the center pane in Figure \ref{fig:statreconstruct}. Another image using the longer integration time can be seen in right pane of Figure \ref{fig:statreconstruct}. These images show that the blurring is on the same order between both integration times.
+In order to give a comparison based on integration time a phantom was also created one with no motion. This can be seen in the first pane Figure \ref{fig:statreconstruct}. An image using the same integration time as in Figure \ref{fig:variable} for the stationary phantom is the center pane in Figure \ref{fig:statreconstruct}. Another image using the longer integration time can be seen in right pane of Figure \ref{fig:statreconstruct}. These images show that the blurring is on the same order between both integration times.
 
 \begin{figure}
 	\centering
 	\includegraphics[width=6in]{stationary}
-	\caption{Stationary phantom along with both types of reconstructions.}	
+	\caption{Stationary Phantom along with Reconstructions using 10 and 200 pulses.}	
 	\label{fig:statreconstruct}
 \end{figure}
 
 \subsection{Case 2}
-Lastly, we show results of a simulation of the plasma density enhancement through the field of view but the ion and electron temperatures are allowed to vary. We again use a plasma enhancement moving through the field of view at 500 m/s but the electron and ion temperature varies with time and altitude. The the background ion and electron temperature vs. height can be seen in Figure \ref{fig:allparamsphantom}. As the electron density enhancement travels through the field of view the temperatures drop by the same ratio that the electron density is enhanced. This is done to keep the variance the same.
+Lastly, we show results of a simulation of the plasma density enhancement through the field of view but the ion and electron temperatures are allowed to vary. We again use a plasma enhancement moving through the field of view at 500 m/s but the electron and ion temperature varies with time and altitude. The the background ion and electron temperature vs. height can be seen in Figure \ref{fig:allparamsphantom}. As the electron density enhancement travels through the field of view the temperatures drop by the same ratio that the electron density is enhanced. This is done to keep the variance the same. %check that
 
 
 \begin{figure}
@@ -507,7 +507,7 @@ The phantoms for each parameter at approximately 402 seconds can be seen in Figu
 \section{Possible Mitigation Techniques}
 There are a number of possible ways to remove the ISR operator function to the data. A relatively simply way to remove the problem is to process the data in the frame of reference of the plasma. Already it has been shown that it is possible to measure the vector velocity of plasma flows, \citep{butler:imagingfregiondrifts}. After measuring the velocity instead of integrating in the same beam one could integrate across different beams using this knowledge. This would allow for ACF to be formed from the same populations of plasma as it moves through the field of view.
 
-In order to reconstruct the plasma parameters it is necessary to do some sort of regularization. There are two type of regularization that can be applied in this case the first is parameter based regularization, like full profile analysis \citet{RDS:RDS3308,hysell2008}. The term parameter based regularization in this case means applying constraints to the physical parameters that are often determined after fitting. This requires a large amount of calculation because the fitting and constraints are done in one step. Currently full profile analysis has only been applied along the range dimension and not in all three spatial dimensions. 
+In order to reconstruct the plasma parameters it is necessary to do some sort of regularization. There are two type of regularization that can be applied in this case the first is parameter based regularization, like full profile analysis \citet{RDS:RDS3308,hysell2008}. The term parameter based regularization in this case means applying constraints to the physical parameters that are often determined after fitting. This can require a large amount of calculation because the fitting and constraints are done in one step. Currently full profile analysis has only been applied along the range dimension and not in all three spatial dimensions. 
 
 The other method will be referred to as data based regularization. This term infers the application of constraints to the estimates of the autocorrelation functions. The constraints usually deal with how the data changes over time and space by constraining the energy of the ACFs or its derivative. This has an advantage of being more computationally tractable in that it is now a linear inverse problem. Using the ideas stated in this paper one can cast the reconstruction of the four dimensional function of the ACFs in these terms. The issue with doing this data based reconstruction is it is unknown how to constrain the reconstruction in the best way.
 
