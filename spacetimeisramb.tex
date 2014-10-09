@@ -376,7 +376,7 @@ The operator $A$ can be determined through knowledge of the radar system's beam 
 Although Figures \ref{fig:amb4} and \ref{fig:ambtime} show the spatial extent of the space-time ambiguity function both with and without target motion, the impact of this on the reconstruction data can better shown through simulation. To do so we show data from a 3-D ISR simulator with a known ionosphere. In the following section we describe this simulator along with two case studies to show the impact of this ambiguity on properly reconstructing the parameters in the ionosphere.
 
 \subsection{Simulator}
-The simulator creates data by deriving time filters from the autocorrelation function and applying them to complex white Gaussian noise generators. Stating this in another way, every point in time and space has a noise plant and filter structure as in Figure \ref{fig:IQdiagram}. The data is then scaled and summed together according to its location in range and angle space to radar.
+The simulator creates data by deriving time filters from the autocorrelation function and applying them to complex white Gaussian noise generators. Stating this in another way, every point in time and space has a noise plant and filter structure as in Figure \ref{fig:IQdiagram}. The data is then scaled and summed together according to its location in range and angle space to radar. For this simulation the data points are only used if they are within 1.1 $^\circ$ of the center beam which is a simplification of the AMISR beam pattern. 
 
 \begin{figure}[h!]
 \centering
@@ -438,7 +438,7 @@ The final estimate of the autocorrelation function after the noise subtraction a
 
 The first example is a simple case of a small plasma enhancement moving through the radar field of view. This case is meant to model conditions expected in the polar cap ionosphere under southward IMF conditions \citep{Dahlgren:2012dq}. The background electron density varies in altitude as a Chapman function, shown in Figure \ref{fig:nevsalt}, while the electron and ion temperature remains constant. 
 
-Embedded in the background there is a 35 km radius sphere of enhanced electron density of $5\times 10^{10} $ m$^{-3}$ centered at 400 km altitude moving at 500 m/s along the $\mathbf{y}$ direction. Images from this phantom can be seen in Figure \ref{fig:phantom}. For the ease of comparison the phantom is only shown in areas where its in the radar's field of view. The positions of the 121 beam used for this case can be seen in Figure \ref{fig:beampattern}.
+Embedded in the background there is a 35 km radius sphere of enhanced electron density of $5\times 10^{10} $ m$^{-3}$ centered at 400 km altitude moving at 500 m/s along the $\mathbf{y}$ direction. Images from this phantom can be seen in Figure \ref{fig:phantom}. To simplify the simulation the atmosphere is assumed to be 100\% Oxygen ions. For the ease of comparison the phantom is only shown in areas where its in the radar's field of view. The positions of the 121 beam used for this case can be seen in Figure \ref{fig:beampattern}. 
 
 Because only the electron density is varying the fitting method becomes simply a power estimate as the electron density is directly proportional to the return power if the temperature ration is known. This example allows the blurring from the space-time ambiguity function can be observed easier, while also showing trade offs between statistical variance and blurring. \footnote{I think we had a better way of stating this. }
 
@@ -487,7 +487,7 @@ Lastly, we show results of a simulation of the plasma density enhancement throug
 	\label{fig:allparamsphantom}
 \end{figure}
 
-The phantoms for each parameter at approximately 402 seconds can be seen in Figure \ref{fig:allparamsphantom}. The reconstruction of this field at the same time can be seen in Figure \ref{fig:allparamsblurreddata}. The reconstruction does not seem to show the electron density enhancement even in a blurred form. This is likely due to the nonlinear nature of the fitting.
+The phantoms for each parameter at approximately 402 seconds can be seen in Figure \ref{fig:allparamsphantom}. The reconstruction of this field at the same time can be seen in Figure \ref{fig:allparamsblurreddata}. The reconstruction does not seem to show the electron density enhancement even in a blurred form. 
 
 \begin{figure}
 	\centering
@@ -501,6 +501,17 @@ The phantoms for each parameter at approximately 402 seconds can be seen in Figu
 	\includegraphics[width=6in]{allparamsblurreddata}
 	\caption{Interpolated Data after Full Fitting.}	
 	\label{fig:allparamsblurreddata}
+\end{figure}
+
+In order to determine the reason behind the poor reconstruction we look at the fit surface of one of the points in the reconstruction. The fit surface is the error between the estimated ISR spectrum and the spectrum derived from the different parameters. Comparing the points $\mathbf{r}=[10,10, 400]$km and the closest reconstruction point in the radar field of view, $\mathbf{r}_s=[6.72,1.80, 398.77]$. The time was chosen so the integrated measurement would be centered over the time when the enhancement moved through this point. During this time period the radar will integrate over two distributions of plasma at this point. The plasma at point $\mathbf{r}$ are $N_e=1.96\times 10^{10}$m$^{-3}$, $T_i =1064$ $^\circ$K and $T_e =1324$ $^\circ$K when there is no enhancement traveling through. When the enhancement is traveling through this point $N_e=5\times 10^{10}$m$^{-3}$, $T_i =416$ $^\circ$K and $T_e =518$ $^\circ$K. The speed of the enhancement, which is going at 500 m/s, causes about two-thirds of the pulses to correspond to the enhanced plasma during the integration.
+
+The fit results in the parameter values at $\mathbf{r}$ are $N_e=2.36\times 10^{10}$m$^{-3}$, $T_i =973$ $^\circ$K and $T_e =500$ $^\circ$K. The fit surface was formed over the parameter space of $N_e$ $1\times 10^{10}$ to $1\times10^{11} $m$^{-3}$, and for both $T_e$ and $T_i$ were over an values 100 to 1500 $^\circ$K. In this case the fit surface showed that the global minimum was located in the same found in the same location as found by the Levenberg-Marquart algorithm. . A two dimensional cut of the fit surface at $N_e=2.43\times 10^{10} $ and showing its variability between $T_i$ and $T_e$ in Figure \ref{fig:fitsurface}. Since this is a global minimum supports the possibility of the non uniformity of the plasma parameters causing and erroneous fit. Mixtures of different plasma populations causing erroneous fits have been shown before such as in \citep{knudsen1993}. \footnote{Feel like I need a better ending to this section.}
+
+\begin{figure}
+	\centering
+	\includegraphics[width=6in]{Fitsurface3}
+	\caption{Fit surface.}	
+	\label{fig:fitsurface}
 \end{figure}
 %%%%%%%%%%%%%% Mitigation %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
