@@ -312,7 +312,7 @@ A rendering of an example of this full spatial ambiguity function for an uncoded
 \begin{figure}
 	\centering
 	\includegraphics[width=5.5in]{spaceamb}
-	\caption{Full Spatial Ambiguity Function}	
+	\caption{Full spatial ambiguity function}	
 	\label{fig:amb4}
 \end{figure}
 
@@ -367,7 +367,7 @@ By performing the integration in $t$ the problem can now be simplified further b
 \begin{figure}[!t]
 	\centering
 	\includegraphics[width=5.5in]{spaceambmoving}
-	\caption{Full Spatial Ambiguity Function With Motion}
+	\caption{Full spatial ambiguity function with target motion}
 	\label{fig:ambtime}
 \end{figure}
 
@@ -385,7 +385,7 @@ The simulator creates data by deriving time filters from the autocorrelation fun
 \begin{figure}[h!]
 \centering
 \includegraphics[width=3in]{diagrampart}
-\caption{I/Q Simulator Diagram}
+\caption{I/Q simulator diagram}
 \label{fig:IQdiagram}
 \end{figure}
 
@@ -397,7 +397,7 @@ After the IQ data has been created it is processed to create estimates of the AC
 % where an .eps filename suffix will be assumed under latex, 
 % and a .pdf suffix will be assumed for pdflatex; or what has been declared
 % via \DeclareGraphicsExtensions.
-\caption{ISR Processing Chain.}
+\caption{ISR processing chain.}
 \label{fig:chain}
 \end{figure}
 
@@ -427,14 +427,14 @@ The final estimate of the autocorrelation function after the noise subtraction a
 \begin{figure}
 	\centering
 	\includegraphics[width=3in]{nevsalt}
-	\caption{Electron Density vs. Altitude.}	
+	\caption{Simulated electron density verses altitude.}	
 	\label{fig:nevsalt}
 \end{figure}
 
 \begin{figure}
 	\centering
 	\includegraphics[width=6in]{phantom}
-	\caption{Images from Phantom.}	
+	\caption{Pmages from phantom.}	
 	\label{fig:phantom}
 \end{figure}
 
@@ -452,14 +452,14 @@ Using the phantom we can see how just simply changing the integration time can i
 \begin{figure}
 	\centering
 	\includegraphics[width=3in]{beampattern}
-	\caption{Beam Pattern}	
+	\caption{Radar beam pattern used in the simulations}	
 	\label{fig:beampattern}
 \end{figure}
 
 \begin{figure}
 	\centering
 	\includegraphics[width=6in]{variabledata}
-	\caption{Images from Reconstruction Using Only 10 Pulses.}	
+	\caption{Reconstructions of $N_e$ using 10 Pulses.}	
 	\label{fig:variable}
 \end{figure}
 
@@ -467,7 +467,7 @@ Using the phantom we can see how just simply changing the integration time can i
 \begin{figure}
 	\centering
 	\includegraphics[width=6in]{blurreddata}
-	\caption{Images from Reconstruction Using 200 Pulses.}	
+	\caption{Reconstructions of $N_e$ using 200 Pulses.}	
 	\label{fig:blurred}
 \end{figure}
 
@@ -476,7 +476,7 @@ In order to give a comparison based on integration time a phantom was also creat
 \begin{figure}
 	\centering
 	\includegraphics[width=6in]{stationary}
-	\caption{Stationary Phantom along with Reconstructions using 10 and 200 pulses.}	
+	\caption{Stationary phantom of $N_e$ along with reconstructions using 10 and 200 pulses.}	
 	\label{fig:statreconstruct}
 \end{figure}
 
@@ -489,7 +489,7 @@ We again use a plasma enhancement moving through the field of view at 500 m/s bu
 \begin{figure}
 	\centering
 	\includegraphics[width=4in]{tempvsheight}
-	\caption{Ion \& Electron Temperature vs. Height. }	
+	\caption{Ion \& electron temperature verses height for simulation. }	
 	\label{fig:allparamsphantom}
 \end{figure}
 
@@ -498,14 +498,14 @@ The phantoms for each parameter at approximately 402 seconds can be seen in Figu
 \begin{figure}
 	\centering
 	\includegraphics[width=6in]{allparamsphantom}
-	\caption{Phantom of Parameters.}	
+	\caption{Phantoms of $T_i$, $T_e$ and $N_e$ at $t=401.8265$s.}	
 	\label{fig:allparamsphantom}
 \end{figure}
 
 \begin{figure}
 	\centering
 	\includegraphics[width=6in]{allparamsblurreddata}
-	\caption{Interpolated Data after Full Fitting.}	
+	\caption{Interpolated reconstructions of $T_i$, $T_e$ and $N_e$ at $t=401.8265$s.}	
 	\label{fig:allparamsblurreddata}
 \end{figure}
 
@@ -516,7 +516,7 @@ The fit results in the parameter values at $\mathbf{r}$ are $N_e=2.36\times 10^{
 \begin{figure}
 	\centering
 	\includegraphics[width=6in]{Fitsurface3}
-	\caption{Fit surface.}	
+	\caption{fit surface.}	
 	\label{fig:fitsurface}
 \end{figure}
 
@@ -524,16 +524,16 @@ The spectrums that are yielded from the parameters along with what was estimated
 \begin{figure}
 	\centering
 	\includegraphics[width=6in]{spectrums}
-	\caption{Spectrums.}	
+	\caption{spectrums.}	
 	\label{fig:spectrums}
 \end{figure}
 %%%%%%%%%%%%%% Mitigation %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Possible Mitigation Techniques}
 
-There are a number of possible approaches  one could apply in order to produce an improved data product from such measurements.  A relatively simple approach involves processing the data in the frame of reference of the moving plasma density field.   The convection velocity is manifested as a bulk Doppler shift in the ISR spectrum. 
+As can be seen a number of different types of errors can occur due to this type of ambiguity function. There are a number of possible approaches one could apply in order to produce an improved data product from electronically scanned ISR measurements. The main types of improvements will discuss mainly come down to  methods to remove motion blur type errors that occur when plasma is moving through the field of view and techniques to improve the spatio-temporal resolution of the measurements.
 
-There are a number of possible ways to remove the ISR operator function to the data. A relatively simply way to remove the problem is to process the data in the frame of reference of the plasma. Already it has been shown that it is possible to measure the vector velocity of plasma flows, \citep{butler:imagingfregiondrifts}. After measuring the velocity instead of integrating in the same beam one could integrate across different beams using this knowledge. This would allow for ACF to be formed from the same populations of plasma as it moves through the field of view.
+A relatively simple approach involves processing the data in the frame of reference of the moving plasma density field. The convection velocity is manifested as a bulk Doppler shift in the ISR spectrum. Already it has been shown that it is possible to measure the vector velocity of plasma flows, \citep{RDS:RDS5552,butler:imagingfregiondrifts}. After measuring the velocity instead of integrating in the same beam one could integrate across different beams using this knowledge. This would allow for ACF to be formed from the same populations of plasma as it moves through the field of view.
 
 In order to reconstruct the plasma parameters it is necessary to do some sort of regularization. There are two type of regularization that can be applied in this case the first is parameter based regularization, like full profile analysis \citet{RDS:RDS3308,hysell2008}. The term parameter based regularization in this case means applying constraints to the physical parameters that are often determined after fitting. This can require a large amount of calculation because the fitting and constraints are done in one step. Currently full profile analysis has only been applied along the range dimension and not in all three spatial dimensions. 
 
@@ -545,8 +545,8 @@ In order to properly process data from ESA systems these methods will have to be
 %With this in mind one can go a step further and investigate super resolution methods seen in image processing literature \citep{Takeda:2009ep},\citep{Takeda:2011en}. With these techniques along with the data regularization based frame work in one dimensional ISR these techniques could be used to reconstruct the ACFs. This would require a complete change in the methodology in which 3-D ISR data is investigated. Basically instead of fitting data in the coordinate space of the radar we would first re-grid the data in a Cartesian space and then apply the nonlinear fitting. This would have the advantage of working with a linear inverse problem but the issues would be the same as with other data based regularization techniques were there is a question of what type of constraint should be used as opposed to a straight forward physical constraint. 
 %%%%%%%%%%%%%% Conclusion %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\section{Conclusion}
-We have presented a new method for analyzing incoherent scatter radar processing through use of the full space-time ambiguity function. This allows for taking into account the antenna beam pattern, pulse pattern and time integration. Through simulation we have shown how plasma motion can impact reconstruction of parameters which compounded with the non-linear nature of the parameter fitting step can create errors which are hard to predict. Lastly we have suggested a number of ways using three dimensional ISR systems we could mitigate these errors and reconstruct parameters at higher resolutions then what is currently possible.
+\section{Conclusion}This publication has laid the foundation for the optimal analysis of volumetric data acquired from electronically steerable ISR systems. This framework allows for taking into account the antenna beam pattern, pulse pattern and time integration. Through simulation we have shown how plasma motion can impact reconstruction of parameters which compounded with the non-linear nature of the parameter fitting step can create errors which are hard to predict. Lastly we briefly outlined a number of possible approaches for estimating parameter fields at higher spatio-temporal resolutions that what is currently possible.
+
 
 \appendix
 \section{Derivation of Idealized AMISR Array Pattern} \label{App:AMISRarr}
