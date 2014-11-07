@@ -1,7 +1,6 @@
 \documentclass[draft,ras]{Template/AGUTeX}
 
 \usepackage{graphicx}   % if you want to include graphics files
-\usepackage{subfigure}
 \usepackage{setspace}
 \usepackage{amsxtra}
 \usepackage{amsmath}
@@ -110,18 +109,7 @@ The space-time ambiguity can be thought of as a kernel to a combined volume and 
 
 By using this formulation many parallels between ISR and classic camera blurring problems can be made. In cameras blurring can take place when an object moves over a space covered by one pixel while the shutter is open and the CCD is collecting photons. A diagram of this can be seen in Figure \ref{fig:ccd}. The same holds for ISR except that the pixels are no longer square and instead are determined by the beam shape and pulse pattern. This is shown in the diagrams in Figure \ref{fig:radarblur}.
 
-%\begin{figure}[h!]
-%    \centering
-%    \subfigure[CCD No Blur]{
-%        \includegraphics[height=2in]{ccddiagramnoblur}
-%        \label{sfig:ccdnoblur}}
-%    \quad
-%    \subfigure[CCD With Blur]{
-%        \includegraphics[height=2in]{ccddiagramblur}
-%        \label{sfig:ccdblur}}
-%    \caption{CCD pixel resolution cell shape}
-%    \label{fig:ccd}
-%\end{figure}
+
 \begin{figure}[h!]
 \centering
 	\includegraphics[height=3in]{ccddiagramall}
@@ -137,18 +125,6 @@ By using this formulation many parallels between ISR and classic camera blurring
 \end{figure}
 
 
-%\begin{figure}[h!]
-  %  \centering
-    %\subfigure[Radar No Blur]{
-      %  \includegraphics[height=2in]{radardiagramnoblur}
-       % \label{sfig:radarnoblur}}
-    %\quad
-    %\subfigure[Radar With Blur]{
-      %  \includegraphics[height=2in]{radardiagramblur}
-       % \label{sfig:radarblur}}
-    %\caption{Radar}
-    %\label{fig:radarblur}
-%\end{figure}
 Before we derive this ambiguity function we will start with defining our coordinate system.
 
 \subsection{Coordinate System Definitions}
