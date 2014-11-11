@@ -143,14 +143,14 @@ The basic physical mechanism behind ISR produces measurable radar scatter from e
 
 \begin{equation}
 \label{eq:xt}
-x(n) = h(n) \ast \int e^{-j\mathbf{k} \cdot \mathbf{r}}  s\left(n-\frac{2r}{c}\right) n_e(\mathbf{r},n) d\mathbf{r},
+x(n) = h(n) \ast \int \exp\left[-j\mathbf{k} \cdot \mathbf{r}\right]  s\left(n-\frac{2r}{c}\right) n_e(\mathbf{r},n) d\mathbf{r},
 \end{equation}
 
 \noindent where $h(n)$ is the receiver filter and the $\ast$ represents the convolution operator. In modern ISR systems, this signal $x(n)$ is then sampled at discrete points in fast-time which will be referred to as $n_s$. The convolution and sampling operation can be brought in the integral as the following,
 
 \begin{equation}
 \label{ex:xtaug}
-x(n_s) = \int e^{-j\mathbf{k} \cdot \mathbf{r}}  s\left(n-\frac{2r}{c}\right) n_e(\mathbf{r},n)h(n_s-n) d\mathbf{r}dn
+x(n_s) = \int \exp\left[-j\mathbf{k} \cdot \mathbf{r}\right]  s\left(n-\frac{2r}{c}\right) n_e(\mathbf{r},n)h(n_s-n) d\mathbf{r}dn
 \end{equation}
 
 
@@ -158,7 +158,7 @@ Once the signal has been received and sampled, the autocorrelation function is t
 
 \begin{multline}
 \label{ex:acf0}
-\langle x(n_s)x^*(n_s')\rangle =  \int e^{-j \mathbf{k}\cdot \left(\mathbf{r}'-\mathbf{r} \right)}s\left(n-\frac{2r}{c}\right)s^*\left(n'-\frac{2r'}{c}\right) \\ h(n_s-n)h(n_s'-n')\langle n_e(\mathbf{r},n)n^*_e(\mathbf{r}',n')\rangle d\mathbf{r} d\mathbf{r}'dn dn',
+\langle x(n_s)x^*(n_s')\rangle =  \int \exp\left[-j \mathbf{k}\cdot \left(\mathbf{r}'-\mathbf{r} \right)\right]s\left(n-\frac{2r}{c}\right)s^*\left(n'-\frac{2r'}{c}\right) \\ h(n_s-n)h(n_s'-n')\langle n_e(\mathbf{r},n)n^*_e(\mathbf{r}',n')\rangle d\mathbf{r} d\mathbf{r}'dn dn',
 \end{multline}
 
 \noindent where $r'$ is the magnitude of the vector $\mathbf{r}'$. By assuming stationarity of second order signal statistics along fast time, we can then substitute the lag variables $\tau\equiv n'-n$, and $\tau_s\equiv n_s'-n_s$. With these substitutions, Equation \ref{ex:acf0} becomes
@@ -166,20 +166,20 @@ Once the signal has been received and sampled, the autocorrelation function is t
 
 \begin{multline}
 \label{ex:acf1}
-\langle x(n_s)x^*(n_s+\tau_s)\rangle =\int e^{-j \mathbf{k}\cdot \left(\mathbf{r}'-\mathbf{r} \right)}s\left(n-\frac{2r}{c}\right)s^*\left(n+\tau-\frac{2r'}{c}\right) \\ h(n_s-n)h(n_s+\tau_s-n-\tau) \langle n_e(\mathbf{r},n)n^*_e(\mathbf{r}',n+\tau)\rangle d\mathbf{r} d\mathbf{r}' dnd\tau
+\langle x(n_s)x^*(n_s+\tau_s)\rangle =\int \exp\left[-j \mathbf{k}\cdot \left(\mathbf{r}'-\mathbf{r} \right)\right]s\left(n-\frac{2r}{c}\right)s^*\left(n+\tau-\frac{2r'}{c}\right) \\ h(n_s-n)h(n_s+\tau_s-n-\tau) \langle n_e(\mathbf{r},n)n^*_e(\mathbf{r}',n+\tau)\rangle d\mathbf{r} d\mathbf{r}' dnd\tau
 \end{multline}
 
 \noindent We can make a simplifying assumption at this point that the space-time autocorrelation function of $n_e(\mathbf{r},t)$, $\langle n_e(\mathbf{r},n)n_e(\mathbf{r}',n+\tau)\rangle$, will go to zero as the magnitude of $\mathbf{y} \equiv \mathbf{r}'-\mathbf{r}$ increases beyond the debye length \citep{farley1969}. Thus, the rate which the spatial autocorrelation goes to zero will be such that $\tau\gg \frac{2||\mathbf{y}||}{c}$, allowing us to set $r= r'$. This allows Equation \ref{ex:acf1} to be rewritten as 
  
  \begin{multline}
  \label{ex:acf2}
- \langle x(n_s)x^*(n_s+\tau)\rangle = \int s\left(n-\frac{2r}{c}\right)s^*\left(n+\tau -\frac{2r}{c}\right) h(n_s-n)h^*(n_s+\tau_s-n-\tau) \\\left[\int e^{-2j \mathbf{k}\cdot \mathbf{y}} \langle n_e(\mathbf{r},n)n^*_e(\mathbf{y}+\mathbf{r},n+\tau)\rangle d\mathbf{y} \right]d\mathbf{r}dn d\tau.
+ \langle x(n_s)x^*(n_s+\tau)\rangle = \int s\left(n-\frac{2r}{c}\right)s^*\left(n+\tau -\frac{2r}{c}\right) h(n_s-n)h^*(n_s+\tau_s-n-\tau) \\\left[\int \exp\left[-2j \mathbf{k}\cdot \mathbf{y}\right] \langle n_e(\mathbf{r},n)n^*_e(\mathbf{y}+\mathbf{r},n+\tau)\rangle d\mathbf{y} \right]d\mathbf{r}dn d\tau.
  \end{multline}
 
 The inner integral is a spatial Fourier transform evaluated at the wave number of the radar $\mathbf{k}$. By again asserting stationarity along fast time, we can represent the true ACF as the following,
  \begin{equation}
  \label{eq:spft}
-R(\tau,\mathbf{r})= \langle |n_e(\mathbf{k},r,\tau)|^2\rangle \equiv  \int e^{-2j \mathbf{k}\cdot \mathbf{y} } \langle n_e(\mathbf{r},b)n^*_e(\mathbf{y}+\mathbf{r},n+\tau)\rangle d\mathbf{y}.
+R(\tau,\mathbf{r})= \langle |n_e(\mathbf{k},r,\tau)|^2\rangle \equiv  \int \exp\left[-2j \mathbf{k}\cdot \mathbf{y} \right] \langle n_e(\mathbf{r},b)n^*_e(\mathbf{y}+\mathbf{r},n+\tau)\rangle d\mathbf{y}.
  \end{equation}
  
  \noindent Now Equation \ref{ex:acf2} becomes
@@ -278,7 +278,7 @@ The spatial ambiguity across azimuth and elevation angles is determined by the a
  % make appendix to develop this further.
  \begin{equation}
  \label{eqn:amisrpat}
-F(\theta_s,\phi_s,\theta,\phi) = \frac{1}{2}(1+\cos(\theta)^2)\left[ \frac{1}{MN} \left(1+e^{j(\psi_y/2 + \psi_x)}\right)\frac{\sin((M/2) \psi_x)}{\sin(\psi_x)} \frac{\sin((N/2) \psi_x)}{\sin(\psi_x/2)}\right]^2,
+F(\theta_s,\phi_s,\theta,\phi) = \frac{1}{2}(1+\cos(\theta)^2)\left[ \frac{1}{MN} \left(1+\exp\left[j(\psi_y/2 + \psi_x)\right]\right)\frac{\sin((M/2) \psi_x)}{\sin(\psi_x)} \frac{\sin((N/2) \psi_x)}{\sin(\psi_x/2)}\right]^2,
  \end{equation}
  
  \noindent where $\psi_x = -k d_x(\sin\theta\cos\phi-\sin\theta_s\cos\phi_s)$, $\psi_y = -k d_y(\sin\theta\sin\phi-\sin\theta_s\sin\phi_s)$ and $M$ is the number of elements in the $x$ direction of the array, and $N$ is the number of elements in the $y$ direction(see Appendix: \ref{App:AMISRarr} for derivation).
@@ -496,7 +496,7 @@ The phantoms for each parameter at approximately 402 seconds can be seen in Figu
 	\label{fig:allparamsblurreddata}
 \end{figure}
 
-In order to determine the reason behind the poor reconstruction, we look at the fit surface of one of the points in the reconstruction. The fit surface is the error between the estimated ISR spectrum and the spectrum derived from the different parameters. We will compare the points $\mathbf{r}=[10,10, 400]$ km and the closest reconstruction point in the radar field of view, $\mathbf{r}_s=[6.72,1.80, 398.77]$ at time {\it JOHN: what time?}. The time was chosen so the integrated measurement would be centered over the interval when the enhancement moved through this point, as the radar will integrate over two distinct plasma distributions. The plasma parameters at point $\mathbf{r}$ are $N_e=1.96\times 10^{10}$m$^{-3}$, $T_i =1064$ K and $T_e =1324$ K when there is no enhancement traveling through. When the enhancement is traveling through this point $N_e=5\times 10^{10}$m$^{-3}$, $T_i =416$ K and $T_e =518$ K. The speed of the enhancement, 500 m/s, causes about two-thirds of the pulses measured to correspond to the enhanced plasma during the integration.
+In order to determine the reason behind the poor reconstruction, we look at the fit surface of one of the points in the reconstruction. The fit surface is the error between the estimated ISR spectrum and the spectrum derived from the different parameters. We will compare the points $\mathbf{r}=[10,10, 400]$ km and the closest reconstruction point in the radar field of view, $\mathbf{r}_s=[6.72,1.80, 398.77]$ at time 309.5s.  The time was chosen so the integrated measurement would be centered over the interval when the enhancement moved through this point, as the radar will integrate over two distinct plasma distributions. The plasma parameters at point $\mathbf{r}$ are $N_e=1.96\times 10^{10}$m$^{-3}$, $T_i =1064$ K and $T_e =1324$ K when there is no enhancement traveling through. When the enhancement is traveling through this point $N_e=5\times 10^{10}$m$^{-3}$, $T_i =416$ K and $T_e =518$ K. The speed of the enhancement, 500 m/s, causes about two-thirds of the pulses measured to correspond to the enhanced plasma during the integration.
 
 After integrating and fitting the ISR spectra, the parameter fit results at $\mathbf{r}$ are $N_e=2.36\times 10^{10}$m$^{-3}$, $T_i =973$ K and $T_e =500$ K, representative of neither the background or enhanced plasma. To investigate further, the fit surface was formed over the parameter space of $N_e =1\times 10^{10}$ to $1\times10^{11} $m$^{-3}$, and for both $T_e$ and $T_i$ over values 100 to 1500 $^\circ$K. In this case, the fit surface showed that the global minimum was located in the same location as found by the Levenberg-Marquardt algorithm. A two dimensional cut of the fit surface variation as a function of $T_i$ and $T_e$ holding $N_e=2.43\times 10^{10} $m$^{-3}$ is shown in Figure \ref{fig:fitsurface}. The final fit values are located at a global minimum, indicating that this is not a result of multiple parameter ambiguities but rather that the non uniformity of the plasma parameters caused an erroneous fit. Mixtures of different plasma populations causing erroneous fits have been shown before such as in \citet{knudsen1993}. %\footnote{Feel like I need a better ending to this section.}
 
@@ -544,29 +544,29 @@ In order to simplify the antenna can be treated as two rectangular arrays of cro
 
 \begin{equation}
 \label{eqn:arrpat1}
-E_1(\theta,\phi) =\displaystyle \sum_{m=1}^{M/2}\sum_{n=1}^{N} e^{-j2\left(m-1\right)kd_x\sin\theta\cos\phi -j\left(n-1\right) k d_y\sin\theta\sin\phi}.
+E_1(\theta,\phi) =\displaystyle \sum_{m=1}^{M/2}\sum_{n=1}^{N} \exp\left[-j2\left(m-1\right)kd_x\sin\theta\cos\phi -j\left(n-1\right) k d_y\sin\theta\sin\phi\right].
 \end{equation}
 
 \noindent Since the second array can be though of a shifted version of the first in the $x$ direction we get the following
 
 \begin{equation}
 \label{eqn:arrpat2}
-E_2(\theta,\phi) =\displaystyle \sum_{m=1}^{M/2}\sum_{n=1}^{N} e^{-j\left(2m-1\right)kd_x\sin\theta\cos\phi -j\left(n-1/2\right) k d_y\sin\theta\sin\phi}.
+E_2(\theta,\phi) =\displaystyle \sum_{m=1}^{M/2}\sum_{n=1}^{N} \exp\left[-j\left(2m-1\right)kd_x\sin\theta\cos\phi -j\left(n-1/2\right) k d_y\sin\theta\sin\phi\right].
 \end{equation}
 
 In order to simplify notation we will make the following substitutions, $\psi_x = -k d_x\sin\theta\cos\phi$, $\psi_y = -k d_y\sin\theta\sin\phi$. Using Equations \ref{eqn:arrpat1} and \ref{eqn:arrpat2} we can see the following relationship,
 
 \begin{equation}
 \label{eqn:arrpateqn}
-E_2(\theta,\phi)  = e^{j(\psi_y/2 + \psi_x)} E_1(\theta,\phi)  = \displaystyle \sum_{m=1}^{M/2}\sum_{n=1}^{N} e^{-j2\left(m-1\right) \psi_x -j\left(n-1\right) \psi_y}.
+E_2(\theta,\phi)  =  \exp\left[j(\psi_y/2 + \psi_x)\right] E_1(\theta,\phi)  = \displaystyle \sum_{m=1}^{M/2}\sum_{n=1}^{N}  \exp\left[-j2\left(m-1\right) \psi_x -j\left(n-1\right) \psi_y\right].
 \end{equation}
 
 \noindent Adding $E_1$ and $E_2$ together we get the following linear array pattern
 
 \begin{equation} \label{eq1}
 \begin{split}
-E(\theta,\phi) &= \displaystyle  \left(1+e^{j(\psi_y/2 + \psi_x)}\right)\sum_{m=1}^{M/2}\sum_{n=1}^{N} e^{-j2\left(m-1\right) \psi_x -j\left(n-1\right) \psi_y}.\\
-& = \frac{1}{MN} \left(1+e^{j(\psi_y/2 + \psi_x)}\right)\frac{\sin((M/2) \psi_x)}{\sin(\psi_x)} \frac{\sin((N/2) \psi_x)}{\sin(\psi_x/2)}.
+E(\theta,\phi) &= \displaystyle  \left(1+ \exp\left[j(\psi_y/2 + \psi_x)\right]\right)\sum_{m=1}^{M/2}\sum_{n=1}^{N}  \exp\left[-j2\left(m-1\right) \psi_x -j\left(n-1\right) \psi_y\right].\\
+& = \frac{1}{MN} \left(1+ \exp\left[j(\psi_y/2 + \psi_x)\right]\right)\frac{\sin((M/2) \psi_x)}{\sin(\psi_x)} \frac{\sin((N/2) \psi_x)}{\sin(\psi_x/2)}.
 \end{split}
 \end{equation}
 
@@ -574,15 +574,14 @@ Since the array is steerable this can be taken into account in the equations by 
 
 \begin{equation}
 \label{eqn:amisrpatfinal}
-F(\theta_s,\phi_s,\theta,\phi) = \frac{1}{2}(1+\cos(\theta)^2)\left| \frac{1}{MN} \left(1+e^{j(\psi_y/2 + \psi_x)}\right)\frac{\sin((M/2) \psi_x)}{\sin(\psi_x)} \frac{\sin((N/2) \psi_x)}{\sin(\psi_x/2)}\right|^2.
+F(\theta_s,\phi_s,\theta,\phi) = \frac{1}{2}(1+\cos(\theta)^2)\left| \frac{1}{MN} \left(1+ \exp\left[j(\psi_y/2 + \psi_x)\right]\right)\frac{\sin((M/2) \psi_x)}{\sin(\psi_x)} \frac{\sin((N/2) \psi_x)}{\sin(\psi_x/2)}\right|^2.
 \end{equation}
  
 \bibliographystyle{BibTeX/agufull08}
 \bibliography{BibTeX/litreview}
 
 \begin{acknowledgments}
-(Text here)
-\end{acknowledgments}
+This work was supported by the National Science Foundation, through Aeronomy Program Grant AGS-1339500 to Boston University and Cooperative Agreement AGS-1242204 between the NSF and the Massachusetts Institute of Technology, and by the Air Force Office of Scientific Research under contract FA9550-12-1-018.   The authors are grateful to the International Space Science Institute (ISSI, Bern, Switzerland) for sponsoring a series of workshops from which the idea for this work emerged.\end{acknowledgments}
 
 \end{article}
 
