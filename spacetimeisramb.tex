@@ -76,7 +76,7 @@ The space-time ambiguity can be thought of as a kernel to a combined volume and 
 \rho(\tau_s ,\mathbf{r}_{s},t_s) = \int L(\tau_s, \mathbf{r}_{s},t_s,\tau,\mathbf{r},t) R(\tau,\mathbf{r},t) d\mathbf{r}d t d\tau
 \end{equation}
 
-\noindent where, for ISR, $R(\tau,\mathbf{r},t) $ is the lag $\tau$ of the autocorrelation function at time $t$, and position $\mathbf{r}$.
+\noindent where, for ISR, $R(\tau,\mathbf{r},t) $ is the lag, $L(\tau_s, \mathbf{r}_{s},t_s,\tau,\mathbf{r},t) $ is a blurring kernel over time and space, $\tau$ of the autocorrelation function at time $t$, and position $\mathbf{r}$.
 
 By using this formulation, many parallels between ISR and classic camera blurring problems can be made. In cameras, blurring can take place when an object moves over a space covered by one pixel while the shutter is open and the CCD is collecting photons. A diagram of this can be seen in Figure \ref{fig:ccd}. The same holds for the ISR measurement problem, except that the pixels are no longer square and instead are determined by the beam shape and pulse pattern. This is shown in the diagrams in Figure \ref{fig:radarblur}.
 
@@ -97,7 +97,7 @@ By using this formulation, many parallels between ISR and classic camera blurrin
 
 \subsection{Coordinate System Definitions}
 
-Before we derive the full space-time ambiguity function $K(\mathbf{r}_{s},\mathbf{r})$ we will start with defining our coordinate system.  Our three dimensional coordinate system is defined as $\mathbf{r}=[x,y,z]^T$. For this coordinate system, $\mathbf{r}=[0,0,0]^T$ at the location of the radar and thus $r=|\mathbf{r}|$, also known as the range variable. This allows for the use of polar coordinates $\mathbf{r} =  [r,\theta_,\phi]^T$ where $\theta$ is the observer's elevation angle and $\phi$ is the azimuth angle.
+Before we derive the full space-time ambiguity function, $L(\tau_s,\mathbf{r}_s,t_s,\tau,\mathbf{r},t)$, we will start with defining our coordinate system.  Our three dimensional coordinate system is defined as $\mathbf{r}=[x,y,z]^T$. For this coordinate system, $\mathbf{r}=[0,0,0]^T$ at the location of the radar and thus $r=|\mathbf{r}|$, also known as the range variable. This allows for the use of polar coordinates $\mathbf{r} =  [r,\theta_,\phi]^T$ where $\theta$ is the observer's elevation angle and $\phi$ is the azimuth angle.
 
 The radar samples this space at a set of discrete points which will be referred to as $\mathbf{r}_s = [x_s,y_s,z_s]^T$ along with the discretized range expression $r_s=|\mathbf{r}_s|$. The sampled space consists of a number of points, composed of range gates within a beam multiplied by the number of beams. These points can also be referred in polar coordinates $\mathbf{r}_s = [r_s,\theta_s,\phi_s]^T$, where $\theta_s$ is the observationally sampled elevation angle and $\phi_s$ is the sampled azimuth angle.
 
@@ -253,8 +253,7 @@ The problem can now be simplified further back to a Fredholm integral equation b
 	\label{fig:ambtime}
 \end{figure}
 
-The operator $A$ can be determined through knowledge of the radar system's beam pattern along with the experiment's pulse pattern, integration time and inherent velocity of the plasma. This velocity $\mathbf{v}$ can be separately estimated by taking measurements of the Doppler shift and using a methodology seen in \citet{butler:imagingfregiondrifts}. Once the operator has been determined, standard processing techniques can be used as if the plasma is not moving, under the previous assumptions.
-
+The operator $A$ can be determined through knowledge of the radar system's beam pattern along with the experiment's pulse pattern, integration time and inherent velocity of the plasma. This velocity $\mathbf{v}$ can be separately estimated by taking measurements of the Doppler shift and using a methodology seen in \citet{butler:imagingfregiondrifts}. With this strategy the operator is acting purely as a spatial blurring function, thus reducing the dimensionality of the problem.
 %%%%%%%%%%%%%% Simulation %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Simulation}
