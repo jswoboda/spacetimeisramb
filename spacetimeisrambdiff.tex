@@ -1,7 +1,7 @@
 \documentclass[draft,ras]{Template/AGUTeX}
 %DIF LATEXDIFF DIFFERENCE FILE
 %DIF DEL spacetimeisramborig.tex   Wed Feb 11 14:53:44 2015
-%DIF ADD spacetimeisramb.tex       Thu Feb 19 15:43:28 2015
+%DIF ADD spacetimeisramb.tex       Tue Feb 24 17:55:14 2015
 
 \usepackage{graphicx}   
 \usepackage{setspace}
@@ -89,31 +89,31 @@ In many cases, especially in the high latitude ionosphere, this stationarity ass
 .
 }\DIFaddend 
 
-These new ESA based systems differentiate themselves from dish antennas in a fundamental way. Instead of dwelling in a single beam or scanning along a prescribed direction, an ESA can move to a different beam position within its field of view on a rapid, pulse by pulse basis. \DIFaddbegin \DIFadd{We can see this by how the different types of antennas integrate pulses using the beam positions seen in Figure \ref{fig:bp1}. Figure \ref{fig:dbsts} shows how a dish based antenna will move to different beam positions through time, represented by the z-axis in pulse repetition intervals (PRIs), by sweeping through the field of view in a continuous scan. The phased array will instead move from position to position in discrete steps as seen in Figure \ref{fig:phbsts}. Another observation from these diagrams is that the phased array antenna is able to collect data from different beams during overlapping time periods.
+These new ESA based systems differentiate themselves from dish antennas in a fundamental way. Instead of dwelling in a single beam or scanning along a prescribed direction, an ESA can move to a different beam position within its field of view on a rapid, pulse by pulse basis. \DIFaddbegin \DIFadd{We can see this by how the different types of antennas integrate pulses using the beam positions seen in Figure \ref{fig:bp1}. Figure \ref{fig:dbsts} shows a possible path for a dish based antenna to move to different beam positions through time, represented by the z-axis in pulse repetition intervals (PRIs). The dish is basically sweeping through the field of view in a continuous scan. The phased array will instead move from position to position in discrete steps as seen in Figure \ref{fig:phbsts}. Another observation from these diagrams is that the phased array antenna is able to collect data from different beams during overlapping time periods, which creates a lattice like pattern.  
 }
 
 \begin{figure}
 	\centering
 	\includegraphics[width=3.5in]{beampositionssts}
-	\caption{\DIFaddFL{Full spatial ambiguity function in Cartesian space for case with 4 beams with trailing edge of a 240$\mu$s pulse at 400km range.}}	
+	\caption{\DIFaddFL{A 3x3 grid of beam positions to show sampling. }}	
 	\label{fig:bp1}
 \end{figure}
 
 \begin{figure}
 	\centering
 	\includegraphics[width=5.5in]{dishsts}
-	\caption{\DIFaddFL{Space-time sampling of a dish based antenna.}}	
+	\caption{\DIFaddFL{Space-time sampling of a dish based antenna where the red x's mark the pulse in beam space and time. Beam positions from Figure \ref{fig:bp1} are shown below in blue at $z=0$.}}	
 	\label{fig:dbsts}
 \end{figure}
 
 \begin{figure}
 	\centering
 	\includegraphics[width=5.5in]{phasedarraysts}
-	\caption{\DIFaddFL{Space-time sampling of a phased array based antenna.}}	
+	\caption{\DIFaddFL{Space-time sampling of a phased array based antenna where the red x's mark the pulse in beam space and time. Beam positions from Figure \ref{fig:bp1} are shown below in blue at $z=0$.}}	
 	\label{fig:phbsts}
 \end{figure}
 
-\DIFaddend This yields a new flexibility to statistically combine information from different beams using knowledge of the plasma velocity field, where this information is obtained either from external sources or from the Doppler shift of the ionospheric echoes themselves. This can help to relax the assumption of stationarity \DIFdelbegin \DIFdel{, since if the }\DIFdelend \DIFaddbegin \DIFadd{for plasmas that are evolving or changing their shape on time scales longer than the integration time. If the }\DIFaddend plasma moves into a different beam, returns from the same plasma can be integrated together with proper bookkeeping. Such a technique is very difficult to accomplish with dish antenna based systems having significant pointing inertia, and typically in these situations the returns from \DIFdelbegin \DIFdel{different plasmas }\DIFdelend \DIFaddbegin \DIFadd{multiple plasma populations with different parameter sets }\DIFaddend are unavoidably and improperly averaged together.
+\DIFaddend This yields a new flexibility\DIFaddbegin \DIFadd{, in post processing, }\DIFaddend to statistically combine information from different beams using knowledge of the plasma velocity field, where this information is obtained either from external sources or from the Doppler shift of the ionospheric echoes themselves. This can help to relax the assumption of stationarity \DIFdelbegin \DIFdel{, since if the }\DIFdelend \DIFaddbegin \DIFadd{for plasmas that are evolving or changing their shape on time scales longer than the integration time. If the }\DIFaddend plasma moves into a different beam, returns from the same plasma can be integrated together with proper bookkeeping. Such a technique is very difficult to accomplish with dish antenna based systems having significant pointing inertia, and typically in these situations the returns from \DIFdelbegin \DIFdel{different plasmas }\DIFdelend \DIFaddbegin \DIFadd{multiple plasma populations with different parameter sets }\DIFaddend are unavoidably and improperly averaged together.
 
 In order to take advantage of new ESA flexibilities, this work puts forth the idea of the space-time ambiguity function. This concept extends the range ambiguity to all three spatial dimensions along with time. The goal of this paper is to develop the formalism for treating space-time ambiguity for electronically steerable ISRs, and in particular ISRs that are capable of sampling a given volume on a pulse-by-pulse basis. \DIFaddbegin \DIFadd{This paradigm can also be applied to other types ISR systems as well, but much of the utility of using this new formalism will likely be seen with ESA based systems. }\DIFaddend We will develop specific cases of the impact of the three-dimensional ambiguity on moving plasma using conditions characteristic of polar cap patches. A simulation of a polar cap patch using a full ISR simulator, which creates ISR data at the I/Q level, will be shown. Lastly we will explore a number of different strategies that could improve measurements from electronically steerable ISR systems.
 
